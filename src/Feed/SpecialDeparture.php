@@ -47,8 +47,8 @@ CREATE TABLE `$tableName` (
   `sailingdate_id` int NOT NULL DEFAULT '0',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `sailingdate_id` (`sailingdate_id`),
-  KEY `special_id` (`special_id`),
+  KEY `sailingdate` (`sailingdate_id`),
+  KEY `special` (`special_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 SQL;
 	}
