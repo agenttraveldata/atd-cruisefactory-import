@@ -122,5 +122,7 @@ class Importer {
 		delete_site_option( ATD_CF_XML_KEY_FIELD );
 		delete_option( ATD_CF_XML_VERIFIED_FIELD );
 		delete_site_option( ATD_CF_XML_VERIFIED_FIELD );
+		delete_option( ATD_CF_XML_DB_VERSION_FIELD );
+		delete_site_option( ATD_CF_XML_DB_VERSION_FIELD );
 	}
 }
