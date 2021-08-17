@@ -1,0 +1,11 @@
+/.idea
+/vendor
+/node_modules
+/releases
+/dist
+/var/logs
+!/var/logs/index.php
+/var/cache/services
+/var/cache/services/index.php
+/var/cache/increment
+/var/cache/increment/index.php

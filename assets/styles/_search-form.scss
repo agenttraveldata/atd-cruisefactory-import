@@ -1,0 +1,26 @@
+@use "variables";
+
+.atd-cfi-sf {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+
+    .atd-cfi-sf__col {
+        min-width: 100%;
+        width: 100%;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin: 5px 0;
+
+        @media (min-width: variables.$break-point) {
+            min-width: 20%;
+            width: 20%;
+        }
+    }
+
+    .atd-cfi-sf__btns {
+        .atd-cfi-sf-btns__btn-reset:not(:hover) {
+            background-color: lighten(#000, 50%) !important;
+        }
+    }
+}

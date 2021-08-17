@@ -1,0 +1,9 @@
+/.idea
+/assets
+/releases
+/var/logs/import*
+/var/cache/services/*.xml
+/var/cache/increment/*.xml
+/composer*
+/package*
+/webpack.config.js

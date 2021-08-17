@@ -1,0 +1,25 @@
+{
+    "name": "agenttraveldata/atd-cruisefactory-xml",
+    "description": "description",
+    "minimum-stability": "stable",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Christopher Merat",
+            "email": "chris@agenttraveldata.com"
+        }
+    ],
+    "require": {
+        "ext-mysqli": "*",
+        "ext-xmlreader": "*",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "ATD\\CruiseFactory\\": "src"
+        }
+    },
+    "require-dev": {
+        "wp-cli/wp-cli": "^2.5"
+    }
+}

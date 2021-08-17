@@ -1,0 +1,46 @@
+.atd-cfi {
+    &__img-fluid {
+        max-width: 100%;
+        height: auto;
+    }
+
+    &__float-end {
+        float: right;
+    }
+
+    &__ml-2 {
+        margin-left: 1.2rem;
+    }
+
+    &__mb-2 {
+        margin-bottom: 1.2rem;
+    }
+
+    &__mt-2 {
+        margin-top: 1.2rem;
+    }
+
+    &__mw-60 {
+        max-width: 60%;
+    }
+
+    &__mw-40 {
+        max-width: 40%;
+    }
+
+    &__input {
+        width: 100%;
+    }
+
+    &__flex-1 {
+        flex: 1;
+    }
+
+    &__hidden {
+        display: none;
+    }
+
+    &__clearfix {
+        clear: both;
+    }
+}

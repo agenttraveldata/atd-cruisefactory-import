@@ -1,0 +1,85 @@
+@use "mixins";
+@use "functions";
+@use "variables";
+
+$search-row-bg: #fff;
+$search-row-btn-bg: #b10f26;
+
+.atd-cfi-sr {
+    margin: 10px;
+
+    .atd-cfi-sr__row {
+        @include mixins.result-row($search-row-bg, true);
+
+        @media (max-width: variables.$break-point) {
+            flex-direction: column;
+        }
+
+        .atd-cfi-sr-row__img {
+            max-height: 260px;
+            background-color: rgba($search-row-bg, 50%);
+
+            @media (min-width: variables.$break-point) {
+                min-width: 25%;
+                width: 25%;
+            }
+
+            > img {
+                min-width: 100%;
+                min-height: 100%;
+                object-fit: contain;
+            }
+        }
+
+        .atd-cfi-sr-row__details {
+            padding: 18px;
+            background-color: $search-row-bg;
+
+            &, > p {
+                line-height: 1.2em;
+            }
+
+            .atd-cfi-sr-row-details__title {
+                a {
+                    color: inherit;
+                    text-decoration: none;
+                }
+            }
+        }
+
+        .atd-cfi-sr-row__actions {
+            @media (min-width: variables.$break-point) {
+                min-width: 20%;
+                width: 20%;
+            }
+
+            padding: 18px;
+            text-align: right;
+            background-color: $search-row-bg;
+
+            .atd-cfi-sr-row-actions__logo {
+                width: 100%;
+                margin: 0 0 20px;
+            }
+
+            .atd-cfi-sr-row-actions__price {
+                text-align: right;
+                line-height: 1.2em;
+                margin: 16px 0;
+
+                > div {
+                    font-size: 1.6rem;
+                    font-weight: bold;
+                }
+            }
+
+            .atd-cfi-sr-row-actions__btn {
+                padding: 8px;
+                border-radius: 8px;
+                color: functions.set-color($search-row-btn-bg);
+                background-color: $search-row-btn-bg;
+                text-decoration: none;
+            }
+        }
+    }
+}

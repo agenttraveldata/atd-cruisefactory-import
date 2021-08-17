@@ -1,0 +1,5 @@
+@use "mixins";
+
+.atd-cfi__cols {
+    @include mixins.columns();
+}

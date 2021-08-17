@@ -1,0 +1,51 @@
+@use "functions";
+@use "sass:math";
+
+@mixin result-row($lightest: #fff, $shadow: false) {
+    display: flex;
+    margin: 10px 0;
+    color: darken($lightest, 80%);
+
+    @if $shadow {
+        box-shadow: 0 0 10px rgba(darken($lightest, 50%), .25);
+    }
+}
+
+@mixin boxed($lightest: #fff, $shadow: false) {
+    margin: 10px 0;
+    background: $lightest;
+    color: darken($lightest, 80%);
+
+    @if $shadow {
+        box-shadow: 0 0 10px rgba(darken($lightest, 50%), .25);
+    }
+}
+
+@mixin more-btn($color) {
+    padding: 8px;
+    border-radius: 8px;
+    color: functions.set-color($color);
+    background-color: $color;
+    text-decoration: none;
+}
+
+@mixin columns($cols: 3) {
+    $col-width: math.div(100%, $cols);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .atd-cfi-cols__column {
+        width: calc(#{$col-width} - 36px);
+        margin-left: 18px;
+        margin-right: 18px;
+
+        &.atd-cfi-cols-column__stretch {
+            width: calc(100% - 36px);
+        }
+
+        &.atd-cfi-cols-column__double {
+            width: calc((#{$col-width} * 2) - 36px);
+        }
+    }
+}
