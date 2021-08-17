@@ -11,6 +11,7 @@ interface Feed {
 	public function import( DateTimeInterface $updatedAt ): bool;
 	public function fetchServices(): ?string;
 	public function fetchIncrement(): ?string;
+	public static function getTableName( string $prefix = '' ): string;
 	public static function getTableNameWithPrefix(): string;
 	public static function getCreateTableSchema(): string;
 	public function getLastUpdate(): ?DateTimeInterface;

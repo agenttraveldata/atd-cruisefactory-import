@@ -31,7 +31,7 @@ class CleanUp {
 		}
 	}
 
-	public function removeWordpressPostAndRelated( string $tableName, int $id, string $metaKey ): void {
+	public function removeWordPressPostAndRelated( string $tableName, int $id, string $metaKey ): void {
 		if ( $postType = $this->getPostTypeByTableName( $tableName ) ) {
 			if ( $post = $this->fetchPostByTypeAndMetaValue( $postType, $id, $metaKey ) ) {
 				$this->wpdb->query( 'DELETE FROM ' . $this->wpdb->postmeta . ' WHERE post_id=' . $post->ID );
