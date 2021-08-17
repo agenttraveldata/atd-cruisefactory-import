@@ -50,7 +50,7 @@ CREATE TABLE `$tableName` (
   `currency_id` int unsigned DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `ShipsIndex` (`cruiseline_id`,`id`)
+  KEY `cruise_line` (`cruiseline_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 SQL;
 	}

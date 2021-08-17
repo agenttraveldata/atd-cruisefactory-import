@@ -35,7 +35,7 @@ CREATE TABLE `$tableName` (
   `price_suites` double(9,2) DEFAULT '0.00',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `specialId` (`special_id`)
+  KEY `special` (`special_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 SQL;
 	}

@@ -27,7 +27,7 @@ class Departure extends AbstractFeed {
 CREATE TABLE `$tableName` (
   `id` int NOT NULL AUTO_INCREMENT,
   `cruise_id` int NOT NULL DEFAULT '0',
-  `sailingdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `sailingdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `embarkport_id` int NOT NULL DEFAULT '0',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),

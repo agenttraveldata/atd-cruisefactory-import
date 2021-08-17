@@ -38,7 +38,7 @@ CREATE TABLE `$tableName` (
   `currency_id` int NOT NULL DEFAULT '1',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `specialid` (`special_id`)
+  KEY `special` (`special_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 SQL;
 	}

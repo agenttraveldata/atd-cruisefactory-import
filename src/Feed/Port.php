@@ -32,7 +32,7 @@ CREATE TABLE `$tableName` (
   `photo` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `PortsIndex` (`destination_id`,`id`)
+  KEY `destination` (`destination_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 SQL;
 	}
