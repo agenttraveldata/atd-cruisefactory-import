@@ -20,7 +20,7 @@ global $atdDestination;
     <div class="atd-cfi-tabs__contents" data-atd-cfi-tabs-target="contents" data-controller="atd-cfi-popover">
         <div id="atd-tab-overview">
             <a class="atd-cfi__float-end atd-cfi__ml-2 atd-cfi__mb-2 atd-cfi__mw-40" data-action="atd-cfi-popover#image" href="<?php echo get_the_post_thumbnail_url(); ?>">
-                <img class="atd-cfi__img-fluid" src="<?php echo get_the_post_thumbnail_url(); ?>" alt="">
+				<?php the_post_thumbnail( 'large', [ 'class' => 'atd-cfi__img-fluid' ] ); ?>
             </a>
 			<?php the_content(); ?>
         </div>

@@ -1,6 +1,6 @@
 <div class="atd-cfi-ar__col">
     <div class="atd-cfi-ar-col__img">
-		<?php the_post_thumbnail(); ?>
+		<?php the_post_thumbnail( 'medium' ); ?>
     </div>
     <div class="atd-cfi-ar-col__details">
         <h4><?php the_title(); ?></h4>

@@ -31,8 +31,8 @@ export default class extends Controller {
         const popoverElement = document.createElement('div');
         popoverElement.innerHTML = `<div class="atd-cfi-popover-overlay">
     <div class="atd-cfi-popover-contents">
-        <div style="padding: 40px;">
-            <div style="padding: 18px;">
+        <div class="atd-cfi-popover-json">
+            <div class="atd-cfi-popover-json-inner">
                 <div class="spinner-loader"></div>
             </div>
         </div>

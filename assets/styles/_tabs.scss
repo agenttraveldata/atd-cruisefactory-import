@@ -1,3 +1,5 @@
+@use "variables";
+
 $atd-cfi-tab-bg: transparent;
 $atd-cfi-tab-active-bg: #fff;
 $atd-cfi-tab-border-color: #000;
@@ -6,16 +8,28 @@ $atd-cfi-tab-border-color: #000;
     .atd-cfi-tabs__anchors {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
+
+        @media (max-width: variables.$break-point-tablet) {
+            flex-wrap: wrap-reverse;
+        }
 
         > a {
             &, &:focus {
                 text-decoration: none !important;
             }
 
-            margin: 18px 8px 0;
+            margin: 0 8px;
             padding: 8px;
             background-color: $atd-cfi-tab-bg;
             border: 2px solid transparent;
+
+            @media (max-width: variables.$break-point-tablet) and (min-width: variables.$break-point-mobile + 1) {
+                flex: 1 0 18vw;
+            }
+            @media (max-width: variables.$break-point-mobile) {
+                flex: 1 0 38vw;
+            }
 
             &.active {
                 margin-bottom: -2px;

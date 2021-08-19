@@ -3,3 +3,7 @@
 .atd-cfi__cols {
     @include mixins.columns();
 }
+
+.atd-cfi__cols-enquiry {
+    @include mixins.columns(5);
+}

@@ -121,7 +121,7 @@ trait ItineraryTrait {
 
 	private function startTable(): string {
 		return <<<HTML
-<table class="wp-block-table is-style-stripes" data-controller="atd-cfi-popover">
+<table class="atd-cfi__itinerary-table wp-block-table is-style-stripes" data-controller="atd-cfi-popover">
 	<thead>
 	<tr>
 		<th>Date</th>

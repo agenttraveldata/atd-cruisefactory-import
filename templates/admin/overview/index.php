@@ -26,7 +26,7 @@
                 <small class="atd-cfi-xml-verification <?php echo( ATD_CF_XML_VERIFIED ? 'atd-cfi-verified' : 'atd-cfi-not-verified' ); ?>"><?php echo ATD_CF_XML_VERIFIED ? '' : 'Not '; ?>Verified</small>
             </h3>
             <label for="atd_cfi_xml_key">Cruise Factory XML Key</label>
-            <input type="text" id="atd_cfi_xml_key" class="regular-textbutton-primary" name="<?php echo ATD_CF_XML_KEY_FIELD; ?>" value="<?php echo get_site_option( ATD_CF_XML_KEY_FIELD ); ?>">
+            <input type="text" id="atd_cfi_xml_key" class="regular-textbutton-primary" name="<?php echo ATD_CF_XML_KEY_FIELD; ?>" value="<?php echo get_option( ATD_CF_XML_KEY_FIELD ); ?>">
             <button id="atd-cfi-verify-xml" class="button-primary">Verify</button>
         </div>
     </div>

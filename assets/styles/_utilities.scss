@@ -43,4 +43,12 @@
     &__clearfix {
         clear: both;
     }
+
+    &__align-start {
+        text-align: left;
+    }
+
+    &__align-end {
+        text-align: right;
+    }
 }

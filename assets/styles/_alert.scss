@@ -1,0 +1,17 @@
+$alerts: (
+    "info": #eaeaea,
+    "error": #ffe5e5,
+    "success": #e5ffe7
+);
+
+.atd-cfi__alert {
+    @each $name, $color in $alerts {
+        &.atd-cfi-alert__#{$name} {
+            padding: 18px;
+            margin: 18px;
+            color: darken($color, 80%);
+            border: 1px solid darken($color, 80%);
+            background-color: $color;
+        }
+    }
+}

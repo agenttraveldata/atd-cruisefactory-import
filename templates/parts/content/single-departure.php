@@ -52,7 +52,7 @@ $shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruis
             </div>
         </div>
     </div>
-    <div class="atd-cfi-cols__column atd-cfi-cols-column__double">
+    <div class="atd-cfi-cols__column atd-cfi-cols-column-2">
         <div class="atd-cfi__tabs" data-controller="atd-cfi-tabs">
             <div class="atd-cfi-tabs__anchors" data-atd-cfi-tabs-target="anchors">
                 <a href="#atd-tab-overview">Overview</a>

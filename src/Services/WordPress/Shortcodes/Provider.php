@@ -6,6 +6,7 @@ namespace ATD\CruiseFactory\Services\WordPress\Shortcodes;
 
 class Provider {
 	public static function register() {
-		add_shortcode('atd_cfi_search_form', [(new Search()), 'shortcode']);
+		add_shortcode( 'atd-cfi-search-form', [ ( new SearchForm() ), 'shortcode' ] );
+		add_shortcode( 'atd-cfi-enquiry-form', [ ( new EnquiryForm() ), 'shortcode' ] );
 	}
 }

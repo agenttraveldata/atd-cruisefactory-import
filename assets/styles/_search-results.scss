@@ -11,7 +11,7 @@ $search-row-btn-bg: #b10f26;
     .atd-cfi-sr__row {
         @include mixins.result-row($search-row-bg, true);
 
-        @media (max-width: variables.$break-point) {
+        @media (max-width: variables.$break-point-mobile) {
             flex-direction: column;
         }
 
@@ -19,7 +19,7 @@ $search-row-btn-bg: #b10f26;
             max-height: 260px;
             background-color: rgba($search-row-bg, 50%);
 
-            @media (min-width: variables.$break-point) {
+            @media (min-width: variables.$break-point-mobile) {
                 min-width: 25%;
                 width: 25%;
             }
@@ -48,7 +48,7 @@ $search-row-btn-bg: #b10f26;
         }
 
         .atd-cfi-sr-row__actions {
-            @media (min-width: variables.$break-point) {
+            @media (min-width: variables.$break-point-mobile) {
                 min-width: 20%;
                 width: 20%;
             }

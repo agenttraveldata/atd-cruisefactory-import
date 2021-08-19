@@ -277,7 +277,7 @@ abstract class AbstractFeed implements Feed {
 		try {
 			$feedFile = sprintf( 'http://feeds.cruisefactory.net/%s/%s/get/%s',
 				$serviceType,
-				get_site_option( ATD_CF_XML_KEY_FIELD ),
+				get_option( ATD_CF_XML_KEY_FIELD ),
 				$feedName
 			);
 

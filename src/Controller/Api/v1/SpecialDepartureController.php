@@ -24,7 +24,8 @@ class SpecialDepartureController extends AbstractController {
 		$this->addRoute( '/fetch/services', [ $this, 'services' ] )
 		     ->addRoute( '/fetch/increment', [ $this, 'increment' ] )
 		     ->addRoute( '/import', [ $this, 'import' ], true, WP_REST_Server::CREATABLE )
-		     ->addRoute( '/(?P<id>\d+)/itinerary', [ $this, 'itinerary' ] );
+		     ->addRoute( '/(?P<id>\d+)/itinerary', [ $this, 'itinerary' ] )
+		     ->addRoute( '/(?P<id>\d+)/summary', [ $this, 'summary' ] );
 	}
 
 	public function itinerary( WP_REST_Request $request ): WP_REST_Response {
@@ -37,6 +38,15 @@ class SpecialDepartureController extends AbstractController {
 		}
 
 		return new WP_REST_Response( [ [ 'html_response' => $itinerary ] ] );
+	}
+
+	public function summary( WP_REST_Request $request ): void {
+		$itinerary = [];
+		if ( $request->has_param( 'id' ) ) {
+			$itinerary = $request->get_param( 'id' );
+		}
+
+		wp_send_json_success( [ 'html_response' => $itinerary ] );
 	}
 
 	public function import( WP_REST_Request $request ): array {

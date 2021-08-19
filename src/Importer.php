@@ -21,7 +21,6 @@ class Importer {
 			register_activation_hook( ATD_CF_PLUGIN_FILE, [ $this, 'activate' ] );
 			register_deactivation_hook( ATD_CF_PLUGIN_FILE, [ $this, 'deactivate' ] );
 			register_uninstall_hook( ATD_CF_PLUGIN_FILE, [ self::class, 'uninstall' ] );
-			add_action( 'plugins_loaded', [ $this, 'installTables' ] );
 		}
 	}
 
@@ -97,11 +96,25 @@ class Importer {
 	public function activate() {
 		Post\Provider::registerPosts();
 		$this->installTables();
+
+		if ( ! get_option( ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD ) ) {
+			$shortcode = new Services\WordPress\Blocks\Shortcode( '[atd-cfi-enquiry-form/]' );
+
+			update_option( ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD, wp_insert_post( [
+				'post_status'    => 'publish',
+				'post_type'      => 'page',
+				'post_name'      => 'cruise-enquiry',
+				'post_title'     => 'Cruise Enquiry',
+				'post_content'   => $shortcode->render(),
+				'comment_status' => 'closed',
+			] ) );
+		}
+
 		flush_rewrite_rules();
 	}
 
 	public function installTables() {
-		if ( ATD_CF_PLUGIN_VERSION !== (int) get_site_option( ATD_CF_XML_DB_VERSION_FIELD ) ) {
+		if ( ATD_CF_PLUGIN_VERSION !== (int) get_option( ATD_CF_XML_DB_VERSION_FIELD ) ) {
 			Feed\Provider::registerTables();
 		}
 	}
@@ -119,10 +132,12 @@ class Importer {
 		}
 
 		delete_option( ATD_CF_XML_KEY_FIELD );
-		delete_site_option( ATD_CF_XML_KEY_FIELD );
+		delete_option( ATD_CF_XML_KEY_FIELD );
 		delete_option( ATD_CF_XML_VERIFIED_FIELD );
-		delete_site_option( ATD_CF_XML_VERIFIED_FIELD );
+		delete_option( ATD_CF_XML_VERIFIED_FIELD );
 		delete_option( ATD_CF_XML_DB_VERSION_FIELD );
-		delete_site_option( ATD_CF_XML_DB_VERSION_FIELD );
+		delete_option( ATD_CF_XML_DB_VERSION_FIELD );
+
+		wp_trash_post( get_option( ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD ) );
 	}
 }

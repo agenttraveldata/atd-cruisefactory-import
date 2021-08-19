@@ -1,3 +1,5 @@
+@use "variables";
+
 .atd-cfi-popover {
     &:hover {
         cursor: zoom-in;
@@ -24,6 +26,8 @@
         left: 50%;
         transform: translate(-50%, -50%);
         max-height: 100%;
+        min-width: 100%;
+        text-align: center;
 
         .atd-cfi-popover-img {
             padding: 40px;
@@ -31,6 +35,24 @@
             img {
                 max-width: none;
                 max-height: none;
+            }
+        }
+
+        .atd-cfi-popover-json {
+            padding: 40px;
+
+            .atd-cfi-popover-json-inner {
+                padding: 18px;
+                width: 50%;
+                margin: 0 auto;
+                text-align: left;
+
+                @media (max-width: variables.$break-point-desk) and (min-width: variables.$break-point-tablet + 1) {
+                    width: 75%;
+                }
+                @media (max-width: variables.$break-point-tablet) {
+                    width: 100%;
+                }
             }
         }
     }

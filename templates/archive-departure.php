@@ -11,7 +11,7 @@ get_header();
 ?>
 
 <?php if ( have_posts() ) : ?>
-	<?php echo do_shortcode( '[atd_cfi_search_form]' ); ?>
+	<?php echo do_shortcode( '[atd-cfi-search-form]' ); ?>
 
     <div class="atd-cfi-sr" data-controller="atd-cfi-popover">
 		<?php while ( have_posts() ) : the_post(); ?>

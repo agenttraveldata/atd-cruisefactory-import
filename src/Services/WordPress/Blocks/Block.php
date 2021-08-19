@@ -13,10 +13,14 @@ class Block {
 	public array $innerContent = [];
 	public array $innerBlocks = [];
 
-	public function __construct( ?string $html = null ) {
+	public function __construct( ?string $html = null, array $attributes = [] ) {
 		if ( $html ) {
 			$this->setInnerHTML( $html );
 			$this->setInnerContent( [ $html ] );
+		}
+
+		if ( $attributes ) {
+			$this->setAttributes( $attributes );
 		}
 	}
 

@@ -1,7 +1,9 @@
 <?php global $atdFactory, $atdDeparture, $atdSpecial; ?>
 
 <div class="atd-cfi-sr__row">
-    <a data-action="atd-cfi-popover#image" class="atd-cfi-sr-row__img" href="<?php echo get_the_post_thumbnail_url(); ?>"><?php the_post_thumbnail(); ?></a>
+    <a data-action="atd-cfi-popover#image" class="atd-cfi-sr-row__img" href="<?php echo get_the_post_thumbnail_url(); ?>">
+		<?php the_post_thumbnail('medium'); ?>
+    </a>
     <div class="atd-cfi-sr-row__details atd-cfi__flex-1">
         <div class="atd-cfi-sr-row-details__title">
             <h4><a href="<?php echo get_permalink(); ?>"><?php the_title(); ?></a></h4>
