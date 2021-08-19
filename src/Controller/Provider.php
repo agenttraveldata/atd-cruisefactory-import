@@ -13,5 +13,6 @@ class Provider {
 		new Api\v1\ShipController();
 		new Api\v1\CruiseController();
 		new Api\v1\SearchController();
+		new Api\v1\EnquireController();
 	}
 }
