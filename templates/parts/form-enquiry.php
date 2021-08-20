@@ -1,4 +1,4 @@
-<form action="/wp-json/atd/cfi/v1/enquire/send" method="post" data-controller="atd-cfi-submit-form">
+<form action="/wp-json/atd/cfi/v1/enquire/send" method="post" data-controller="atd-cfi-submit-form" data-action="atd-cfi-submit-form#submit">
     <div class="atd-cfi__cols-enquiry">
         <div class="atd-cfi-cols__column atd-cfi-cols-column-3 atd-cfi__mb-2">
             <label for="email_address">
@@ -35,13 +35,17 @@
                 <textarea name="message" id="message" cols="30" rows="10" placeholder="Tell us about your enquiry"></textarea>
             </label>
         </div>
-    </div>
-    <div class="atd-cfi__cols-enquiry">
+		<?php if ( $siteKey = get_option( ATD_CF_XML_GOOGLE_SITE_KEY_FIELD ) ): ?>
+            <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+            <div class="atd-cfi-cols__column atd-cfi__mb-2">
+                <div class="g-recaptcha" data-sitekey="<?php echo $siteKey; ?>"></div>
+            </div>
+		<?php endif; ?>
         <div class="atd-cfi-cols__column atd-cfi-cols-column__half atd-cfi__mb-2 atd-cfi__align-start">
             <button type="reset">Reset</button>
         </div>
         <div class="atd-cfi-cols__column atd-cfi-cols-column__half atd-cfi__mb-2 atd-cfi__align-end">
-            <button type="submit" data-action="atd-cfi-submit-form#submit">Submit</button>
+            <button type="submit">Submit</button>
         </div>
     </div>
 </form>

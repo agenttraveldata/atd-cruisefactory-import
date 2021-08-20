@@ -13,8 +13,30 @@ jQuery(function () {
             }
         }).fail(function () {
             notification.removeClass('atd-cfi-verified').addClass('atd-cfi-not-verified').html('Not Verified');
-        })
+        });
     });
+
+    var recaptchaNotification;
+    jQuery('#atd-cfi-recaptcha-save').on('click', function () {
+        var saveButton = jQuery(this);
+        var data = {save_recaptcha: atd_cfi.save_recaptcha};
+        data[atd_cfi.recaptcha_site_field] = jQuery('#atd_cfi_recaptcha_site_key').val();
+        data[atd_cfi.recaptcha_secret_field] = jQuery('#atd_cfi_recaptcha_secret_key').val();
+        wp.ajax.post('atd_cfi_save_recaptcha_keys', data).done(function (r) {
+            if (r.hasOwnProperty('message')) {
+                if (recaptchaNotification) {
+                    recaptchaNotification.remove();
+                }
+
+                recaptchaNotification = document.createElement('span');
+                recaptchaNotification.innerHTML = r.message;
+                saveButton.parent()[0].insertBefore(recaptchaNotification, saveButton.nextSibling);
+                setTimeout(function () {
+                    jQuery(recaptchaNotification).fadeOut(2000);
+                }, 2000);
+            }
+        });
+    })
 
     jQuery('#atd-cfi-increment-import').on('click', function () {
         var button = jQuery(this);

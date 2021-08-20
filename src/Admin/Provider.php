@@ -29,6 +29,16 @@ class Provider {
 			}
 		} );
 
+		add_action( 'wp_ajax_atd_cfi_save_recaptcha_keys', function () {
+			if ( false !== check_ajax_referer( 'atd_cfi_save_recaptcha_keys', 'save_recaptcha' ) ) {
+				update_option( ATD_CF_XML_GOOGLE_SITE_KEY_FIELD, $_POST[ ATD_CF_XML_GOOGLE_SITE_KEY_FIELD ] );
+				update_option( ATD_CF_XML_GOOGLE_SECRET_KEY_FIELD, $_POST[ ATD_CF_XML_GOOGLE_SECRET_KEY_FIELD ] );
+				wp_send_json_success( [ 'message' => 'Successfully updated keys.' ] );
+			}
+
+			wp_send_json_error( [ 'message' => 'Failed to update keys.' ] );
+		} );
+
 		add_action( 'wp_ajax_atd_cfi_get_feeds', function () {
 			if ( false !== check_ajax_referer( 'atd_cfi_get_feeds', 'get_feeds' ) ) {
 				wp_send_json_success( [ 'feeds' => \ATD\CruiseFactory\Feed\Provider::getPublicFeeds() ] );

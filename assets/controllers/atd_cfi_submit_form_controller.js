@@ -9,7 +9,7 @@ export default class extends Controller {
         e.preventDefault();
         e.stopImmediatePropagation();
 
-        const button = e.currentTarget;
+        const button = e.currentTarget.querySelector('[type="submit"]');
         const buttonOriginalText = button.innerHTML;
         button.innerHTML = 'Please wait...';
         button.disabled = true;

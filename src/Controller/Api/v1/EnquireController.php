@@ -6,6 +6,7 @@ namespace ATD\CruiseFactory\Controller\Api\v1;
 
 use ATD\CruiseFactory\Controller\AbstractController;
 use ATD\CruiseFactory\Services\Form\Validators\EnquiryValidator;
+use ATD\CruiseFactory\Services\Google\ReCaptcha;
 use WP_REST_Request;
 use WP_REST_Server;
 
@@ -20,7 +21,16 @@ class EnquireController extends AbstractController {
 		$validator = new EnquiryValidator();
 
 		if ( $validator->validate() ) {
+			if ( $secretKey = get_option( ATD_CF_XML_GOOGLE_SECRET_KEY_FIELD ) ) {
+				$reCaptcha = new ReCaptcha( $secretKey );
+				if ( ! $reCaptcha->validate( $_POST['g-recaptcha-response'] ) ) {
+					wp_send_json_error( [ 'message' => 'Google reCaptcha failed.' ] );
+				}
+			}
+
 			$fields = $validator->getSanitizedFields();
+			// send form
+
 			wp_send_json_success( [ 'message' => 'Thank you for your enquiry!' ] );
 		}
 
