@@ -3,8 +3,18 @@
 
 @mixin result-row($lightest: #fff, $shadow: false) {
     display: flex;
-    margin: 10px 0;
+    margin: 10px 18px;
     color: darken($lightest, 80%);
+    flex: 1 1 0;
+
+    @media (max-width: variables.$break-point-tablet) and (min-width: variables.$break-point-mobile + 1) {
+        min-width: calc(50% - 36px);
+        flex-direction: column;
+    }
+
+    @media (max-width: variables.$break-point-mobile) {
+        min-width: calc(100% - 36px);
+    }
 
     @if $shadow {
         box-shadow: 0 0 10px rgba(darken($lightest, 50%), .25);
