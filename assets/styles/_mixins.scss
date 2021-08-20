@@ -1,5 +1,6 @@
 @use "functions";
 @use "variables";
+@use "sass:math";
 
 @mixin result-row($lightest: #fff, $shadow: false) {
     display: flex;
@@ -40,33 +41,33 @@
 }
 
 @mixin columns($cols: 3, $gutter: 18px) {
+    $col-width: math.div(100%, $cols);
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 
-    @media (max-width: variables.$break-point-mobile) {
-        flex-direction: column;
-    }
-
     .atd-cfi-cols__column {
-        flex: 1 1 0;
+        flex: 1 0 0%;
         padding-left: $gutter;
         padding-right: $gutter;
 
         &.atd-cfi-cols-column__stretch {
-            flex: 1 0 0;
+            flex: 0 0 auto;
+            width: 100%;
         }
 
         &.atd-cfi-cols-column__half {
+            flex: 0 0 auto;
             width: 50%;
         }
 
         @for $i from 1 through $cols {
             &.atd-cfi-cols-column-#{$i} {
-                flex: $i 1 0;
+                flex: 0 0 auto;
+                width: #{$col-width * $i};
 
-                @media (max-width: variables.$break-point-desk) {
-                    flex: 1 1 0;
+                @media (max-width: variables.$break-point-mobile) {
+                    width: 100%;
                 }
             }
         }

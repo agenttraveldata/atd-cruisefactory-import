@@ -35,11 +35,13 @@
                 <textarea name="message" id="message" cols="30" rows="10" placeholder="Tell us about your enquiry"></textarea>
             </label>
         </div>
+    </div>
+    <div class="atd-cfi__cols-enquiry">
         <div class="atd-cfi-cols__column atd-cfi-cols-column__half atd-cfi__mb-2 atd-cfi__align-start">
-            <button type="reset">Reset form</button>
+            <button type="reset">Reset</button>
         </div>
         <div class="atd-cfi-cols__column atd-cfi-cols-column__half atd-cfi__mb-2 atd-cfi__align-end">
-            <button type="submit" data-action="atd-cfi-submit-form#submit">Submit Enquiry</button>
+            <button type="submit" data-action="atd-cfi-submit-form#submit">Submit</button>
         </div>
     </div>
 </form>

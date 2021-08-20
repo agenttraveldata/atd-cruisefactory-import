@@ -20,36 +20,41 @@ $shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruis
             </p>
         </div>
         <div class="atd-cfi-departure__pricing atd-cfi__mt-2" data-controller="atd-cfi-toggle-element" data-atd-cfi-toggle-element-prefix-value="atd-cfi-departure-price-">
-            <div class="atd-cfi-departure-pricing__prices">
-				<?php if ( $atdSpecial ): ?>
-                    <h3>Special Pricing</h3>
-                    <h4 class="atd-cfi__mb-2">
-                        <small>From</small>
-                        <small><?php echo $atdFactory->getCurrency()->getSign(); ?></small><?php echo number_format( $atdSpecial->getStartPrice() ); ?>
-                        <small>pp twin share</small>
-                    </h4>
-					<?php atd_cf_get_template_part( 'content/departure', 'special-pricing' ); ?>
-				<?php elseif ( $atdDeparture->getCruisePrices()->count() > 0 ): ?>
-                    <h3>Pricing</h3>
-                    <h4 class="atd-cfi__mb-2">
-                        <small>From</small>
-                        <small><?php echo $atdFactory->getCurrency()->getSign(); ?></small><?php echo number_format( $atdDeparture->getCruisePrices()->get( 0 )->getPriceDouble() ); ?>
-                        <small>pp twin share</small>
-                    </h4>
-					<?php atd_cf_get_template_part( 'content/departure', 'cruise-pricing' ); ?>
-				<?php else: ?>
-                    <h4>Request Price</h4>
-                    <div class="atd-cfi__mb-2">
-                        <label for="atd-cfi-departure-price-request">Cabin type</label>
-                        <select name="" class="atd-cfi__input" id="atd-cfi-departure-price-request">
-                            <option value="inside">Inside</option>
-                            <option value="outside">Outside</option>
-                            <option value="balcony">Balcony</option>
-                            <option value="suite">Suite</option>
-                        </select>
-                    </div>
-				<?php endif; ?>
-            </div>
+            <form action="<?php echo get_permalink( get_option( ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD ) ); ?>" method="get">
+                <div class="atd-cfi-departure-pricing__prices">
+					<?php if ( $atdSpecial ): ?>
+                        <h3>Special Pricing</h3>
+                        <h4 class="atd-cfi__mb-2">
+                            <small>From</small>
+                            <small><?php echo $atdFactory->getCurrency()->getSign(); ?></small><?php echo number_format( $atdSpecial->getStartPrice() ); ?>
+                            <small>pp twin share</small>
+                        </h4>
+						<?php atd_cf_get_template_part( 'content/departure', 'special-pricing' ); ?>
+					<?php elseif ( $atdDeparture->getCruisePrices()->count() > 0 ): ?>
+                        <h3>Pricing</h3>
+                        <h4 class="atd-cfi__mb-2">
+                            <small>From</small>
+                            <small><?php echo $atdFactory->getCurrency()->getSign(); ?></small><?php echo number_format( $atdDeparture->getCruisePrices()->get( 0 )->getPriceDouble() ); ?>
+                            <small>pp twin share</small>
+                        </h4>
+						<?php atd_cf_get_template_part( 'content/departure', 'cruise-pricing' ); ?>
+					<?php else: ?>
+                        <h4>Request Price</h4>
+                        <div class="atd-cfi__mb-2">
+                            <label for="atd-cfi-departure-price-request">Cabin type</label>
+                            <select name="" class="atd-cfi__input" id="atd-cfi-departure-price-request">
+                                <option value="inside">Inside</option>
+                                <option value="outside">Outside</option>
+                                <option value="balcony">Balcony</option>
+                                <option value="suite">Suite</option>
+                            </select>
+                        </div>
+					<?php endif; ?>
+                </div>
+                <div class="atd-cfi-departure-pricing__buttons">
+                    <button type="submit">Continue</button>
+                </div>
+            </form>
         </div>
     </div>
     <div class="atd-cfi-cols__column atd-cfi-cols-column-2">
