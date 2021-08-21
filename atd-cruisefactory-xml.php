@@ -22,6 +22,7 @@ const ATD_CF_PLUGIN_VERSION              = 1;
 const ATD_CF_XML_KEY_FIELD               = 'atd_cf_xml_key';
 const ATD_CF_XML_DB_VERSION_FIELD        = 'atd_cfi_db_version';
 const ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD   = 'atd_cfi_enquiry_page_id';
+const ATD_CF_XML_GOOGLE_TYPE_FIELD       = 'atd_cfi_recaptcha_type';
 const ATD_CF_XML_GOOGLE_SITE_KEY_FIELD   = 'atd_cfi_recaptcha_site_key';
 const ATD_CF_XML_GOOGLE_SECRET_KEY_FIELD = 'atd_cfi_recaptcha_secret_key';
 const ATD_CF_XML_DATE_FORMAT             = 'Y-m-d H:i:s';

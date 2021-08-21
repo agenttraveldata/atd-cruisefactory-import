@@ -2,19 +2,56 @@ import {Controller} from 'stimulus';
 
 export default class extends Controller {
     static values = {};
-    static targets = [];
+    static targets = ['submitButton'];
     notification;
+
+    connect() {
+        if (this.element.querySelector('#recaptcha')) {
+            this.initRecaptcha();
+        }
+    }
+
+    initRecaptcha() {
+        this.submitButtonTarget.type = 'button';
+        this.submitButtonTarget.addEventListener('click', () => {
+            grecaptcha.execute();
+        });
+    }
 
     submit(e) {
         e.preventDefault();
         e.stopImmediatePropagation();
 
-        const button = e.currentTarget.querySelector('[type="submit"]');
-        const buttonOriginalText = button.innerHTML;
-        button.innerHTML = 'Please wait...';
-        button.disabled = true;
+        const recaptchaType = e.target.querySelector('#atd-cfi-recaptcha-type');
+
+        switch (recaptchaType.dataset.type) {
+            case 'v3':
+                if (typeof atd_cfi !== 'undefined' && atd_cfi.hasOwnProperty('recaptcha_site_key') && typeof grecaptcha !== 'undefined') {
+                    grecaptcha.ready(() => {
+                        grecaptcha.execute(atd_cfi.recaptcha_site_key, {action: 'submit'}).then((token) => {
+                            this.doSubmit(e.target, token);
+                        });
+                    });
+                }
+                break;
+            case 'v2i':
+            case 'v2c':
+                this.doSubmit(e.target);
+                grecaptcha.reset();
+                break;
+        }
+    }
+
+    doSubmit = (target, token = null) => {
+        const buttonOriginalText = this.submitButtonTarget.innerHTML;
+        this.submitButtonTarget.innerHTML = 'Please wait...';
+        this.submitButtonTarget.disabled = true;
 
         const formData = new FormData(this.element);
+
+        if (token) {
+            formData.append('g-recaptcha-response', token);
+        }
 
         if (this.notification) {
             this.notification.remove();
@@ -30,6 +67,7 @@ export default class extends Controller {
         }).then(r => r.json()).then(json => {
             if (json.hasOwnProperty('success') && json.success === true) {
                 this.notification.classList.add('atd-cfi-alert__success');
+                this.element.reset();
             } else {
                 this.notification.classList.add('atd-cfi-alert__error');
             }
@@ -41,8 +79,8 @@ export default class extends Controller {
             }
         }).catch(r => console.log(r)).finally(() => {
             this.notification.scrollIntoView(true);
-            button.innerHTML = buttonOriginalText;
-            button.disabled = false;
+            this.submitButtonTarget.innerHTML = buttonOriginalText;
+            this.submitButtonTarget.disabled = false;
         });
     }
 }

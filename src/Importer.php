@@ -52,6 +52,7 @@ class Importer {
 				wp_localize_script( 'atd-cf-xml-admin-js', 'atd_cfi', [
 					'verify_xml'             => wp_create_nonce( 'atd_cfi_verify_xml' ),
 					'save_recaptcha'         => wp_create_nonce( 'atd_cfi_save_recaptcha_keys' ),
+					'recaptcha_type_field'   => ATD_CF_XML_GOOGLE_TYPE_FIELD,
 					'recaptcha_site_field'   => ATD_CF_XML_GOOGLE_SITE_KEY_FIELD,
 					'recaptcha_secret_field' => ATD_CF_XML_GOOGLE_SECRET_KEY_FIELD,
 					'get_feeds'              => wp_create_nonce( 'atd_cfi_get_feeds' ),
@@ -92,6 +93,10 @@ class Importer {
 			add_action( 'wp_enqueue_scripts', function () {
 				wp_enqueue_script( 'atd-cf-xml-js', plugins_url( '/dist/main.js', ATD_CF_PLUGIN_FILE ), [], false, true );
 				wp_enqueue_style( 'atd-cf-xml-css', plugins_url( '/dist/main.css', ATD_CF_PLUGIN_FILE ) );
+
+				wp_localize_script( 'atd-cf-xml-js', 'atd_cfi', [
+					'recaptcha_site_key' => get_option( ATD_CF_XML_GOOGLE_SITE_KEY_FIELD )
+				] );
 			} );
 		}
 	}

@@ -36,11 +36,28 @@
             <div class="inside">
                 <h3>Google ReCaptcha</h3>
                 <p>For your enquiry form, please enter your Google ReCaptcha keys below.</p>
-                <label for="atd_cfi_recaptcha_site_key">Site Key</label>
-                <input type="text" id="atd_cfi_recaptcha_site_key" class="regular-textbutton-primary" name="<?php echo ATD_CF_XML_GOOGLE_SITE_KEY_FIELD; ?>" value="<?php echo get_option( ATD_CF_XML_GOOGLE_SITE_KEY_FIELD ); ?>">
-                <label for="atd_cfi_recaptcha_secret_key">Secret Key</label>
-                <input type="text" id="atd_cfi_recaptcha_secret_key" class="regular-textbutton-primary" name="<?php echo ATD_CF_XML_GOOGLE_SECRET_KEY_FIELD; ?>" value="<?php echo get_option( ATD_CF_XML_GOOGLE_SECRET_KEY_FIELD ); ?>">
-                <button id="atd-cfi-recaptcha-save" class="button-primary">Save</button>
+                <fieldset>
+                    <label>
+                        <input class="atd-cfi-recaptcha-type" type="radio" name="<?php echo ATD_CF_XML_GOOGLE_TYPE_FIELD; ?>" value="v2c"<?php echo get_option( ATD_CF_XML_GOOGLE_TYPE_FIELD ) === 'v2c' ? ' checked="checked"' : ''; ?>>
+                        <span>v2 Checkbox</span>
+                    </label>
+                    <br>
+                    <label>
+                        <input class="atd-cfi-recaptcha-type" type="radio" name="<?php echo ATD_CF_XML_GOOGLE_TYPE_FIELD; ?>" value="v2i"<?php echo get_option( ATD_CF_XML_GOOGLE_TYPE_FIELD ) === 'v2i' ? ' checked="checked"' : ''; ?>>
+                        <span>v2 Invisible</span>
+                    </label>
+                    <br>
+                    <label>
+                        <input class="atd-cfi-recaptcha-type" type="radio" name="<?php echo ATD_CF_XML_GOOGLE_TYPE_FIELD; ?>" value="v3"<?php echo get_option( ATD_CF_XML_GOOGLE_TYPE_FIELD ) === 'v3' ? ' checked="checked"' : ''; ?>>
+                        <span>v3</span>
+                    </label>
+                    <br><br>
+                    <label for="atd_cfi_recaptcha_site_key">Site Key</label>
+                    <input size="50" type="text" id="atd_cfi_recaptcha_site_key" class="regular-textbutton-primary" name="<?php echo ATD_CF_XML_GOOGLE_SITE_KEY_FIELD; ?>" value="<?php echo get_option( ATD_CF_XML_GOOGLE_SITE_KEY_FIELD ); ?>">
+                    <label for="atd_cfi_recaptcha_secret_key">Secret Key</label>
+                    <input size="50" type="text" id="atd_cfi_recaptcha_secret_key" class="regular-textbutton-primary" name="<?php echo ATD_CF_XML_GOOGLE_SECRET_KEY_FIELD; ?>" value="<?php echo get_option( ATD_CF_XML_GOOGLE_SECRET_KEY_FIELD ); ?>">
+                    <button id="atd-cfi-recaptcha-save" class="button-primary">Save</button>
+                </fieldset>
             </div>
         </div>
 	<?php endif; ?>

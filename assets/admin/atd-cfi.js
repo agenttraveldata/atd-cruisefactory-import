@@ -20,6 +20,7 @@ jQuery(function () {
     jQuery('#atd-cfi-recaptcha-save').on('click', function () {
         var saveButton = jQuery(this);
         var data = {save_recaptcha: atd_cfi.save_recaptcha};
+        data[atd_cfi.recaptcha_type_field] = jQuery('.atd-cfi-recaptcha-type:is(:checked)').val();
         data[atd_cfi.recaptcha_site_field] = jQuery('#atd_cfi_recaptcha_site_key').val();
         data[atd_cfi.recaptcha_secret_field] = jQuery('#atd_cfi_recaptcha_secret_key').val();
         wp.ajax.post('atd_cfi_save_recaptcha_keys', data).done(function (r) {
