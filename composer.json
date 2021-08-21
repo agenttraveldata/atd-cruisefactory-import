@@ -1,8 +1,8 @@
 {
     "name": "agenttraveldata/atd-cruisefactory-xml",
-    "description": "description",
+    "description": "Cruise Factory XML import for creating dynamic automatically updated cruise websites. ^Cruise Factory account required.",
     "minimum-stability": "stable",
-    "license": "proprietary",
+    "license": "GPL-2.0-only",
     "authors": [
         {
             "name": "Christopher Merat",

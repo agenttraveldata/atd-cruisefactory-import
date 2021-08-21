@@ -140,12 +140,14 @@ class Importer {
 		}
 
 		delete_option( ATD_CF_XML_KEY_FIELD );
-		delete_option( ATD_CF_XML_KEY_FIELD );
-		delete_option( ATD_CF_XML_VERIFIED_FIELD );
 		delete_option( ATD_CF_XML_VERIFIED_FIELD );
 		delete_option( ATD_CF_XML_DB_VERSION_FIELD );
-		delete_option( ATD_CF_XML_DB_VERSION_FIELD );
+		delete_option( ATD_CF_XML_GOOGLE_TYPE_FIELD );
+		delete_option( ATD_CF_XML_GOOGLE_SITE_KEY_FIELD );
+		delete_option( ATD_CF_XML_GOOGLE_SECRET_KEY_FIELD );
 
 		wp_trash_post( get_option( ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD ) );
+
+		delete_option( ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD );
 	}
 }
