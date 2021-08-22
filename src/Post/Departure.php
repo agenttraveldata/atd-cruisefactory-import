@@ -231,10 +231,19 @@ class Departure implements Post {
 				'compare' => 'EXISTS'
 			]
 		] ) ) {
+			// remove metadata
 			delete_post_meta( $originalPost->ID, Feed\SpecialDeparture::$metaKeyId );
 			delete_post_meta( $originalPost->ID, 'atd_cfi_special_id' );
 			delete_post_meta( $originalPost->ID, 'atd_cfi_valid_from' );
 			delete_post_meta( $originalPost->ID, 'atd_cfi_valid_to' );
+
+			// remove terms
+			if ( $terms = wp_get_post_terms( $originalPost->ID, Taxonomy\SpecialType::$name ) ) {
+				wp_remove_object_terms( $originalPost->ID, array_column( $terms, 'term_id' ), Taxonomy\SpecialType::$name );
+			}
+			if ( $terms = wp_get_post_terms( $originalPost->ID, Taxonomy\PromoCode::$name ) ) {
+				wp_remove_object_terms( $originalPost->ID, array_column( $terms, 'term_id' ), Taxonomy\PromoCode::$name );
+			}
 
 			$post_details = [
 				'ID'          => $originalPost->ID,

@@ -90,6 +90,16 @@ class Importer {
 				'sortAttachedMediaQuery'
 			], 10, 3 );
 
+			add_filter( 'query_vars', function ( array $vars ) {
+				$vars[] = 'departure_id';
+				$vars[] = 'departure_type';
+				$vars[] = 'pax';
+				$vars[] = 'lead_price';
+				$vars[] = 'cabin_price';
+
+				return $vars;
+			} );
+
 			add_action( 'wp_enqueue_scripts', function () {
 				wp_enqueue_script( 'atd-cf-xml-js', plugins_url( '/dist/main.js', ATD_CF_PLUGIN_FILE ), [], false, true );
 				wp_enqueue_style( 'atd-cf-xml-css', plugins_url( '/dist/main.css', ATD_CF_PLUGIN_FILE ) );

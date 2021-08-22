@@ -1,4 +1,5 @@
 <form id="atd-cfi-enquiry-form" action="/wp-json/atd/cfi/v1/enquire/send" method="post" data-controller="atd-cfi-submit-form" data-action="atd-cfi-submit-form#submit">
+	<?php atd_cf_get_template_part( 'content/departure', 'enquiry-summary' ); ?>
     <div class="atd-cfi__cols-enquiry">
         <div class="atd-cfi-cols__column atd-cfi-cols-column-3 atd-cfi__mb-2">
             <label for="email_address">

@@ -4,11 +4,35 @@ namespace ATD\CruiseFactory\Services\WordPress\Posts;
 
 use ATD\CruiseFactory\Feed;
 use ATD\CruiseFactory\Post;
-use ATD\CruiseFactory\Post\Ship;
+use Exception;
 use WP_Post;
 use WP_Query;
 
 class Finder {
+	/**
+	 * @param int $departureId
+	 * @param string $type
+	 *
+	 * @return object
+	 * @throws Exception
+	 */
+	public static function getDepartureByIdAndType( int $departureId, string $type ): ?object {
+		switch ( $type ) {
+			case 'special':
+				$feed = new Feed\SpecialDeparture();
+				break;
+			case 'cruise':
+				$feed = new Feed\Departure();
+				break;
+		}
+
+		if ( ! empty( $feed ) && ( $departure = $feed->getEntityManager()->getMapper( $feed->getEntity() )->find( $departureId ) ) ) {
+			return $departure;
+		}
+
+		return null;
+	}
+
 	/**
 	 * @param string $postType
 	 * @param int $id
@@ -121,7 +145,7 @@ class Finder {
 	}
 
 	public function sortAttachedMediaQuery( array $args, string $type, WP_Post $post ): array {
-		if ( $post->post_type === Ship::$postType ) {
+		if ( $post->post_type === Post\Ship::$postType ) {
 			$args['orderby'] = 'post_title';
 
 			switch ( $type ) {

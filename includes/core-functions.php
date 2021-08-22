@@ -1,5 +1,6 @@
 <?php
 
+use ATD\CruiseFactory\Entity;
 use ATD\CruiseFactory\Services\WordPress\Posts\Finder;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -86,6 +87,12 @@ function atd_cf_get_post_by_meta_value( string $postType, int $metaValue, bool $
 	return false;
 }
 
+/**
+ * @param string $postType
+ * @param array $metaValues
+ *
+ * @return WP_Query
+ */
 function atd_cf_get_query_for_posts_by_meta( string $postType, array $metaValues ): WP_Query {
 	return Finder::getQueryByPostTypeAndMetaValues( $postType, $metaValues );
 }
@@ -106,9 +113,56 @@ function atd_cf_get_permalink_by_meta_value( string $postType, int $metaValue ) 
 
 /**
  * @param int|null $post_id
+ * @param string|null $image_type
  *
  * @return array
  */
 function atd_cf_get_post_attached_images( ?int $post_id = null, ?string $image_type = null ): array {
 	return Finder::getPostAttachments( $post_id, $image_type );
+}
+
+/**
+ * @param int $departure_id
+ * @param string $departure_type
+ *
+ * @return Entity\DepartureSummary
+ */
+function atd_cf_get_departure_details( int $departure_id, string $departure_type ): Entity\DepartureSummary {
+	try {
+		$departure = Finder::getDepartureByIdAndType( $departure_id, $departure_type );
+	} catch ( Exception $e ) {
+		wp_redirect( '/' );
+		exit;
+	}
+
+	$summary = new Entity\DepartureSummary();
+	$summary->setId( $departure_id );
+	$summary->setType( $departure_type );
+
+	switch ( $departure_type ) {
+		case 'special':
+			/** @var Entity\SpecialDeparture $departure */
+			$summary->setSpecial( $departure->getSpecial() );
+			$summary->setCruise( $departure->getSailingdate()->getCruise() );
+			$summary->setSailingDate( $departure->getSailingdate()->getSailingDate() );
+			$summary->setSpecialLeadPrice( $departure->getSpecial()->getSpecialLeadPrice() );
+			$specialPrice = $departure->getSpecial()->getSpecialPrices()->filter( function ( $p ) {
+				/** @var Entity\SpecialPrice $p */
+				return $p->getId() === (int) get_query_var( 'cabin_price' );
+			} );
+			$summary->setSpecialPrice( $specialPrice->count() === 1 ? $specialPrice->first() : null );
+			break;
+		case 'cruise':
+			/** @var Entity\Departure $departure */
+			$summary->setCruise( $departure->getCruise() );
+			$summary->setSailingDate( $departure->getSailingDate() );
+			$cruisePrice = $departure->getCruisePrices()->filter( function ( $p ) {
+				/** @var Entity\CruisePrice $p */
+				return $p->getId() === (int) get_query_var( 'cabin_price' );
+			} );
+			$summary->setCruisePrice( $cruisePrice->count() === 1 ? $cruisePrice->first() : null );
+			break;
+	}
+
+	return $summary;
 }

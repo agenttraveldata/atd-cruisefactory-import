@@ -10,7 +10,7 @@ abstract class AbstractTaxonomy {
 		if ( $slug && $term = get_term_by( 'slug', $slug, $taxonomy, ARRAY_A ) ) {
 			$term = wp_update_term( $term['term_id'], $taxonomy, [ 'name' => $taxonomy_term ] );
 		} else if ( ! $term = term_exists( $taxonomy_term, $taxonomy ) ) {
-			$term = wp_insert_term( $taxonomy_term, $taxonomy, [ 'slug' => sanitize_title( $slug ?? $taxonomy_term ) ] );//. ( $id ? '-' . $id : '' ) ) ] );
+			$term = wp_insert_term( $taxonomy_term, $taxonomy, [ 'slug' => sanitize_title( $slug ?? $taxonomy_term ) ] );
 		}
 
 		if ( ! is_array( $term ) ) {

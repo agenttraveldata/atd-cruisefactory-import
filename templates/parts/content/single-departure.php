@@ -21,7 +21,8 @@ $shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruis
         </div>
         <div class="atd-cfi-departure__pricing atd-cfi__mt-2" data-controller="atd-cfi-toggle-element" data-atd-cfi-toggle-element-prefix-value="atd-cfi-departure-price-">
             <form action="<?php echo get_permalink( get_option( ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD ) ); ?>" method="get">
-                <input type="hidden" name="<?php echo $atdSpecial ? 'special_departure_id' : 'departure_id'; ?>" value="<?php echo $atdSpecial ? $atdSpecial->getId() : $atdDeparture->getId(); ?>">
+                <input type="hidden" name="departure_id" value="<?php echo $atdSpecial ? $atdSpecial->getId() : $atdDeparture->getId(); ?>">
+                <input type="hidden" name="departure_type" value="<?php echo $atdSpecial ? 'special' : 'cruise'; ?>">
                 <div class="atd-cfi-departure-pricing__prices">
 					<?php if ( $atdSpecial ): ?>
                         <h3>Special Pricing</h3>
