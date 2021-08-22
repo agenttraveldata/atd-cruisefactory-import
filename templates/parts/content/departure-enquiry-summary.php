@@ -25,17 +25,15 @@ $leadPrice  = get_query_var( 'lead_price', 'inside' );
         <strong>Ship:</strong>
 		<?php echo $departure->getCruise()->getShip()->getName(); ?>
     </li>
-	<?php if ( $departure->getSpecial() ): ?>
-        <li><strong>Package Duration:</strong> 8 Nights</li>
-        <li><strong>Package Departs:</strong> 19 February 2023</li>
-	<?php endif; ?>
+    <li><strong>Duration:</strong> <?php echo $departure->getCruise()->getDuration(); ?> Nights</li>
+    <li><strong>Departs:</strong> <?php echo $departure->getSailingDate()->format( 'j F Y' ); ?></li>
     <li>
         <strong>Cabin:</strong>
 		<?php if ( $departure->getSpecial() ): ?>
 			<?php if ( $cabinPrice ): ?>
 				<?php echo $departure->getSpecialPrice()->getCabin()->getName(); ?>
 			<?php else: ?>
-				<?php echo ucfirst( $leadPrice ); ?> Cabin
+				<?php echo ucfirst( $leadPrice ); ?>
 			<?php endif; ?>
 		<?php else: ?>
 			<?php if ( $cabinPrice ): ?>

@@ -8,7 +8,7 @@
 				continue;
 			endif; ?>
             <div>
-                <input type="radio" name="lead_price" id="atd-cfi-special-lead-pricing-<?php echo $price; ?>">
+                <input type="radio" name="lead_price" value="<?php echo $price; ?>" id="atd-cfi-special-lead-pricing-<?php echo $price; ?>">
                 <label for="atd-cfi-special-lead-pricing-<?php echo $price; ?>">
 					<?php echo ucfirst( $price ); ?> from <?php echo $atdSpecial->getCurrency()->getSign(); ?><?php echo number_format( $atdSpecial->getSpecialLeadPrice()->{'getPrice' . ucfirst( $price )}() ); ?>
                 </label>

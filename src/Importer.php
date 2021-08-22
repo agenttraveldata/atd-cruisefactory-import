@@ -59,6 +59,14 @@ class Importer {
 					'xml_import'             => wp_create_nonce( 'atd_cfi_import_xml' )
 				] );
 			} );
+
+			add_filter( 'display_post_states', function ( $post_states, $post ) {
+				if ( (int) get_option( ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD ) === $post->ID ) {
+					$post_states['atd_cfi_page_for_departure_enquiry'] = 'Cruise Enquiry Page';
+				}
+
+				return $post_states;
+			}, 10, 2 );
 		}
 
 		/**
