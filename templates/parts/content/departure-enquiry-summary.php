@@ -39,7 +39,7 @@ $leadPrice  = get_query_var( 'lead_price', 'inside' );
 			<?php if ( $cabinPrice ): ?>
 				<?php echo $departure->getCruisePrice()->getCabin(); ?>
 			<?php else: ?>
-				<?php echo ucfirst( $leadPrice ); ?> Cabin
+				<?php echo ucfirst( $leadPrice ); ?>
 			<?php endif; ?>
 		<?php endif; ?>
     </li>
