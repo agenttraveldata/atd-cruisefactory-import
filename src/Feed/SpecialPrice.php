@@ -11,7 +11,7 @@ class SpecialPrice extends AbstractFeed {
 	protected static string $tableName = 'atd_cfi_special_price';
 	protected static string $feedName = 'specialspricing';
 	protected static string $entity = Entity\SpecialPrice::class;
-	protected array $relationships = [ 'cabin_id' => Entity\Cabin::class ];
+	protected static array $relationships = [ 'cabin_id' => Entity\Cabin::class ];
 
 	public function import( DateTimeInterface $updatedAt ): bool {
 		return false;

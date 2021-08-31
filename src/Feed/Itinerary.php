@@ -11,7 +11,7 @@ class Itinerary extends AbstractFeed {
 	protected static string $tableName = 'atd_cfi_itinerary';
 	protected static string $feedName = 'itineraries';
 	protected static string $entity = Entity\Itinerary::class;
-	protected array $relationships = [
+	protected static array $relationships = [
 		'port_id' => Entity\Port::class
 	];
 

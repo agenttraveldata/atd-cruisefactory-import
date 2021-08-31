@@ -12,7 +12,7 @@ class Port extends AbstractFeed {
 	protected static string $feedName = 'ports';
 	protected static string $entity = Entity\Port::class;
 	public array $dependencies = [ LatLong::class ];
-	protected array $relationships = [ Entity\LatLong::class => 'port_id' ];
+	protected static array $relationships = [ Entity\LatLong::class => 'port_id' ];
 
 	public static function getTableNameWithPrefix(): string {
 		global $wpdb;

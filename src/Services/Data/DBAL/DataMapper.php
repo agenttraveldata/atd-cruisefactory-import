@@ -5,6 +5,7 @@ namespace ATD\CruiseFactory\Services\Data\DBAL;
 
 
 use ATD\CruiseFactory\Feed\Feed;
+use ATD\CruiseFactory\Services\ConvertClass;
 use Exception;
 use mysqli;
 use mysqli_stmt;
@@ -26,17 +27,19 @@ class DataMapper {
 	 * @throws Exception
 	 */
 	public function setEntity( string $entity ): self {
-		$feedClass = str_replace( '\Entity', '\Feed', $entity );
+		if ( false !== strpos( $entity, '\Entity\\' ) ) {
+			$feedClass = ConvertClass::toFeedFromEntity( $entity );
 
-		if ( class_exists( $feedClass ) ) {
-			/** @var Feed $feedClass */
-			$this->tableName = $feedClass::getTableNameWithPrefix();
-			$this->entity    = $entity;
+			if ( class_exists( $feedClass ) ) {
+				/** @var Feed $feedClass */
+				$this->tableName = $feedClass::getTableNameWithPrefix();
+				$this->entity    = $entity;
 
-			return $this;
+				return $this;
+			}
 		}
 
-		throw new Exception( sprintf( 'Unable to find feed class for entity %s!', get_class( $entity ) ) );
+		throw new Exception( sprintf( 'Unable to find feed class for entity %s!', $entity ) );
 	}
 
 	/**
@@ -99,16 +102,14 @@ class DataMapper {
 			return;
 		}
 
-		$parentFeed = str_replace( '\Entity', '\Feed', get_class( $firstRow ) );
+		/** @var class-string<Feed> $parentFeed */
+		$parentFeed = ConvertClass::toFeedFromEntity( $firstRow );
 
 		if ( ! class_exists( $parentFeed ) ) {
 			return;
 		}
 
-		/** @var Feed $parentFeed */
-		$parentFeed = new $parentFeed();
-
-		foreach ( $parentFeed->getRelationships() as $column => $entityClass ) {
+		foreach ( $parentFeed::getRelationships() as $column => $entityClass ) {
 			$relationColumn = 'id';
 			$propertyName   = str_replace( '_id', '', $column );
 
@@ -120,16 +121,15 @@ class DataMapper {
 			}
 
 			if ( property_exists( $firstRow, $column ) ) {
-				$feedClass = str_replace( '\Entity', '\Feed', $entityClass );
-				/** @var Feed $feedClass */
-				$feedClass = new $feedClass();
+				/** @var class-string<Feed> $feedClass */
+				$feedClass = ConvertClass::toFeedFromEntity( $entityClass );
 
 				/*
 				 * we can force id here because we know the queries/columns, etc
 				 */
 				$res = $this->dbh->query(
 					'SELECT * ' .
-					' FROM ' . $feedClass->getTableNameWithPrefix() .
+					' FROM ' . $feedClass::getTableNameWithPrefix() .
 					' WHERE ' . $relationColumn . ' IN (' . implode( ',', array_unique( array_column( $rows, $column ) ) ) . ')'
 				);
 
@@ -138,7 +138,7 @@ class DataMapper {
 					$relations[] = $relation;
 				}
 
-				if ( count( $relations ) > 0 && $this->relationshipDepth <= 2 && ( count( $feedClass->getRelationships() ) > 0 ) || count( $feedClass->getCollections() ) > 0 ) {
+				if ( count( $relations ) > 0 && $this->relationshipDepth <= 2 && ( count( $feedClass::getRelationships() ) > 0 ) || count( $feedClass::getCollections() ) > 0 ) {
 					$this->relationshipDepth ++;
 					$this->defineRelationships( $relations );
 					$this->relationshipDepth --;
@@ -156,18 +156,18 @@ class DataMapper {
 			/*
 			 * We don't need this during import
 			 */
-			if ( ! empty( $parentFeed->getCollections() ) ) {
+			if ( ! empty( $parentFeed::getCollections() ) ) {
 				$ids = array_unique( array_column( $rows, 'id' ) );
 				sort( $ids );
 
-				foreach ( $parentFeed->getCollections() as $column => $entities ) {
+				foreach ( $parentFeed::getCollections() as $column => $entities ) {
 					foreach ( $entities as $entity ) {
 						$entityName   = substr( strrchr( $entity, '\\' ), 1 );
-						$parentSetter = 'set' . $entityName . ( substr( $entityName, -1 ) === 'y' ? '' : 's' );
+						$parentSetter = 'set' . $entityName . ( substr( $entityName, - 1 ) === 'y' ? '' : 's' );
 
-						if ( method_exists( $parentFeed->getEntity(), $parentSetter ) ) {
+						if ( method_exists( ConvertClass::toEntityFromFeed( $parentFeed ), $parentSetter ) ) {
 							/** @var Feed $entityFeed */
-							$entityFeed = str_replace( '\Entity', '\Feed', $entity );
+							$entityFeed = ConvertClass::toFeedFromEntity( $entity );
 
 							$res = $this->dbh->query(
 								'SELECT * ' .

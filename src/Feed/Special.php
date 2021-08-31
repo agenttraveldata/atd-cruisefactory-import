@@ -17,13 +17,13 @@ class Special extends AbstractFeed {
 		SpecialPrice::class,
 		SpecialItinerary::class
 	];
-	protected array $collections = [
+	protected static array $collections = [
 		'special_id' => [
 			Entity\SpecialPrice::class,
 			Entity\SpecialItinerary::class
 		]
 	];
-	protected array $relationships = [
+	protected static array $relationships = [
 		'currency_id'                  => Entity\Currency::class,
 		Entity\SpecialLeadPrice::class => 'special_id'
 	];

@@ -10,7 +10,7 @@ class CruiseLine extends AbstractFeed {
 	protected static string $tableName = 'atd_cfi_cruise_line';
 	protected static string $feedName = 'cruiselines';
 	protected static string $entity = Entity\CruiseLine::class;
-	protected array $collections = [ 'cruiseline_id' => [ Entity\Ship::class ] ];
+	protected static array $collections = [ 'cruiseline_id' => [ Entity\Ship::class ] ];
 	protected array $xmlFieldModifiers = [
 		'logodata' => [ self::class, 'convertLogo' ]
 	];

@@ -11,7 +11,7 @@ class Cabin extends AbstractFeed {
 	protected static string $feedName = 'cabins';
 	public static string $metaKeyId = 'atd_cfi_cabin_id';
 	protected static string $entity = Entity\Cabin::class;
-	protected array $relationships = [ 'ship_id' => Entity\Ship::class ];
+	protected static array $relationships = [ 'ship_id' => Entity\Ship::class ];
 
 	public static function getTableNameWithPrefix(): string {
 		global $wpdb;

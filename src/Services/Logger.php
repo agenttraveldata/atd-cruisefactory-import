@@ -9,6 +9,7 @@ use DateTime;
 
 class Logger {
 	private static Collection $logs;
+	/** @var resource $fh */
 	private static $fh = null;
 	private static array $typeColours = [
 		'add'    => [ '#1d5f13', '#e8efe7' ],

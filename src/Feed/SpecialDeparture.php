@@ -17,7 +17,7 @@ class SpecialDeparture extends AbstractFeed {
 		Departure::class,
 		Special::class
 	];
-	protected array $relationships = [
+	protected static array $relationships = [
 		'sailingdate_id' => Entity\Departure::class,
 		'special_id'     => Entity\Special::class
 	];

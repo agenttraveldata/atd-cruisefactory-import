@@ -12,7 +12,7 @@ class Factory extends AbstractFeed {
 	protected static string $feedName = 'factory-details';
 	protected static string $entity = Entity\Factory::class;
 	public array $dependencies = [ Currency::class ];
-	protected array $relationships = [ 'currency_id' => Entity\Currency::class ];
+	protected static array $relationships = [ 'currency_id' => Entity\Currency::class ];
 
 	public function import( DateTimeInterface $updatedAt ): bool {
 		return false;

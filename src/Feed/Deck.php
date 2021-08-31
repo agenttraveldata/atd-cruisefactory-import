@@ -11,7 +11,7 @@ class Deck extends AbstractFeed {
 	protected static string $feedName = 'deckplans';
 	public static string $metaKeyId = 'atd_cfi_deck_id';
 	protected static string $entity = Entity\Deck::class;
-	protected array $relationships = [ 'ship_id' => Entity\Ship::class ];
+	protected static array $relationships = [ 'ship_id' => Entity\Ship::class ];
 
 	public static function getTableNameWithPrefix(): string {
 		global $wpdb;

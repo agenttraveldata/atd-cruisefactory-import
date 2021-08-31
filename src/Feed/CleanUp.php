@@ -4,7 +4,9 @@
 namespace ATD\CruiseFactory\Feed;
 
 
+use ATD\CruiseFactory\Importer;
 use ATD\CruiseFactory\Post;
+use ATD\CruiseFactory\Services\ConvertClass;
 use ATD\CruiseFactory\Taxonomy;
 use WP_Post;
 use WP_Query;
@@ -94,7 +96,7 @@ class CleanUp {
 	private function getPostTypeByTableName( string $tableName ): ?string {
 		foreach ( Provider::getFeeds() as $feed ) {
 			if ( $feed::getTableNameWithPrefix() === $this->wpdb->prefix . $tableName ) {
-				$postClass = str_replace( '\Feed', '\Post', $feed );
+				$postClass = ConvertClass::toPostFromFeed( $feed );
 				if ( class_exists( $postClass ) ) {
 					/** @var Post\Post $postClass */
 					return $postClass::$postType;

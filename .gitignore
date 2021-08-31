@@ -9,3 +9,4 @@
 /var/cache/services/index.php
 /var/cache/increment
 /var/cache/increment/index.php
+/.phpunit.result.cache

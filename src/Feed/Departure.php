@@ -11,8 +11,8 @@ class Departure extends AbstractFeed {
 	protected static string $feedName = 'sailingdates';
 	protected static string $entity = Entity\Departure::class;
 	public array $dependencies = [ Cruise::class ];
-	protected array $relationships = [ 'cruise_id' => Entity\Cruise::class ];
-	protected array $collections = [ 'sailingdate_id' => [ Entity\CruisePrice::class ] ];
+	protected static array $relationships = [ 'cruise_id' => Entity\Cruise::class ];
+	protected static array $collections = [ 'sailingdate_id' => [ Entity\CruisePrice::class ] ];
 
 	public static function getTableNameWithPrefix(): string {
 		global $wpdb;

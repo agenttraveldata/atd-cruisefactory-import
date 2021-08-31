@@ -19,8 +19,8 @@ class Cruise extends AbstractFeed {
 		Ship::class,
 		CruisePrice::class
 	];
-	protected array $collections = [ 'cruise_id' => [ Entity\Itinerary::class ] ];
-	protected array $relationships = [
+	protected static array $collections = [ 'cruise_id' => [ Entity\Itinerary::class ] ];
+	protected static array $relationships = [
 		'destination_id'   => Entity\Destination::class,
 		'cruiseline_id'    => Entity\CruiseLine::class,
 		'ship_id'          => Entity\Ship::class,

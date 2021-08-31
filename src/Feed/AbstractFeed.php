@@ -6,6 +6,7 @@ namespace ATD\CruiseFactory\Feed;
 
 use ATD\CruiseFactory\Entity;
 use ATD\CruiseFactory\Post;
+use ATD\CruiseFactory\Services\ConvertClass;
 use ATD\CruiseFactory\Services\Data\DBAL\EntityManager;
 use DateTime;
 use DateTimeInterface;
@@ -21,8 +22,8 @@ abstract class AbstractFeed implements Feed {
 	public static string $metaKeyId = 'atd_cfi_id';
 	protected static ?string $forceServiceType = null;
 	protected static string $entity = '';
-	protected array $collections = [];
-	protected array $relationships = [];
+	protected static array $collections = [];
+	protected static array $relationships = [];
 	protected array $xmlFieldModifiers = [];
 	protected int $expiryTime = 600;
 	protected string $updatedAt;
@@ -43,12 +44,12 @@ abstract class AbstractFeed implements Feed {
 		return $this->entityManager;
 	}
 
-	public function getRelationships(): array {
-		return $this->relationships;
+	public static function getRelationships(): array {
+		return static::$relationships;
 	}
 
-	public function getCollections(): array {
-		return $this->collections;
+	public static function getCollections(): array {
+		return static::$collections;
 	}
 
 	public function getEntity(): string {
@@ -193,7 +194,7 @@ abstract class AbstractFeed implements Feed {
 
 	public function import( DateTimeInterface $updatedAt ): bool {
 		/** @var Post\Post $post */
-		$post = str_replace( '\Feed', '\Post', static::class );
+		$post = ConvertClass::toPostFromFeed( static::class );
 
 		foreach ( $this->fetchRowsToImport( [ 'i.updated_at >=' => $updatedAt->format( ATD_CF_XML_DATE_FORMAT ) ] ) as $row ) {
 			$post::add( $row );

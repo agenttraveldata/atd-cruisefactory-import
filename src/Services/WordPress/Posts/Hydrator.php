@@ -5,6 +5,7 @@ namespace ATD\CruiseFactory\Services\WordPress\Posts;
 use ATD\CruiseFactory\Entity;
 use ATD\CruiseFactory\Feed;
 use ATD\CruiseFactory\Post;
+use ATD\CruiseFactory\Services\ConvertClass;
 use ATD\CruiseFactory\Services\Data\DBAL\EntityManager;
 use ATD\CruiseFactory\Taxonomy;
 use mysqli;
@@ -111,9 +112,9 @@ class Hydrator {
 						}
 						break;
 					default:
-						$entityClass = str_replace( '\Post', '\Entity', $postClass );
+						$entityClass = ConvertClass::toEntityFromPost( $postClass );
 						/** @var Feed\Feed $feedClass */
-						$feedClass = str_replace( '\Entity', '\Feed', $entityClass );
+						$feedClass = ConvertClass::toFeedFromEntity( $entityClass );
 						$metaKeyId = $feedClass::$metaKeyId;
 				}
 

@@ -4,6 +4,7 @@ namespace ATD\CruiseFactory\Services\WordPress\Posts;
 
 use ATD\CruiseFactory\Feed;
 use ATD\CruiseFactory\Post;
+use ATD\CruiseFactory\Services\ConvertClass;
 use Exception;
 use WP_Post;
 use WP_Query;
@@ -42,7 +43,7 @@ class Finder {
 	 */
 	public static function getPostByPostTypeAndId( string $postType, int $id, bool $returnQuery = false ) {
 		if ( $postClass = Post\Provider::getPostClassByPostType( $postType ) ) {
-			$feedClass = str_replace( '\Post', '\Feed', $postClass );
+			$feedClass = ConvertClass::toFeedFromPost( $postClass );
 
 			if ( class_exists( $feedClass ) ) {
 				/**
@@ -74,7 +75,7 @@ class Finder {
 		/** @var class-string<Post\Post> $postClass */
 		if ( $postClass = Post\Provider::getPostClassByPostType( $postType ) ) {
 			/** @var class-string<Feed\Feed> $feedClass */
-			$feedClass = str_replace( '\Post', '\Feed', $postClass );
+			$feedClass = ConvertClass::toFeedFromPost( $postClass );
 
 			$queryParams = [
 				'post_type'  => $postClass::$postType,
