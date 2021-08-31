@@ -44,7 +44,7 @@ $shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruis
                         <h4>Request Price</h4>
                         <div class="atd-cfi__mb-2">
                             <label for="atd-cfi-departure-price-request">Cabin type</label>
-                            <select name="request_price" class="atd-cfi__input" id="atd-cfi-departure-price-request">
+                            <select name="lead_price" class="atd-cfi__input" id="atd-cfi-departure-price-request">
                                 <option value="inside">Inside</option>
                                 <option value="outside">Outside</option>
                                 <option value="balcony">Balcony</option>
