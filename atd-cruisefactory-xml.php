@@ -19,6 +19,8 @@ require __DIR__ . '/includes/core-functions.php';
 
 const ATD_CF_PLUGIN_FILE                 = __FILE__;
 const ATD_CF_PLUGIN_VERSION              = 1;
+const ATD_CF_XML_PAX_TYPES               = [ 'single', 'double', 'triple', 'quad' ];
+const ATD_CF_XML_LEAD_CATEGORIES         = [ 'inside', 'outside', 'balcony', 'suite' ];
 const ATD_CF_XML_KEY_FIELD               = 'atd_cf_xml_key';
 const ATD_CF_XML_DB_VERSION_FIELD        = 'atd_cfi_db_version';
 const ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD   = 'atd_cfi_enquiry_page_id';

@@ -3,7 +3,7 @@
 <?php if ( $atdSpecial->getSpecialLeadPrice() ): ?>
     <div class="atd-cfi__mb-2">
         <h4>Lead pricing</h4>
-		<?php foreach ( [ 'inside', 'outside', 'balcony', 'suite' ] as $price ): ?>
+		<?php foreach ( ATD_CF_XML_LEAD_CATEGORIES as $price ): ?>
 			<?php if ( ! $atdSpecial->getSpecialLeadPrice()->{'getPrice' . ucfirst( $price )}() ):
 				continue;
 			endif; ?>

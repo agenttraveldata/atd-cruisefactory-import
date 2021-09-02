@@ -11,7 +11,6 @@ abstract class AbstractController {
 	protected Feed $feed;
 	protected string $apiNamespace = 'atd/cfi/v1';
 	protected string $apiEndpointPrefix;
-	protected array $routes = [];
 
 	public function setFeed( Feed $feed ) {
 		$this->feed = $feed;
@@ -23,10 +22,6 @@ abstract class AbstractController {
 
 	public function getApiEndpointPrefix(): string {
 		return $this->apiEndpointPrefix ?? '';
-	}
-
-	public function getRoutes(): array {
-		return $this->routes;
 	}
 
 	protected function addRoute( string $endpoint, callable $callback, bool $requiresAuth = false, string $method = WP_REST_Server::READABLE ): self {

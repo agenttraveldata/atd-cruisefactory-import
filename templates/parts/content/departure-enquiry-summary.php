@@ -2,8 +2,8 @@
 
 $departure = atd_cf_get_departure_details( get_query_var( 'departure_id', 0 ), get_query_var( 'departure_type' ) );
 
-$paxTypes  = [ 'single', 'double', 'triple', 'quad' ];
-$leadTypes = [ 'inside', 'outside', 'balcony', 'suite' ];
+$paxTypes  = ATD_CF_XML_PAX_TYPES;
+$leadTypes = ATD_CF_XML_LEAD_CATEGORIES;
 
 $pax        = get_query_var( 'pax', 'double' );
 $pax        = $pax === 'twin' ? 'double' : $pax;

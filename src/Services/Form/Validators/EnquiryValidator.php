@@ -11,6 +11,11 @@ class EnquiryValidator {
 			'invalidMessage' => 'Invalid e-mail address provided.',
 			'required'       => true
 		],
+		'phone_number' => [
+			'filter'         => FILTER_SANITIZE_STRING,
+			'invalidMessage' => 'Invalid phone number provided.',
+			'required'       => true
+		],
 		'first_name'    => [
 			'filter'         => FILTER_SANITIZE_STRING,
 			'invalidMessage' => 'First name is not valid.',
