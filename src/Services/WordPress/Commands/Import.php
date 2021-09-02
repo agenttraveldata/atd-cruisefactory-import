@@ -7,7 +7,6 @@ namespace ATD\CruiseFactory\Services\WordPress\Commands;
 use ATD\CruiseFactory\Feed;
 use ATD\CruiseFactory\Services\Logger;
 use DateTime;
-use WP_CLI;
 
 class Import {
 	private array $friendlyFeedNames = [
@@ -17,6 +16,12 @@ class Import {
 		'specialsailingdates' => 'special-departures',
 		'cruiselines'         => 'cruise-lines'
 	];
+
+	public function __construct() {
+		if ( class_exists( 'WP_CLI' ) ) {
+			define( 'ATD_CF_XML_USING_CLI', true );
+		}
+	}
 
 	/**
 	 * Import Cruise Factory XML into WordPress.
@@ -84,29 +89,29 @@ class Import {
 
 		foreach ( $feedObjects as $feedName => $feedObject ) {
 			if ( $args_assoc['wordpress'] === 'only' ) {
-				WP_CLI::log( 'Importing ' . $feedName . ' from database into WordPress' );
+				$this->logGeneral( 'Importing ' . $feedName . ' from database into WordPress' );
 				if ( $feedObject->import( new DateTime( '-50 years' ) ) ) {
-					WP_CLI::success( 'Imported ' . $feedName . ' WordPress posts.' );
+					$this->logSuccess( 'Imported ' . $feedName . ' WordPress posts.' );
 				}
 				continue;
 			}
 
-			WP_CLI::log( 'Fetching Cruise Factory services XML for ' . $feedName );
+			$this->logGeneral( 'Fetching Cruise Factory services XML for ' . $feedName );
 			if ( $updatedAt = $feedObject->fetchServices() ) {
-				WP_CLI::success( 'Imported XML from Cruise Factory into database.' );
+				$this->logSuccess( 'Imported XML from Cruise Factory into database.' );
 
 				if ( $dateTime = DateTime::createFromFormat( ATD_CF_XML_DATE_FORMAT, $updatedAt ) ) {
 					if ( $args_assoc['wordpress'] === 'import' ) {
-						WP_CLI::log( 'Importing ' . $feedName . ' from database into WordPress' );
+						$this->logGeneral( 'Importing ' . $feedName . ' from database into WordPress' );
 						if ( $feedObject->import( $dateTime ) ) {
-							WP_CLI::success( 'Imported ' . $feedName . ' WordPress posts.' );
+							$this->logSuccess( 'Imported ' . $feedName . ' WordPress posts.' );
 						}
 					}
 				}
 			}
 		}
 
-		WP_CLI::log( 'Import complete.' );
+		$this->logGeneral( 'Import complete.' );
 	}
 
 	/**
@@ -178,22 +183,22 @@ class Import {
 
 		foreach ( $feedObjects as $feedName => $feedObject ) {
 			if ( $args_assoc['wordpress'] === 'only' ) {
-				WP_CLI::log( 'Importing ' . $feedName . ' from database into WordPress' );
+				$this->logGeneral( 'Importing ' . $feedName . ' from database into WordPress' );
 				if ( $feedObject->import( new DateTime( '-50 years' ) ) ) {
-					WP_CLI::success( 'Imported ' . $feedName . ' WordPress posts.' );
+					$this->logSuccess( 'Imported ' . $feedName . ' WordPress posts.' );
 				}
 				continue;
 			}
 
-			WP_CLI::log( 'Fetching Cruise Factory incremental XML for ' . $feedName );
+			$this->logGeneral( 'Fetching Cruise Factory incremental XML for ' . $feedName );
 			if ( $updatedAt = $feedObject->fetchIncrement() ) {
-				WP_CLI::success( 'Imported XML from Cruise Factory into database.' );
+				$this->logSuccess( 'Imported XML from Cruise Factory into database.' );
 
 				if ( $dateTime = DateTime::createFromFormat( ATD_CF_XML_DATE_FORMAT, $updatedAt ) ) {
 					if ( $args_assoc['wordpress'] === 'import' ) {
-						WP_CLI::log( 'Importing ' . $feedName . ' from database into WordPress' );
+						$this->logGeneral( 'Importing ' . $feedName . ' from database into WordPress' );
 						if ( $feedObject->import( $dateTime ) ) {
-							WP_CLI::success( 'Imported ' . $feedName . ' WordPress posts.' );
+							$this->logSuccess( 'Imported ' . $feedName . ' WordPress posts.' );
 						}
 					}
 				}
@@ -208,14 +213,13 @@ class Import {
 
 		Logger::destroy();
 
-		WP_CLI::log( 'Import complete.' );
+		$this->logGeneral( 'Import complete.' );
 	}
 
 	/**
 	 * @param string $paramFeed
 	 *
 	 * @return Feed\Feed[]|null
-	 * @throws WP_CLI\ExitException
 	 */
 	private function getFeedObjects( string $paramFeed ): ?array {
 		$realFeedNames = array_flip( $this->friendlyFeedNames );
@@ -233,11 +237,37 @@ class Import {
 		}
 
 		if ( empty( $feedObjects ) ) {
-			WP_CLI::error( 'Could not find ' . $paramFeed . ' feed to import!' );
+			try {
+				$this->logError( 'Could not find ' . $paramFeed . ' feed to import!' );
+			} catch ( \WP_CLI\ExitException $e ) {
+			}
 
 			return null;
 		}
 
 		return $feedObjects;
+	}
+
+	private function logGeneral( string $message ) {
+		if ( ATD_CF_XML_USING_CLI ) {
+			\WP_CLI::log( $message );
+		}
+	}
+
+	private function logSuccess( string $message ) {
+		if ( ATD_CF_XML_USING_CLI ) {
+			\WP_CLI::success( $message );
+		}
+	}
+
+	/**
+	 * @param string $message
+	 *
+	 * @throws \WP_CLI\ExitException
+	 */
+	private function logError( string $message ) {
+		if ( ATD_CF_XML_USING_CLI ) {
+			\WP_CLI::error( $message );
+		}
 	}
 }
