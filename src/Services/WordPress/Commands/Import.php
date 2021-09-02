@@ -249,13 +249,13 @@ class Import {
 	}
 
 	private function logGeneral( string $message ) {
-		if ( ATD_CF_XML_USING_CLI ) {
+		if ( defined( 'ATD_CF_XML_USING_CLI' ) ) {
 			\WP_CLI::log( $message );
 		}
 	}
 
 	private function logSuccess( string $message ) {
-		if ( ATD_CF_XML_USING_CLI ) {
+		if ( defined( 'ATD_CF_XML_USING_CLI' ) ) {
 			\WP_CLI::success( $message );
 		}
 	}
@@ -266,7 +266,7 @@ class Import {
 	 * @throws \WP_CLI\ExitException
 	 */
 	private function logError( string $message ) {
-		if ( ATD_CF_XML_USING_CLI ) {
+		if ( defined( 'ATD_CF_XML_USING_CLI' ) ) {
 			\WP_CLI::error( $message );
 		}
 	}
