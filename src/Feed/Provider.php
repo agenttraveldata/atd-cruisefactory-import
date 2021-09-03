@@ -46,17 +46,20 @@ class Provider {
 	}
 
 	public static function getPublicFeeds( bool $fullClassName = false ): array {
-		$feeds = array_filter( self::$feeds, function ( $f ) {
-			$invalid = [
-				CleanUp::class,
-				Log::class,
-				Factory::class,
-				Currency::class,
-				Itinerary::class,
-				CruisePrice::class,
-				SpecialLeadPrice::class
-			];
+		$invalid = [
+			CleanUp::class,
+			Log::class,
+			Amenity::class,
+			Facility::class,
+			Factory::class,
+			Currency::class,
+			Itinerary::class,
+			SpecialPrice::class,
+			SpecialLeadPrice::class,
+			SpecialItinerary::class
+		];
 
+		$feeds = array_filter( self::$feeds, function ( $f ) use ( $invalid ) {
 			return ! in_array( $f, $invalid );
 		} );
 

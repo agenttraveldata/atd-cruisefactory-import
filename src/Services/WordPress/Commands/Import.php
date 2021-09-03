@@ -10,11 +10,12 @@ use DateTime;
 
 class Import {
 	private array $friendlyFeedNames = [
-		'cruises-with-ports'  => 'cruises',
-		'deckplans'           => 'decks',
-		'sailingdates'        => 'departures',
-		'specialsailingdates' => 'special-departures',
-		'cruiselines'         => 'cruise-lines'
+		'cruises-with-ports'   => 'cruises',
+		'deckplans'            => 'decks',
+		'sailingdates'         => 'departures',
+		'specialsailingdates'  => 'special-departures',
+		'cruiselines'          => 'cruise-lines',
+		'cabincategorypricing' => 'cruise-pricing'
 	];
 
 	public function __construct() {
@@ -28,7 +29,7 @@ class Import {
 	 *
 	 * ## OPTIONS
 	 *
-	 * [<name>]
+	 * [<name>...]
 	 * : The name of the feed to import.
 	 * ---
 	 * default: all
@@ -42,6 +43,7 @@ class Import {
 	 *   - ports
 	 *   - departures
 	 *   - special-departures
+	 *   - cruise-pricing
 	 *
 	 * [--wordpress=<wordpress>]
 	 * : Whether to import XML data as WordPress posts
@@ -59,14 +61,10 @@ class Import {
 	 * options:
 	 *   - overwrite
 	 *   - exclude
-	 *
-	 * [--posts=<posts>]
-	 * : Whether to overwrite post details in WordPress
 	 * ---
-	 * default: ignore
-	 * options:
-	 *   - ignore
-	 *   - overwrite
+	 *
+	 * [--overwrite-posts]
+	 * : Whether to overwrite post details in WordPress
 	 *
 	 * [--cache=<cache>]
 	 * : Whether to use cached XML files or invalid and re-download XML file from Cruise Factory
@@ -83,19 +81,23 @@ class Import {
 	 *
 	 */
 	public function services( array $args, array $args_assoc ): void {
-		if ( $args_assoc['images'] === 'overwrite' ) {
+		if ( ! empty( $args_assoc['images'] ) && $args_assoc['images'] === 'overwrite' ) {
 			define( 'ATD_CF_XML_IMAGE_OVERWRITE', true );
 		}
 
-		if ( $args_assoc['cache'] === 'invalidate' ) {
+		if ( ! empty( $args_assoc['cache'] ) && $args_assoc['cache'] === 'invalidate' ) {
 			define( 'ATD_CF_XML_IMPORT_NO_CACHE', true );
 		}
 
-		if ( $args_assoc['posts'] === 'overwrite' ) {
+		if ( ! empty( $args_assoc['overwrite-posts'] ) ) {
 			define( 'ATD_CF_XML_IMPORT_FORCE_OVERWRITE', true );
 		}
 
-		if ( ! $feedObjects = $this->getFeedObjects( $args[0] ) ) {
+		if ( empty( $args_assoc['wordpress'] ) ) {
+			$args_assoc['wordpress'] = 'import';
+		}
+
+		if ( ! $feedObjects = $this->getFeedObjects( $args ) ) {
 			return;
 		}
 
@@ -131,7 +133,7 @@ class Import {
 	 *
 	 * ## OPTIONS
 	 *
-	 * [<name>]
+	 * [<name>...]
 	 * : The name of the feed to import.
 	 * ---
 	 * default: all
@@ -145,6 +147,8 @@ class Import {
 	 *   - ports
 	 *   - departures
 	 *   - special-departures
+	 *   - cruise-pricing
+	 * ---
 	 *
 	 * [--wordpress=<wordpress>]
 	 * : Whether to import XML data as WordPress posts
@@ -154,6 +158,7 @@ class Import {
 	 *   - import
 	 *   - exclude
 	 *   - only
+	 * ---
 	 *
 	 * [--images=<images>]
 	 * : Whether to import images into WordPress
@@ -162,14 +167,10 @@ class Import {
 	 * options:
 	 *   - overwrite
 	 *   - exclude
-	 *
-	 * [--posts=<posts>]
-	 * : Whether to overwrite post details in WordPress
 	 * ---
-	 * default: ignore
-	 * options:
-	 *   - ignore
-	 *   - overwrite
+	 *
+	 * [--overwrite-posts]
+	 * : Whether to overwrite post details in WordPress
 	 *
 	 * [--cache=<cache>]
 	 * : Whether to use cached XML files or invalid and re-download XML file from Cruise Factory
@@ -189,19 +190,23 @@ class Import {
 		define( 'ATD_CF_XML_LOG_UPDATES', true );
 		Logger::info( 'Incremental import started.' );
 
-		if ( $args_assoc['images'] === 'overwrite' ) {
+		if ( ! empty( $args_assoc['images'] ) && $args_assoc['images'] === 'overwrite' ) {
 			define( 'ATD_CF_XML_IMAGE_OVERWRITE', true );
 		}
 
-		if ( $args_assoc['cache'] === 'invalidate' ) {
+		if ( ! empty( $args_assoc['cache'] ) && $args_assoc['cache'] === 'invalidate' ) {
 			define( 'ATD_CF_XML_IMPORT_NO_CACHE', true );
 		}
 
-		if ( $args_assoc['posts'] === 'overwrite' ) {
+		if ( ! empty( $args_assoc['overwrite-posts'] ) ) {
 			define( 'ATD_CF_XML_IMPORT_FORCE_OVERWRITE', true );
 		}
 
-		if ( ! $feedObjects = $this->getFeedObjects( $args[0] ) ) {
+		if ( empty( $args_assoc['wordpress'] ) ) {
+			$args_assoc['wordpress'] = 'import';
+		}
+
+		if ( ! $feedObjects = $this->getFeedObjects( $args ) ) {
 			return;
 		}
 
@@ -245,24 +250,30 @@ class Import {
 	 *
 	 * @return Feed\Feed[]|null
 	 */
-	private function getFeedObjects( string $paramFeed ): ?array {
+	private function getFeedObjects( array $paramFeeds ): ?array {
 		$realFeedNames = array_flip( $this->friendlyFeedNames );
 
 		/** @var array<string, Feed\Feed> $feedObjects */
 		$feedObjects = [];
 
-		foreach ( Feed\Provider::getPublicFeeds( true ) as $feed ) {
-			/** @var Feed\Feed $feedName */
-			$feedName = $feed['name'];
+		if ( in_array( 'all', $paramFeeds ) ) {
+			$paramFeeds = [ 'all' ];
+		}
 
-			if ( $paramFeed === 'all' || ( $realFeedNames[ $paramFeed ] ?? $paramFeed ) === $feedName::getFeedName() ) {
-				$feedObjects[ $this->friendlyFeedNames[ $feedName::getFeedName() ] ?? $feedName::getFeedName() ] = new $feedName();
+		foreach ( $paramFeeds as $paramFeed ) {
+			foreach ( Feed\Provider::getPublicFeeds( true ) as $feed ) {
+				/** @var Feed\Feed $feedName */
+				$feedName = $feed['name'];
+
+				if ( $paramFeed === 'all' || ( $realFeedNames[ $paramFeed ] ?? $paramFeed ) === $feedName::getFeedName() ) {
+					$feedObjects[ $this->friendlyFeedNames[ $feedName::getFeedName() ] ?? $feedName::getFeedName() ] = new $feedName();
+				}
 			}
 		}
 
 		if ( empty( $feedObjects ) ) {
 			try {
-				$this->logError( 'Could not find ' . $paramFeed . ' feed to import!' );
+				$this->logError( 'Could not find any feed to import!' );
 			} catch ( \WP_CLI\ExitException $e ) {
 			}
 

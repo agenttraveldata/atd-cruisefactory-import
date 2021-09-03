@@ -51,7 +51,7 @@ class Provider {
 		add_action( 'wp_ajax_atd_cfi_import_xml', function () {
 			if ( false !== check_ajax_referer( 'atd_cfi_import_xml', 'xml_import' ) ) {
 				$command = new Import();
-				$command->increment( [ 'all' ], [
+				$command->increment( [ 'departures', 'special-departures', 'destinations', 'cruise-lines', 'ships' ], [
 					'wordpress' => 'import',
 					'images'    => 'exclude',
 					'cache'     => 'cache'

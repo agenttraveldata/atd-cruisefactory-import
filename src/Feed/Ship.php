@@ -10,7 +10,7 @@ class Ship extends AbstractFeed {
 	protected static string $tableName = 'atd_cfi_ship';
 	protected static string $feedName = 'ships';
 	protected static string $entity = Entity\Ship::class;
-	public array $dependencies = [ Cabin::class, Amenity::class, Facility::class ];
+	public array $dependencies = [ Cabin::class, Deck::class, Amenity::class, Facility::class ];
 	protected static array $collections = [ 'ship_id' => [ Entity\Amenity::class, Entity\Facility::class ] ];
 	protected static array $relationships = [ 'cruiseline_id' => Entity\CruiseLine::class ];
 
