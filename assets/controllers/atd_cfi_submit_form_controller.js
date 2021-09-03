@@ -24,6 +24,12 @@ export default class extends Controller {
 
         const recaptchaType = e.target.querySelector('#atd-cfi-recaptcha-type');
 
+        if (!recaptchaType) {
+            // no recaptcha
+            this.doSubmit(e.target);
+            return;
+        }
+
         switch (recaptchaType.dataset.type) {
             case 'v3':
                 if (typeof atd_cfi !== 'undefined' && atd_cfi.hasOwnProperty('recaptcha_site_key') && typeof grecaptcha !== 'undefined') {
