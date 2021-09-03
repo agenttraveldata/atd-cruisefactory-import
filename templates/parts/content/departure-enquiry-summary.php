@@ -1,6 +1,9 @@
 <?php
 
 $departure = atd_cf_get_departure_details( get_query_var( 'departure_id', 0 ), get_query_var( 'departure_type' ) );
+if ($departure->getId() === 0) {
+    return;
+}
 
 $paxTypes  = ATD_CF_XML_PAX_TYPES;
 $leadTypes = ATD_CF_XML_LEAD_CATEGORIES;
