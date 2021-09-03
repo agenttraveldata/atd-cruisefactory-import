@@ -4,7 +4,6 @@
     <input type="hidden" name="pax" value="<?php echo get_query_var( 'pax', '' ); ?>">
     <input type="hidden" name="lead_price" value="<?php echo get_query_var( 'lead_price', '' ); ?>">
     <input type="hidden" name="cabin_price" value="<?php echo get_query_var( 'cabin_price', '' ); ?>">
-	<?php atd_cf_get_template_part( 'content/departure', 'enquiry-summary' ); ?>
     <div class="atd-cfi__cols-enquiry">
         <div class="atd-cfi-cols__column atd-cfi-cols-column-3 atd-cfi__mb-2">
             <label for="email_address">
