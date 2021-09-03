@@ -24,6 +24,12 @@ class Ship implements Post {
 			'meta_value'     => $details->getId()
 		] );
 
+		if ( ! defined( 'ATD_CF_XML_IMPORT_FORCE_OVERWRITE' ) ) {
+			if ( $originalPost->post_count === 1 && $originalPost->post->post_author > 0 ) {
+				return $originalPost->post->ID;
+			}
+		}
+
 		$post_details = [
 			'post_type'    => self::$postType,
 			'post_title'   => $details->getName(),
@@ -106,7 +112,7 @@ class Ship implements Post {
 				'post_tag'
 			],
 			'show_ui'             => true,
-			'show_in_menu'        => true,
+			'show_in_menu'        => ATD_CF_XML_MENU_SLUG,
 			'show_in_rest'        => true,
 			'has_archive'         => 'ships',
 			'menu_position'       => 35,

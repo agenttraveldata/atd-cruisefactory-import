@@ -60,6 +60,14 @@ class Import {
 	 *   - overwrite
 	 *   - exclude
 	 *
+	 * [--posts=<posts>]
+	 * : Whether to overwrite post details in WordPress
+	 * ---
+	 * default: ignore
+	 * options:
+	 *   - ignore
+	 *   - overwrite
+	 *
 	 * [--cache=<cache>]
 	 * : Whether to use cached XML files or invalid and re-download XML file from Cruise Factory
 	 * ---
@@ -81,6 +89,10 @@ class Import {
 
 		if ( $args_assoc['cache'] === 'invalidate' ) {
 			define( 'ATD_CF_XML_IMPORT_NO_CACHE', true );
+		}
+
+		if ( $args_assoc['posts'] === 'overwrite' ) {
+			define( 'ATD_CF_XML_IMPORT_FORCE_OVERWRITE', true );
 		}
 
 		if ( ! $feedObjects = $this->getFeedObjects( $args[0] ) ) {
@@ -151,6 +163,14 @@ class Import {
 	 *   - overwrite
 	 *   - exclude
 	 *
+	 * [--posts=<posts>]
+	 * : Whether to overwrite post details in WordPress
+	 * ---
+	 * default: ignore
+	 * options:
+	 *   - ignore
+	 *   - overwrite
+	 *
 	 * [--cache=<cache>]
 	 * : Whether to use cached XML files or invalid and re-download XML file from Cruise Factory
 	 * ---
@@ -175,6 +195,10 @@ class Import {
 
 		if ( $args_assoc['cache'] === 'invalidate' ) {
 			define( 'ATD_CF_XML_IMPORT_NO_CACHE', true );
+		}
+
+		if ( $args_assoc['posts'] === 'overwrite' ) {
+			define( 'ATD_CF_XML_IMPORT_FORCE_OVERWRITE', true );
 		}
 
 		if ( ! $feedObjects = $this->getFeedObjects( $args[0] ) ) {

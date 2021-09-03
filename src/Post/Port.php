@@ -23,9 +23,16 @@ class Port implements Post {
 			'meta_value'     => $details->getId()
 		] );
 
+		if ( ! defined( 'ATD_CF_XML_IMPORT_FORCE_OVERWRITE' ) ) {
+			if ( $originalPost->post_count === 1 && $originalPost->post->post_author > 0 ) {
+				return $originalPost->post->ID;
+			}
+		}
+
 		$post_details = [
 			'post_type'    => self::$postType,
 			'post_title'   => $details->getName(),
+			'post_author'  => 0,
 			'post_content' => ( new Paragraph( nl2br( trim( $details->getDescription() ) ) ) )->render(),
 			'post_excerpt' => substr( $details->getDescription(), 0, 200 ) . ( strlen( $details->getDescription() ) > 200 ? '...' : '' ),
 			'post_status'  => 'publish',
@@ -74,7 +81,7 @@ class Port implements Post {
 				'post_tag'
 			],
 			'show_ui'             => true,
-			'show_in_menu'        => true,
+			'show_in_menu'        => ATD_CF_XML_MENU_SLUG,
 			'show_in_rest'        => true,
 			'has_archive'         => 'Ports',
 			'menu_position'       => 35,

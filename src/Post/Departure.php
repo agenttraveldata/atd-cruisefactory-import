@@ -50,6 +50,12 @@ class Departure implements Post {
 			$originalType = null;
 		}
 
+		if ( ! defined( 'ATD_CF_XML_IMPORT_FORCE_OVERWRITE' ) ) {
+			if ( $originalPost && $originalPost->post_author > 0 ) {
+				return $originalPost->ID;
+			}
+		}
+
 		$postTitle = isset( $special )
 			? $special->getName()
 			: $details->getCruise()->getName() . ' - ' . $details->getSailingDate()->format( 'd/m/Y' );
@@ -295,7 +301,7 @@ class Departure implements Post {
 				Taxonomy\Month::$name
 			],
 			'show_ui'             => true,
-			'show_in_menu'        => true,
+			'show_in_menu'        => ATD_CF_XML_MENU_SLUG,
 			'show_in_rest'        => true,
 			'has_archive'         => 'cruise-search',
 			'menu_position'       => 30,

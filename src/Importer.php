@@ -67,6 +67,21 @@ class Importer {
 
 				return $post_states;
 			}, 10, 2 );
+
+			add_filter( 'custom_menu_order', function () {
+				global $submenu;
+				if ( ! empty( $submenu[ATD_CF_XML_MENU_SLUG] ) ) {
+					usort( $submenu[ATD_CF_XML_MENU_SLUG], function ( $a, $b ) {
+						if ( $a[1] === $b[1] ) {
+							return strcmp( $a[0], $b[0] );
+						}
+
+						return strcmp( $b[1], $a[1] );
+					} );
+				}
+
+				return $submenu;
+			} );
 		}
 
 		/**
