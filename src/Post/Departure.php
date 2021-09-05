@@ -161,7 +161,8 @@ class Departure implements Post {
 		}
 
 		if ( ! empty( $details->getCruise()->getPhoto() ) ) {
-			$imageUrl = self::$cfImageUrl . $details->getCruise()->getPhoto();
+			$imageUrl      = self::$cfImageUrl . $details->getCruise()->getPhoto();
+			$imageFileName = 'atd-cfi_cruise-' . $details->getCruise()->getId() . ( pathinfo( $imageUrl, PATHINFO_EXTENSION ) === '' ? '.jpg' : '' );
 
 			if ( has_post_thumbnail( $post_id ) ) {
 				if ( defined( 'ATD_CF_XML_IMAGE_OVERWRITE' ) ) {
@@ -175,19 +176,30 @@ class Departure implements Post {
 				return true;
 			}
 
+			$attachmentMetaKey = 'atd_cfi_cruise_id';
+
 			$attachment = new WP_Query( [
-				'posts_per_page' => 1,
 				'post_type'      => 'attachment',
-				'name'           => 'Map image for cruise ID ' . $details->getCruise()->getId(),
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'nopaging'       => true,
+				'no_found_rows'  => true,
+				'meta_query'     => [
+					'relation' => 'AND',
+					'id'       => [
+						'key'   => $attachmentMetaKey,
+						'value' => $details->getCruise()->getId()
+					]
+				]
 			] );
 
-			if ( ! empty( $attachment->posts ) ) {
-				set_post_thumbnail( $post_id, $attachment->posts[0]->ID );
+			if ( $attachment->post_count === 1 ) {
+				set_post_thumbnail( $post_id, $attachment->post->ID );
 			} else {
 				require_once( ABSPATH . 'wp-admin/includes/file.php' );
 
 				$file = [
-					'name'     => wp_basename( $imageUrl ) . ( pathinfo( $imageUrl, PATHINFO_EXTENSION ) === '' ? '.jpg' : '' ),
+					'name'     => $imageFileName,
 					'tmp_name' => download_url( $imageUrl )
 				];
 
@@ -195,7 +207,15 @@ class Departure implements Post {
 					require_once( ABSPATH . 'wp-admin/includes/image.php' );
 					require_once( ABSPATH . 'wp-admin/includes/media.php' );
 
-					$id = media_handle_sideload( $file, $post_id, "Map image for cruise ID {$details->getCruise()->getId()}" );
+					$attachmentPostData = [
+						'post_title'  => 'Map image for cruise ID ' . $details->getCruise()->getId(),
+						'post_status' => 'publish',
+						'meta_input'  => [
+							$attachmentMetaKey => $details->getCruise()->getId()
+						]
+					];
+
+					$id = media_handle_sideload( $file, $post_id, null, $attachmentPostData );
 
 					if ( is_wp_error( $id ) ) {
 						@unlink( $file['tmp_name'] );

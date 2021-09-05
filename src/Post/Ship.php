@@ -51,7 +51,8 @@ class Ship implements Post {
 		$post_id = wp_insert_post( $post_details );
 
 		if ( ! empty( $details->getThumbnail() ) ) {
-			$imageUrl = self::$cfImageUrl . $details->getThumbnail();
+			$imageUrl      = self::$cfImageUrl . $details->getThumbnail();
+			$imageFileName = 'atd-cfi_' . wp_basename( $imageUrl ) . ( pathinfo( $imageUrl, PATHINFO_EXTENSION ) === '' ? '.jpg' : '' );
 
 			if ( has_post_thumbnail( $post_id ) ) {
 				if ( defined( 'ATD_CF_XML_IMAGE_OVERWRITE' ) ) {
@@ -68,7 +69,7 @@ class Ship implements Post {
 			require_once( ABSPATH . 'wp-admin/includes/file.php' );
 
 			$file = [
-				'name'     => wp_basename( $imageUrl ) . '.jpg',
+				'name'     => $imageFileName,
 				'tmp_name' => download_url( $imageUrl )
 			];
 

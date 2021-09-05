@@ -54,7 +54,8 @@ class Cabin {
 	private static function createAttachment( string $imageUrl, int $postId, array $postData ): void {
 		require_once( ABSPATH . 'wp-admin/includes/file.php' );
 
-		$originalPost = new WP_Query( [
+		$imageFileName = 'atd-cfi_' . wp_basename( $imageUrl ) . ( pathinfo( $imageUrl, PATHINFO_EXTENSION ) === '' ? '.jpg' : '' );
+		$originalPost  = new WP_Query( [
 			'post_type'      => 'attachment',
 			'post_status'    => 'any',
 			'posts_per_page' => 1,
@@ -92,7 +93,7 @@ class Cabin {
 		}
 
 		$file = [
-			'name'     => wp_basename( $imageUrl ) . '.jpg',
+			'name'     => $imageFileName,
 			'tmp_name' => download_url( $imageUrl )
 		];
 
