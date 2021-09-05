@@ -298,7 +298,9 @@ class Departure implements Post {
 				Taxonomy\Duration::$name,
 				Taxonomy\EmbarkPort::$name,
 				Taxonomy\DisembarkPort::$name,
-				Taxonomy\Month::$name
+				Taxonomy\Month::$name,
+				Taxonomy\DepartureType::$name,
+				Taxonomy\SpecialType::$name
 			],
 			'show_ui'             => true,
 			'show_in_menu'        => ATD_CF_XML_MENU_SLUG,

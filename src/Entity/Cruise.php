@@ -89,9 +89,9 @@ class Cruise {
 		if ( $this->length ) {
 			if ( $this->length < 7 ) {
 				return '1-6';
-			} elseif ( $this->length >= 7 && $this->length < 14 ) {
+			} elseif ( $this->length < 14 ) {
 				return '7-13';
-			} elseif ( $this->length >= 14 && $this->length < 20 ) {
+			} elseif ( $this->length < 20 ) {
 				return '14-19';
 			} else {
 				return '20+';
