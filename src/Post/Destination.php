@@ -51,8 +51,9 @@ class Destination implements Post {
 		$post_id = wp_insert_post( $post_details );
 
 		if ( ! empty( $details->image ) ) {
-			$imageUrl      = self::$cfImageUrl . $details->image;
-			$imageFileName = 'atd-cfi_destination-' . $details->getId() . ( pathinfo( $imageUrl, PATHINFO_EXTENSION ) === '' ? '.jpg' : '' );
+			$imageUrl       = self::$cfImageUrl . $details->image;
+			$imageExtension = strtolower( pathinfo( $imageUrl, PATHINFO_EXTENSION ) );
+			$imageFileName  = 'atd-cfi_destination-' . $details->getId() . ( $imageExtension === '' ? '.jpg' : '.' . $imageExtension );
 
 			if ( has_post_thumbnail( $post_id ) ) {
 				if ( defined( 'ATD_CF_XML_IMAGE_OVERWRITE' ) ) {

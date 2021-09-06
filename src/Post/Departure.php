@@ -161,8 +161,9 @@ class Departure implements Post {
 		}
 
 		if ( ! empty( $details->getCruise()->getPhoto() ) ) {
-			$imageUrl      = self::$cfImageUrl . $details->getCruise()->getPhoto();
-			$imageFileName = 'atd-cfi_cruise-' . $details->getCruise()->getId() . ( pathinfo( $imageUrl, PATHINFO_EXTENSION ) === '' ? '.jpg' : '' );
+			$imageUrl       = self::$cfImageUrl . $details->getCruise()->getPhoto();
+			$imageExtension = strtolower( pathinfo( $imageUrl, PATHINFO_EXTENSION ) );
+			$imageFileName  = 'atd-cfi_cruise-' . $details->getCruise()->getId() . ( $imageExtension === '' ? '.jpg' : '.' . $imageExtension );
 
 			if ( has_post_thumbnail( $post_id ) ) {
 				if ( defined( 'ATD_CF_XML_IMAGE_OVERWRITE' ) ) {
