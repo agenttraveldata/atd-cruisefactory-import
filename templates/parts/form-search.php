@@ -52,7 +52,7 @@
         <input id="atd_cf_keyword" type="text" name="atd_cf_keyword" class="atd-cfi__input" placeholder="Optional keywords..." value="<?php echo $_GET['atd_cf_keyword'] ?? ''; ?>">
     </div>
     <div class="atd-cfi-sf__col atd-cfi-sf__btns">
-        <button class="atd-cfi-sf-btns__btn-submit" type="submit">Search</button>
-        <button class="atd-cfi-sf-btns__btn-reset" type="reset" data-action="atd-cfi-search-form#reset">Reset</button>
+        <button class="atd-cfi-sf-btns__btn atd-cfi-sf-btns-btn__submit" type="submit">Search</button>
+        <button class="atd-cfi-sf-btns__btn atd-cfi-sf-btns-btn__reset" type="reset" data-action="atd-cfi-search-form#reset">Reset</button>
     </div>
 </form>
