@@ -70,8 +70,8 @@ class Importer {
 
 			add_filter( 'custom_menu_order', function () {
 				global $submenu;
-				if ( ! empty( $submenu[ATD_CF_XML_MENU_SLUG] ) ) {
-					usort( $submenu[ATD_CF_XML_MENU_SLUG], function ( $a, $b ) {
+				if ( ! empty( $submenu[ ATD_CF_XML_MENU_SLUG ] ) ) {
+					usort( $submenu[ ATD_CF_XML_MENU_SLUG ], function ( $a, $b ) {
 						if ( $a[1] === $b[1] ) {
 							return strcmp( $a[0], $b[0] );
 						}
@@ -139,14 +139,15 @@ class Importer {
 		$this->installTables();
 
 		if ( ! get_option( ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD ) ) {
-			$shortcode = new Services\WordPress\Blocks\Shortcode( '[atd-cfi-enquiry-form/]' );
+			$summary     = new Services\WordPress\Blocks\Shortcode( '[atd-cfi-departure-summary/]' );
+			$enquiryForm = new Services\WordPress\Blocks\Shortcode( '[atd-cfi-enquiry-form/]' );
 
 			update_option( ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD, wp_insert_post( [
 				'post_status'    => 'publish',
 				'post_type'      => 'page',
 				'post_name'      => 'cruise-enquiry',
 				'post_title'     => 'Cruise Enquiry',
-				'post_content'   => $shortcode->render(),
+				'post_content'   => $summary->render() . PHP_EOL . PHP_EOL . $enquiryForm->render(),
 				'comment_status' => 'closed',
 			] ) );
 		}
