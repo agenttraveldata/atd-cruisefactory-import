@@ -1,6 +1,8 @@
 @use "variables";
 
 .atd-cfi__itinerary-table {
+    width: 100%;
+
     @media (max-width: variables.$break-point-tablet) {
         font-size: 0.6em;
 
