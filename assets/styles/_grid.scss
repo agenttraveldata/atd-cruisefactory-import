@@ -6,4 +6,8 @@
 
 .atd-cfi__cols-enquiry {
     @include mixins.columns(5);
+
+    label {
+        display: block;
+    }
 }

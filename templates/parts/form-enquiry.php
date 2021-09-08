@@ -37,15 +37,15 @@
         </div>
         <div class="atd-cfi-cols__column atd-cfi-cols-column__stretch atd-cfi__mb-2">
             <label for="message">
-                <textarea name="message" id="message" cols="30" rows="10" placeholder="Tell us about your enquiry"></textarea>
+                <textarea class="atd-cfi__input" name="message" id="message" cols="30" rows="10" placeholder="Tell us about your enquiry"></textarea>
             </label>
         </div>
 		<?php atd_cf_get_template_part( 'form', 'recaptcha' ); ?>
         <div class="atd-cfi-cols__column atd-cfi-cols-column__half atd-cfi__mb-2 atd-cfi__align-start">
-            <button type="reset">Reset</button>
+            <button class="atd-cfi__btn" type="reset">Reset</button>
         </div>
         <div class="atd-cfi-cols__column atd-cfi-cols-column__half atd-cfi__mb-2 atd-cfi__align-end">
-            <button data-atd-cfi-submit-form-target="submitButton" type="submit">Submit</button>
+            <button data-atd-cfi-submit-form-target="submitButton" class="atd-cfi__btn" type="submit">Submit</button>
         </div>
     </div>
 </form>

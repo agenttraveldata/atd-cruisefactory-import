@@ -54,7 +54,7 @@ $shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruis
 					<?php endif; ?>
                 </div>
                 <div class="atd-cfi-departure-pricing__buttons">
-                    <button type="submit">Continue</button>
+                    <button class="atd-cfi__btn" type="submit">Continue</button>
                 </div>
             </form>
         </div>
