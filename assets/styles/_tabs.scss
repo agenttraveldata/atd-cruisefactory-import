@@ -1,8 +1,10 @@
 @use "variables";
 
-$atd-cfi-tab-bg: transparent;
-$atd-cfi-tab-active-bg: #fff;
-$atd-cfi-tab-border-color: #000;
+$atd-cfi-tab-bg: transparent !default;
+$atd-cfi-tab-active-bg: #fff !default;
+$atd-cfi-tab-border-color: #000 !default;
+$atd-cfi-tab-contents-bg: #fff !default;
+$atd-cfi-tab-contents-color: #000 !default;
 
 .atd-cfi__tabs {
     .atd-cfi-tabs__anchors {
@@ -43,6 +45,8 @@ $atd-cfi-tab-border-color: #000;
 
     .atd-cfi-tabs__contents {
         border-top: 2px solid $atd-cfi-tab-border-color;
+        background: $atd-cfi-tab-contents-bg;
+        color: $atd-cfi-tab-contents-color;
 
         > div {
             display: none;
