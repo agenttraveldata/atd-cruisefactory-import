@@ -43,6 +43,10 @@ class Results {
 	public function restDepartureQuery( array $args, WP_REST_Request $request ): array {
 		define( 'ATD_CF_XML_HYDRATE_POST', true );
 
+		if ( ! empty( $request->get_query_params() ) ) {
+			$_GET = array_merge( $_GET, $request->get_query_params() );
+		}
+
 		if ( ! isset( $args['meta_query'] ) ) {
 			$args['meta_query'] = [];
 		}
