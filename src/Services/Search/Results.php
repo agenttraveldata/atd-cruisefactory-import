@@ -188,16 +188,23 @@ class Results {
 		];
 	}
 
-	private function getTaxonomyArray( string $taxonomy, $value ): array {
-		if ( is_array( $value ) ) {
-			$terms = array_map( 'sanitize_text_field', ( $value ) );
-		} else {
-			$terms = sanitize_text_field( $value );
+	private function getTaxonomyArray( string $taxonomy, $terms ): array {
+		if ( ! is_array( $terms ) ) {
+			$terms = [ $terms ];
 		}
+
+		$sanitizer = 'sanitize_text_field';
+		$field     = 'slug';
+		if ( (int) $terms[0] === $terms[0] ) {
+			$sanitizer = 'intval';
+			$field     = 'id';
+		}
+
+		$terms = array_map( $sanitizer, $terms );
 
 		return [
 			'taxonomy' => $taxonomy,
-			'field'    => 'slug',
+			'field'    => $field,
 			'terms'    => $terms
 		];
 	}
