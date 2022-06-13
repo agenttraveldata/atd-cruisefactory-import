@@ -195,7 +195,7 @@ class Results {
 
 		$sanitizer = 'sanitize_text_field';
 		$field     = 'slug';
-		if ( (int) $terms[0] === $terms[0] ) {
+		if ( ( empty( $_GET['__atd_cfi_idString'] ) || $_GET['__atd_cfi_idString'] !== "true" ) && (int) $terms[0] === $terms[0] ) {
 			$sanitizer = 'intval';
 			$field     = 'id';
 		}
