@@ -89,7 +89,7 @@ class Deck {
 			require_once( ABSPATH . 'wp-admin/includes/media.php' );
 
 			$id = media_handle_sideload( $file, $postId, $postData['post_title'], $postData );
-			Logger::add( sprintf( '[%d] Added %s post %s', $postData['meta_input'][ Feed\CruiseLine::$metaKeyId ], 'attachment', $postData['post_title'] ) );
+			Logger::add( sprintf( '[%d] Added %s post %s', $postData['meta_input'][ Feed\Deck::$metaKeyId ], 'attachment', $postData['post_title'] ) );
 
 			if ( is_wp_error( $id ) ) {
 				@unlink( $file['tmp_name'] );
