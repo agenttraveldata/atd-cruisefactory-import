@@ -55,8 +55,6 @@ jQuery(function () {
             }
         }).fail(function () {
             button.html('Error importing!');
-        }).always(function () {
-            spinner.remove();
         });
     });
 

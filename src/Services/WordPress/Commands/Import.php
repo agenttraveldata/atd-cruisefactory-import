@@ -7,6 +7,8 @@ namespace ATD\CruiseFactory\Services\WordPress\Commands;
 use ATD\CruiseFactory\Feed;
 use ATD\CruiseFactory\Services\Logger;
 use DateTime;
+use WP_CLI;
+use WP_CLI\ExitException;
 
 class Import {
 	private array $friendlyFeedNames = [
@@ -246,7 +248,7 @@ class Import {
 	}
 
 	/**
-	 * @param string $paramFeed
+	 * @param array $paramFeeds
 	 *
 	 * @return Feed\Feed[]|null
 	 */
@@ -274,7 +276,7 @@ class Import {
 		if ( empty( $feedObjects ) ) {
 			try {
 				$this->logError( 'Could not find any feed to import!' );
-			} catch ( \WP_CLI\ExitException $e ) {
+			} catch ( ExitException $e ) {
 			}
 
 			return null;
@@ -285,24 +287,24 @@ class Import {
 
 	private function logGeneral( string $message ) {
 		if ( defined( 'ATD_CF_XML_USING_CLI' ) ) {
-			\WP_CLI::log( $message );
+			WP_CLI::log( $message );
 		}
 	}
 
 	private function logSuccess( string $message ) {
 		if ( defined( 'ATD_CF_XML_USING_CLI' ) ) {
-			\WP_CLI::success( $message );
+			WP_CLI::success( $message );
 		}
 	}
 
 	/**
 	 * @param string $message
 	 *
-	 * @throws \WP_CLI\ExitException
+	 * @throws ExitException
 	 */
 	private function logError( string $message ) {
 		if ( defined( 'ATD_CF_XML_USING_CLI' ) ) {
-			\WP_CLI::error( $message );
+			WP_CLI::error( $message );
 		}
 	}
 }
