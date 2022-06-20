@@ -15,6 +15,7 @@
     overflow-y: auto;
     overflow-x: auto;
     background-color: rgba(0, 0, 0, .5);
+    z-index: 200;
 
     &:hover {
         cursor: zoom-out;
