@@ -67,8 +67,8 @@ export default class extends Controller {
                 ));
             });
 
-            if (blockElement) {
-                blockElement.insertAdjacentHTML('afterend', `<input type="hidden" name="${blockElement.id.replace(/_block$/, '')}" value="${el.options[el.selectedIndex].value}">`);
+            if (blockElement && !this.element.querySelector('#' + blockElement.id + '_value')) {
+                blockElement.insertAdjacentHTML('afterend', `<input type="hidden" id="${blockElement.id}_value" name="${blockElement.id.replace(/_block$/, '')}" value="${el.options[el.selectedIndex].value}">`);
             }
         }
     }
@@ -90,11 +90,14 @@ export default class extends Controller {
     }
 
     reset(e) {
-        const departureType = this.formData.get('atd_cf_departure_type');
         this.formData = new FormData();
-        if (departureType) {
-            this.formData.set('atd_cf_departure_type', departureType);
-        }
+        this.element.querySelectorAll('input[type="hidden"]').forEach(el => {
+            if (el.name === "") {
+                return;
+            }
+
+            this.formData.set(el.name, el.value);
+        });
 
         fetch(`${this.apiPath}?${new URLSearchParams(this.formData)}`).then(r => r.json()).then(this.populateDropDowns);
     }
