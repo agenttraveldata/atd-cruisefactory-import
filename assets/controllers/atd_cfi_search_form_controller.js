@@ -56,7 +56,8 @@ export default class extends Controller {
         if (el) {
             el.innerHTML = '';
             el.options.add(new Option(`Any ${this.snakeToWords(key.slice(6))}...`, ''));
-            if (this.element.querySelector(`#${key}_block`)) {
+            const blockElement = this.element.querySelector(`#${key}_block`);
+            if (blockElement) {
                 el.disabled = "disabled";
             }
 
@@ -65,6 +66,10 @@ export default class extends Controller {
                     this.formData.has(key) && this.formData.get(key) === id
                 ));
             });
+
+            if (blockElement) {
+                blockElement.insertAdjacentHTML('afterend', `<input type="hidden" name="${blockElement.id.replace(/_block$/, '')}" value="${el.options[el.selectedIndex].value}">`);
+            }
         }
     }
 
