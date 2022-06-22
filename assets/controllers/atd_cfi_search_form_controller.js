@@ -33,7 +33,6 @@ export default class extends Controller {
             });
             this.update(null, this.formData);
         } else {
-            // fetch(this.apiPath).then(r => r.json()).then(this.populateDropDowns);
             this.update(this.formData);
         }
     }
@@ -57,10 +56,14 @@ export default class extends Controller {
         if (el) {
             el.innerHTML = '';
             el.options.add(new Option(`Any ${this.snakeToWords(key.slice(6))}...`, ''));
+            if (this.element.querySelector(`#${key}_block`)) {
+                el.disabled = "disabled";
+            }
+
             Object.entries(value).sort(numericKeys.includes(key) ? this.compareNumericValues : this.compareKeyStrings).forEach(([id, name]) => {
                 el.options.add(new Option(name, id, false,
-                    this.formData.has(key) && this.formData.get(key) === id)
-                );
+                    this.formData.has(key) && this.formData.get(key) === id
+                ));
             });
         }
     }
