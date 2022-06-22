@@ -19,8 +19,13 @@ export default class extends Controller {
         });
 
         this.formData = new FormData(this.element);
-        if (window.location.search) {
-            const urlSearchParams = new URLSearchParams(window.location.search);
+        const hasUrlParams = window.location.search !== ''
+            ? window.location.search
+            : window.location.hash !== ''
+                ? window.location.hash
+                : null;
+        if (hasUrlParams) {
+            const urlSearchParams = new URLSearchParams(hasUrlParams.replace(/^#/, '?'));
             urlSearchParams.forEach((v, k) => {
                 if (v && this.formData.has(k)) {
                     this.formData.set(k, v);
