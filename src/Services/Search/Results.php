@@ -108,6 +108,9 @@ class Results {
 			if ( isset( $query->query[ Taxonomy\DepartureType::$name ] ) && $query->query[ Taxonomy\DepartureType::$name ] === 'special' ) {
 				$_GET['offerType_id'] = 'special';
 			}
+			if ( ! empty( $_GET['page'] ) ) {
+				$query->set( 'paged', ( (int) $_GET['page'] ) - 1 );
+			}
 
 			/**
 			 * perform query from query params here
