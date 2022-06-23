@@ -56,20 +56,12 @@ export default class extends Controller {
         if (el) {
             el.innerHTML = '';
             el.options.add(new Option(`Any ${this.snakeToWords(key.slice(6))}...`, ''));
-            const blockElement = this.element.querySelector(`#${key}_block`);
-            if (blockElement) {
-                el.disabled = "disabled";
-            }
 
             Object.entries(value).sort(numericKeys.includes(key) ? this.compareNumericValues : this.compareKeyStrings).forEach(([id, name]) => {
                 el.options.add(new Option(name, id, false,
                     this.formData.has(key) && this.formData.get(key) === id
                 ));
             });
-
-            if (blockElement && !this.element.querySelector('#' + blockElement.id + '_value')) {
-                blockElement.insertAdjacentHTML('afterend', `<input type="hidden" id="${blockElement.id}_value" name="${blockElement.id.replace(/_block$/, '')}" value="${el.options[el.selectedIndex].value}">`);
-            }
         }
     }
 
