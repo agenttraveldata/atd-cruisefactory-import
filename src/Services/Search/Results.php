@@ -108,7 +108,7 @@ class Results {
 				$_GET['offerType_id'] = 'special';
 			}
 			if ( ! empty( $_GET['page'] ) ) {
-				$query->set( 'paged', ( (int) $_GET['page'] ) - 1 );
+				$query->set( 'paged', (int) $_GET['page'] );
 			}
 
 			/**
