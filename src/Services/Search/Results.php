@@ -70,6 +70,8 @@ class Results {
 			$args['s'] = $newQuery->query_vars['s'];
 		}
 
+		$args['orderby'] = [ 'atd_cfi_sailing_date' => 'ASC' ];
+
 		$newQuery->set( 'fields', 'ids' );
 
 		if ( $ids = $newQuery->get_posts() ) {
@@ -87,16 +89,13 @@ class Results {
 		$this->hydrator->loopStart( $newQuery );
 		unset( $newQuery );
 
-		$args['orderby'] = 'meta_value';
-		$args['order']   = 'asc';
-
 		return $args;
 	}
 
 	private function setupSearchQuery( WP_Query $query ): void {
 		$query->set( 'post_type', 'departure' );
 		$query->set( 'post_status', 'public' );
-		$query->set( 'posts_per_page', 20 );
+		$query->set( 'posts_per_page', get_option( 'posts_per_page' ) );
 
 		$query->set( 'meta_query', [
 			'relation'             => 'AND',
