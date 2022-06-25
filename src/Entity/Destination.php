@@ -9,6 +9,7 @@ class Destination {
 	private string $name;
 	private string $featured_text;
 	private string $description;
+	private string $map_large;
 
 	public function getId(): int {
 		return $this->id;
@@ -46,6 +47,16 @@ class Destination {
 
 	public function setDescription( string $description ): self {
 		$this->description = $description;
+
+		return $this;
+	}
+
+	public function getMapLarge(): string {
+		return $this->map_large;
+	}
+
+	public function setMapLarge( string $mapLarge ): self {
+		$this->map_large = $mapLarge;
 
 		return $this;
 	}
