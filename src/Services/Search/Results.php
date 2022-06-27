@@ -172,10 +172,13 @@ class Results {
 
 
 		if ( ! empty( $tax ) ) {
-			$query->set( 'tax_query', [
-				'relation' => 'AND',
-				$tax
-			] );
+			$query->tax_query->queries      = array_merge( [ 'relation' => 'AND' ], $tax );
+			$query->query_vars['tax_query'] = $query->tax_query->queries;
+			foreach ( $query->query as $k => $v ) {
+				if ( substr( $k, 0, 7 ) === 'atd_cf_' ) {
+					unset( $query->query[ $k ], $query->query_vars[ $k ] );
+				}
+			}
 		}
 
 		if ( ! empty( $meta ) ) {
