@@ -5,8 +5,7 @@
 /dist
 /var/logs
 !/var/logs/index.php
-/var/cache/services
-/var/cache/services/index.php
-/var/cache/increment
-/var/cache/increment/index.php
+/var/cache/**
+!/var/cache/services/index.php
+!/var/cache/increment/index.php
 /.phpunit.result.cache

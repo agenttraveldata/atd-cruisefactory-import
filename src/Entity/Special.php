@@ -16,6 +16,7 @@ class Special {
 	private string $validity_date_end;
 	private string $type;
 	private float $start_price;
+	private ?string $advert_code;
 	private ?Currency $currency;
 	private ?Cruise $cruise;
 	private ?SpecialLeadPrice $leadPricing;
@@ -164,6 +165,16 @@ class Special {
 
 	public function setSpecialItinerary( array $itinerary ): self {
 		$this->itinerary = new ArrayCollection( $itinerary );
+
+		return $this;
+	}
+
+	public function getPromoCode(): ?string {
+		return $this->advert_code ?? null;
+	}
+
+	public function setPromoCode( string $promoCode ): self {
+		$this->advert_code = $promoCode;
 
 		return $this;
 	}
