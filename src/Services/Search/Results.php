@@ -172,8 +172,11 @@ class Results {
 
 
 		if ( ! empty( $tax ) ) {
-			$query->tax_query->queries      = array_merge( [ 'relation' => 'AND' ], $tax );
-			$query->query_vars['tax_query'] = $query->tax_query->queries;
+			$tax = array_merge( [ 'relation' => 'AND' ], $tax );
+			if ( ! empty( $query->tax_query ) ) {
+				$query->tax_query->queries = $tax;
+			}
+			$query->query_vars['tax_query'] = $tax;
 			foreach ( $query->query as $k => $v ) {
 				if ( substr( $k, 0, 7 ) === 'atd_cf_' ) {
 					unset( $query->query[ $k ], $query->query_vars[ $k ] );
