@@ -13,6 +13,7 @@ use ATD\CruiseFactory\Taxonomy\DisembarkPort;
 use ATD\CruiseFactory\Taxonomy\Duration;
 use ATD\CruiseFactory\Taxonomy\EmbarkPort;
 use ATD\CruiseFactory\Taxonomy\Month;
+use ATD\CruiseFactory\Taxonomy\PromoCode;
 use ATD\CruiseFactory\Taxonomy\Ship;
 use ATD\CruiseFactory\Taxonomy\SpecialType;
 use DateTime;
@@ -70,6 +71,7 @@ class SearchController extends AbstractController {
 					break;
 				case DepartureType::$name:
 				case SpecialType::$name:
+				case PromoCode::$name:
 					$taxQuery[ $param ] = [
 						'taxonomy' => $param,
 						'terms'    => $value,
