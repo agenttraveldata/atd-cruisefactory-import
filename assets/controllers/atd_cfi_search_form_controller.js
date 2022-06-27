@@ -69,7 +69,7 @@ export default class extends Controller {
         return a.localeCompare(b);
     }
 
-    compareKeyDates = (a, b) => Date.parse(new Date(a)) - Date.parse(new Date(b));
+    compareKeyDates = ([, a], [, b]) => Date.parse(new Date(a)) - Date.parse(new Date(b));
 
     update(e, formData = null) {
         if (!formData) {
@@ -79,7 +79,7 @@ export default class extends Controller {
         fetch(`${this.apiPath}?${new URLSearchParams(this.formData)}`).then(r => r.json()).then(this.populateDropDowns);
     }
 
-    reset(e) {
+    reset() {
         this.formData = new FormData();
         this.element.querySelectorAll('input[type="hidden"]').forEach(el => {
             if (el.name === "") {
