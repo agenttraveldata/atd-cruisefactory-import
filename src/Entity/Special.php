@@ -117,8 +117,8 @@ class Special {
 		return $this;
 	}
 
-	public function getSpecialLeadPrice(): SpecialLeadPrice {
-		return $this->leadPricing;
+	public function getSpecialLeadPrice(): ?SpecialLeadPrice {
+		return $this->leadPricing ?? null;
 	}
 
 	public function setSpecialLeadPrice( SpecialLeadPrice $leadPricing ): self {
