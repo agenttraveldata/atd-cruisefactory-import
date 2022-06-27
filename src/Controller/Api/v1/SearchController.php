@@ -36,48 +36,44 @@ class SearchController extends AbstractController {
 			switch ( $param ) {
 				case Month::$name . '_from':
 				case Month::$name . '_to':
-					if ( $dateValue = DateTime::createFromFormat( 'Ymd', $value . '01' ) ) {
-						$dateCompare = '>=';
-						if ( substr( $param, - 3 ) === '_to' ) {
-							$dateCompare = '<=';
-							$dateValue   = DateTime::createFromFormat( 'Ymd', $dateValue->format( 'Ymt' ) );
-						}
-
-						$dateValue->setTime( 0, 0 );
-
-						if ( isset( $metaQuery[ Month::$name ] ) ) {
-							$metaQuery[ Month::$name ]['compare'] = 'BETWEEN';
-
+					if ( $dateTerm = get_term_by( 'id', (int) $value, Month::$name ) ) {
+						if ( $dateValue = DateTime::createFromFormat( 'Ymd', $dateTerm->slug . '01' ) ) {
+							$dateCompare = '>=';
 							if ( substr( $param, - 3 ) === '_to' ) {
-								$metaQuery[ Month::$name ]['value'] = [
-									$metaQuery[ Month::$name ]['value'],
-									$dateValue->getTimestamp()
-								];
+								$dateCompare = '<=';
+								$dateValue   = DateTime::createFromFormat( 'Ymd', $dateValue->format( 'Ymt' ) );
+							}
+
+							$dateValue->setTime( 0, 0 );
+
+							if ( isset( $metaQuery[ Month::$name ] ) ) {
+								$metaQuery[ Month::$name ]['compare'] = 'BETWEEN';
+
+								if ( substr( $param, - 3 ) === '_to' ) {
+									$metaQuery[ Month::$name ]['value'] = [
+										$metaQuery[ Month::$name ]['value'],
+										$dateValue->getTimestamp()
+									];
+								} else {
+									$metaQuery[ Month::$name ]['value'] = [
+										$dateValue->getTimestamp(),
+										$metaQuery[ Month::$name ]['value']
+									];
+								}
 							} else {
-								$metaQuery[ Month::$name ]['value'] = [
-									$dateValue->getTimestamp(),
-									$metaQuery[ Month::$name ]['value']
+								$metaQuery[ Month::$name ] = [
+									'key'     => 'atd_cfi_sailing_date',
+									'value'   => $dateValue->getTimestamp(),
+									'type'    => 'NUMERIC',
+									'compare' => $dateCompare
 								];
 							}
-						} else {
-							$metaQuery[ Month::$name ] = [
-								'key'     => 'atd_cfi_sailing_date',
-								'value'   => $dateValue->getTimestamp(),
-								'type'    => 'NUMERIC',
-								'compare' => $dateCompare
-							];
 						}
 					}
 					break;
 				case DepartureType::$name:
 				case SpecialType::$name:
 				case PromoCode::$name:
-					$taxQuery[ $param ] = [
-						'taxonomy' => $param,
-						'terms'    => $value,
-						'field'    => 'slug',
-					];
-					break;
 				case Destination::$name:
 				case CruiseLine::$name:
 				case Ship::$name:
@@ -87,7 +83,7 @@ class SearchController extends AbstractController {
 					$taxQuery[ $param ] = [
 						'taxonomy' => $param,
 						'terms'    => (int) $value,
-						'field'    => 'slug',
+						'field'    => 'id',
 					];
 			}
 		}
@@ -119,15 +115,25 @@ class SearchController extends AbstractController {
 			$atd = substr( $taxonomy, 0, 3 );
 
 			if ( $atd === 'atd' ) {
-				$termQuery          = new WP_Term_Query( [
+				$termQueryParams = [
 					'taxonomy'   => $taxonomy,
 					'object_ids' => ! empty( $postQuery ) && $postQuery->post_count > 0 ? $postQuery->posts : null,
-					'childless'  => true
-				] );
+					'childless'  => true,
+					'orderby'    => 'name',
+					'order'      => 'ASC'
+				];
+
+				if ( $taxonomy === Month::$name ) {
+					$termQueryParams = array_merge( $termQueryParams, [
+						'orderby' => 'slug'
+					] );
+				}
+
+				$termQuery          = new WP_Term_Query( $termQueryParams );
 				$terms[ $taxonomy ] = [];
 				if ( $termQuery->terms ) {
 					foreach ( $termQuery->terms as $term ) {
-						$terms[ $taxonomy ][ $term->slug ] = htmlspecialchars_decode( $term->name );
+						$terms[ $taxonomy ][ $term->term_id ] = htmlspecialchars_decode( $term->name );
 					}
 				}
 			}

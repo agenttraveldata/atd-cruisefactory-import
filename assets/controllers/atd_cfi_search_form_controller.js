@@ -51,13 +51,13 @@ export default class extends Controller {
 
     sortAndPopulateDropDown = (key, value) => {
         const el = this.element.querySelector(`#${key}`);
-        const numericKeys = ['atd_cf_month_from', 'atd_cf_month_to', 'atd_cf_duration'];
+        const dateKeys = ['atd_cf_month_from', 'atd_cf_month_to', 'atd_cf_duration'];
 
         if (el) {
             el.innerHTML = '';
             el.options.add(new Option(`Any ${this.snakeToWords(key.slice(6))}...`, ''));
 
-            Object.entries(value).sort(numericKeys.includes(key) ? this.compareNumericValues : this.compareKeyStrings).forEach(([id, name]) => {
+            Object.entries(value).sort(dateKeys.includes(key) ? this.compareKeyDates : this.compareKeyStrings).forEach(([id, name]) => {
                 el.options.add(new Option(name, id, false,
                     this.formData.has(key) && this.formData.get(key) === id
                 ));
@@ -69,9 +69,7 @@ export default class extends Controller {
         return a.localeCompare(b);
     }
 
-    compareNumericValues = (a, b) => {
-        return a > b;
-    }
+    compareKeyDates = (a, b) => Date.parse(new Date(a)) - Date.parse(new Date(b));
 
     update(e, formData = null) {
         if (!formData) {

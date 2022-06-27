@@ -144,16 +144,20 @@ class Results {
 
 			switch ( $criterion ) {
 				case Taxonomy\Month::$name . '_from':
-					if ( $dateValue = DateTime::createFromFormat( 'Ymd', $value . '01' ) ) {
-						$meta[] = $this->getMetaArray( 'sailing_date', $dateValue->setTime( 0, 0 )->getTimestamp(), '>=' );
+					if ( $dateTerm = get_term_by( 'id', (int) $value, Taxonomy\Month::$name ) ) {
+						if ( $dateValue = DateTime::createFromFormat( 'Ymd', $dateTerm->slug . '01' ) ) {
+							$meta[] = $this->getMetaArray( 'sailing_date', $dateValue->setTime( 0, 0 )->getTimestamp(), '>=' );
+						}
 					}
 					break;
 				case Taxonomy\Month::$name . '_to':
-					if ( $dateValue = DateTime::createFromFormat( 'Ymd', $value . '01' ) ) {
-						/* get last day of month */
-						$dateValue = DateTime::createFromFormat( 'Ymd', $dateValue->format( 'Ymt' ) );
+					if ( $dateTerm = get_term_by( 'id', (int) $value, Taxonomy\Month::$name ) ) {
+						if ( $dateValue = DateTime::createFromFormat( 'Ymd', $dateTerm->slug . '01' ) ) {
+							/* get last day of month */
+							$dateValue = DateTime::createFromFormat( 'Ymd', $dateValue->format( 'Ymt' ) );
 
-						$meta[] = $this->getMetaArray( 'sailing_date', $dateValue->setTime( 0, 0 )->getTimestamp(), '<=' );
+							$meta[] = $this->getMetaArray( 'sailing_date', $dateValue->setTime( 0, 0 )->getTimestamp(), '<=' );
+						}
 					}
 					break;
 				case 'atd_cf_keyword':
@@ -195,18 +199,11 @@ class Results {
 			$terms = [ $terms ];
 		}
 
-		$sanitizer = 'sanitize_text_field';
-		$field     = 'slug';
-		if ( ( empty( $_GET['__atd_cfi_idString'] ) || $_GET['__atd_cfi_idString'] !== "true" ) && (int) $terms[0] === $terms[0] ) {
-			$sanitizer = 'intval';
-			$field     = 'id';
-		}
-
-		$terms = array_map( $sanitizer, $terms );
+		$terms = array_map( 'intval', $terms );
 
 		return [
 			'taxonomy' => $taxonomy,
-			'field'    => $field,
+			'field'    => 'id',
 			'terms'    => $terms
 		];
 	}

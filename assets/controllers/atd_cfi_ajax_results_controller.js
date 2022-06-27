@@ -12,7 +12,6 @@ export default class extends Controller {
 
     getResults() {
         const formData = new FormData();
-        formData.append('__atd_cfi_idString', true);
 
         if (this.paramValue) {
             for (const k in this.paramValue) {
