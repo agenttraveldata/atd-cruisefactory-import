@@ -55,9 +55,25 @@ class Destination implements Post {
 			$imageExtension = strtolower( pathinfo( $imageUrl, PATHINFO_EXTENSION ) );
 			$imageFileName  = 'atd-cfi_destination-' . $details->getId() . ( $imageExtension === '' ? '.jpg' : '.' . $imageExtension );
 
-			if ( has_post_thumbnail( $post_id ) ) {
+			$attachmentMetaKey = 'atd_cfi_destination_id';
+			$attachment        = new WP_Query( [
+				'post_type'      => 'attachment',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'nopaging'       => true,
+				'no_found_rows'  => true,
+				'meta_query'     => [
+					'relation' => 'AND',
+					'id'       => [
+						'key'   => $attachmentMetaKey,
+						'value' => $details->getId()
+					]
+				]
+			] );
+
+			if ( $attachment->post_count === 1 ) {
 				if ( defined( 'ATD_CF_XML_IMAGE_OVERWRITE' ) ) {
-					$thumb     = get_the_post_thumbnail_url( $post_id );
+					$thumb     = wp_get_attachment_image_url( $attachment->post->ID );
 					$uploadDir = wp_get_upload_dir();
 					$subPath   = str_replace( $uploadDir['baseurl'], '', $thumb );
 					$thumbPath = $uploadDir['basedir'] . $subPath;
@@ -78,7 +94,15 @@ class Destination implements Post {
 				require_once( ABSPATH . 'wp-admin/includes/image.php' );
 				require_once( ABSPATH . 'wp-admin/includes/media.php' );
 
-				$id = media_handle_sideload( $file, $post_id, "Image for destination {$details->getName()}" );
+				$attachmentPostData = [
+					'post_title'  => 'Image for destination ' . $details->getName(),
+					'post_status' => 'publish',
+					'meta_input'  => [
+						$attachmentMetaKey => $details->getId()
+					]
+				];
+
+				$id = media_handle_sideload( $file, $post_id, null, $attachmentPostData );
 
 				if ( is_wp_error( $id ) ) {
 					@unlink( $file['tmp_name'] );

@@ -139,6 +139,11 @@ class Departure implements Post {
 			if ( $term = Taxonomy\SpecialType::addTerm( Taxonomy\SpecialType::$name, $special->getType() ) ) {
 				wp_set_object_terms( $post_id, (int) $term['term_id'], Taxonomy\SpecialType::$name );
 			}
+			if ( $special->getPromoCode() ) {
+				if ( $term = Taxonomy\PromoCode::addTerm( Taxonomy\PromoCode::$name, $special->getPromoCode() ) ) {
+					wp_set_object_terms( $post_id, (int) $term['term_id'], Taxonomy\PromoCode::$name );
+				}
+			}
 		}
 
 		if ( $term = Taxonomy\Duration::addTerm(
@@ -165,17 +170,17 @@ class Departure implements Post {
 			$imageExtension = strtolower( pathinfo( $imageUrl, PATHINFO_EXTENSION ) );
 			$imageFileName  = 'atd-cfi_cruise-' . $details->getCruise()->getId() . ( $imageExtension === '' ? '.jpg' : '.' . $imageExtension );
 
-			if ( has_post_thumbnail( $post_id ) ) {
-				if ( defined( 'ATD_CF_XML_IMAGE_OVERWRITE' ) ) {
-					$thumb     = get_the_post_thumbnail_url( $post_id );
-					$uploadDir = wp_get_upload_dir();
-					$subPath   = str_replace( $uploadDir['baseurl'], '', $thumb );
-					$thumbPath = $uploadDir['basedir'] . $subPath;
-					file_put_contents( $thumbPath, file_get_contents( $imageUrl ) );
-				}
-
-				return true;
-			}
+//			if ( has_post_thumbnail( $post_id ) ) {
+//				if ( defined( 'ATD_CF_XML_IMAGE_OVERWRITE' ) ) {
+//					$thumb     = get_the_post_thumbnail_url( $post_id );
+//					$uploadDir = wp_get_upload_dir();
+//					$subPath   = str_replace( $uploadDir['baseurl'], '', $thumb );
+//					$thumbPath = $uploadDir['basedir'] . $subPath;
+//					file_put_contents( $thumbPath, file_get_contents( $imageUrl ) );
+//				}
+//
+//				return true;
+//			}
 
 			$attachmentMetaKey = 'atd_cfi_cruise_id';
 
@@ -195,7 +200,14 @@ class Departure implements Post {
 			] );
 
 			if ( $attachment->post_count === 1 ) {
-				set_post_thumbnail( $post_id, $attachment->post->ID );
+//				set_post_thumbnail( $post_id, $attachment->post->ID );
+				if ( defined( 'ATD_CF_XML_IMAGE_OVERWRITE' ) ) {
+					$thumb     = wp_get_attachment_image_url( $attachment->post->ID );
+					$uploadDir = wp_get_upload_dir();
+					$subPath   = str_replace( $uploadDir['baseurl'], '', $thumb );
+					$thumbPath = $uploadDir['basedir'] . $subPath;
+					file_put_contents( $thumbPath, file_get_contents( $imageUrl ) );
+				}
 			} else {
 				require_once( ABSPATH . 'wp-admin/includes/file.php' );
 
@@ -221,7 +233,7 @@ class Departure implements Post {
 					if ( is_wp_error( $id ) ) {
 						@unlink( $file['tmp_name'] );
 					} else {
-						set_post_thumbnail( $post_id, $id );
+//						set_post_thumbnail( $post_id, $id );
 					}
 				}
 			}
