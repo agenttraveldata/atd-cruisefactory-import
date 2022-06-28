@@ -178,6 +178,7 @@ class Results {
 			switch ( $criterion ) {
 				case Taxonomy\Month::$name . '_from':
 				case Taxonomy\Month::$name . '_to':
+				case 'atd_cf_keyword':
 					$_GET[ $criterion ] = $value;
 					break;
 				default:
