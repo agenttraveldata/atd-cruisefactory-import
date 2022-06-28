@@ -111,10 +111,11 @@ class Results {
 				$query->set( 'paged', (int) $_GET['page'] );
 			}
 
-			/**
-			 * perform query from query params here
-			 */
-			$this->searchQueryByTaxonomy( $query, $_GET );
+			if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
+				$this->searchQueryByTaxonomy( $query, $_GET['atd_cf_filter'] ?? [] );
+			}
+
+			$this->searchQueryDateAndKeywords( $query, $_GET );
 		} elseif ( isset( $query->query[ Taxonomy\SpecialType::$name ] ) ) {
 			$GLOBALS['showing-top-deals'] = true;
 
@@ -126,6 +127,42 @@ class Results {
 		}
 
 		remove_action( 'pre_get_posts', [ $this, 'searchQuery' ] );
+	}
+
+	private function searchQueryDateAndKeywords( WP_Query $query, array $criteria ): void {
+		$meta = [];
+
+		foreach ( $criteria as $criterion => $value ) {
+			if ( empty( $value ) ) {
+				continue;
+			}
+
+			switch ( $criterion ) {
+				case Taxonomy\Month::$name . '_from':
+					if ( $dateValue = DateTime::createFromFormat( 'Ymd', $value . '01' ) ) {
+						$meta[] = $this->getMetaArray( 'sailing_date', $dateValue->setTime( 0, 0 )->getTimestamp(), '>=' );
+					}
+					break;
+				case Taxonomy\Month::$name . '_to':
+					if ( $dateValue = DateTime::createFromFormat( 'Ymd', $value . '01' ) ) {
+						/* get last day of month */
+						$dateValue = DateTime::createFromFormat( 'Ymd', $dateValue->format( 'Ymt' ) );
+
+						$meta[] = $this->getMetaArray( 'sailing_date', $dateValue->setTime( 0, 0 )->getTimestamp(), '<=' );
+					}
+					break;
+				case 'atd_cf_keyword':
+					$query->set( 's', $value );
+					break;
+			}
+		}
+
+		if ( ! empty( $meta ) ) {
+			$query->set( 'meta_query', [
+				'relation' => 'AND',
+				$meta
+			] );
+		}
 	}
 
 	private function searchQueryByTaxonomy( WP_Query $query, array $criteria ): void {
@@ -144,44 +181,18 @@ class Results {
 
 			switch ( $criterion ) {
 				case Taxonomy\Month::$name . '_from':
-					if ( $dateTerm = get_term_by( 'id', (int) $value, Taxonomy\Month::$name ) ) {
-						if ( $dateValue = DateTime::createFromFormat( 'Ymd', $dateTerm->slug . '01' ) ) {
-							$meta[] = $this->getMetaArray( 'sailing_date', $dateValue->setTime( 0, 0 )->getTimestamp(), '>=' );
-						}
-					}
-					break;
 				case Taxonomy\Month::$name . '_to':
-					if ( $dateTerm = get_term_by( 'id', (int) $value, Taxonomy\Month::$name ) ) {
-						if ( $dateValue = DateTime::createFromFormat( 'Ymd', $dateTerm->slug . '01' ) ) {
-							/* get last day of month */
-							$dateValue = DateTime::createFromFormat( 'Ymd', $dateValue->format( 'Ymt' ) );
-
-							$meta[] = $this->getMetaArray( 'sailing_date', $dateValue->setTime( 0, 0 )->getTimestamp(), '<=' );
-						}
-					}
-					break;
-				case 'atd_cf_keyword':
-					$query->set( 's', $value );
+					$_GET[ $criterion ] = $value;
 					break;
 				default:
-					if ( isset( $taxonomies[ $criterion ] ) ) {
+					if ( defined( 'REST_REQUEST' ) && REST_REQUEST && isset( $taxonomies[ $criterion ] ) ) {
 						$tax[] = $this->getTaxonomyArray( $criterion, $value );
 					}
 			}
 		}
 
-
 		if ( ! empty( $tax ) ) {
-			$tax = array_merge( [ 'relation' => 'AND' ], $tax );
-			if ( ! empty( $query->tax_query ) ) {
-				$query->tax_query->queries = $tax;
-			}
-			$query->query_vars['tax_query'] = $tax;
-			foreach ( $query->query as $k => $v ) {
-				if ( substr( $k, 0, 7 ) === 'atd_cf_' ) {
-					unset( $query->query[ $k ], $query->query_vars[ $k ] );
-				}
-			}
+			$query->set( 'tax_query', array_merge( [ 'relation' => 'AND' ], $tax ) );
 		}
 
 		if ( ! empty( $meta ) ) {
@@ -205,11 +216,9 @@ class Results {
 			$terms = [ $terms ];
 		}
 
-		$terms = array_map( 'intval', $terms );
-
 		return [
 			'taxonomy' => $taxonomy,
-			'field'    => 'id',
+			'field'    => 'slug',
 			'terms'    => $terms
 		];
 	}
