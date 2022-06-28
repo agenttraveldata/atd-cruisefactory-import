@@ -1,8 +1,8 @@
 <?php
 
 $departure = atd_cf_get_departure_details( get_query_var( 'departure_id', 0 ), get_query_var( 'departure_type' ) );
-if ($departure->getId() === 0) {
-    return;
+if ( $departure->getId() === 0 ) {
+	return;
 }
 
 $paxTypes  = ATD_CF_XML_PAX_TYPES;
@@ -11,7 +11,7 @@ $leadTypes = ATD_CF_XML_LEAD_CATEGORIES;
 $pax        = get_query_var( 'pax', 'double' );
 $pax        = $pax === 'twin' ? 'double' : $pax;
 $cabinPrice = get_query_var( 'cabin_price', null );
-$leadPrice  = get_query_var( 'lead_price', 'inside' );
+$leadPrice  = get_query_var( 'lead_price', null );
 
 ?>
 <h4>Departure Summary</h4>
@@ -35,13 +35,13 @@ $leadPrice  = get_query_var( 'lead_price', 'inside' );
 		<?php if ( $departure->getSpecial() ): ?>
 			<?php if ( $cabinPrice ): ?>
 				<?php echo $departure->getSpecialPrice()->getCabin()->getName(); ?>
-			<?php else: ?>
+			<?php elseif ( ! empty( $leadPrice ) ): ?>
 				<?php echo ucfirst( $leadPrice ); ?>
 			<?php endif; ?>
 		<?php else: ?>
 			<?php if ( $cabinPrice ): ?>
 				<?php echo $departure->getCruisePrice()->getCabin(); ?>
-			<?php else: ?>
+			<?php elseif ( ! empty( $leadPrice ) ): ?>
 				<?php echo ucfirst( $leadPrice ); ?>
 			<?php endif; ?>
 		<?php endif; ?>
