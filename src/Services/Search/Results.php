@@ -43,10 +43,6 @@ class Results {
 	public function restDepartureQuery( array $args, WP_REST_Request $request ): array {
 		define( 'ATD_CF_XML_HYDRATE_POST', true );
 
-		if ( ! empty( $request->get_query_params() ) ) {
-			$_GET = array_merge( $_GET, $request->get_query_params() );
-		}
-
 		if ( ! isset( $args['meta_query'] ) ) {
 			$args['meta_query'] = [];
 		}
@@ -58,7 +54,7 @@ class Results {
 		];
 
 		$newQuery = new WP_Query();
-		$this->setupSearchQuery( $newQuery );
+		$this->setupSearchQuery( $newQuery, $request );
 
 		if ( isset( $newQuery->query_vars['tax_query'] ) ) {
 			$args['tax_query'] = $newQuery->query_vars['tax_query'];
@@ -92,7 +88,7 @@ class Results {
 		return $args;
 	}
 
-	private function setupSearchQuery( WP_Query $query ): void {
+	private function setupSearchQuery( WP_Query $query, WP_REST_Request $request = null ): void {
 		$query->set( 'post_type', 'departure' );
 		$query->set( 'post_status', 'public' );
 		$query->set( 'posts_per_page', get_option( 'posts_per_page' ) );
@@ -112,7 +108,7 @@ class Results {
 			}
 
 			if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
-				$this->searchQueryByTaxonomy( $query, $_GET['atd_cf_filter'] ?? [] );
+				$this->searchQueryByTaxonomy( $query, $request->get_query_params()['atd_cf_filter'] );
 			}
 
 			$this->searchQueryDateAndKeywords( $query, $_GET );
