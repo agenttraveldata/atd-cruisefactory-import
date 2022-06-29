@@ -53,8 +53,13 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: ${{ runner.os }}-node-
 
+      - name: Zipping up file
+      - uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r atd-cf-xml-importer.zip dist includes src templates var vendor atd-cruisefactory-xml.php
+
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "composer.json,composer.lock"
+          artifacts: "atd-cf-xml-importer.zip"
           bodyFile: "release-notes.md"
           token: ${{ secrets.GITHUB_TOKEN }}
