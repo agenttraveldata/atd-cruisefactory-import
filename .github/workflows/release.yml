@@ -1,4 +1,4 @@
-name: Release
+name: Releases
 
 on:
   push:
@@ -26,7 +26,6 @@ jobs:
 
       - uses: php-actions/composer@v6
         with:
-          php_extensions: gd zip
           php_version: 7.4
           dev: no
           ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
