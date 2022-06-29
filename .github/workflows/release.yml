@@ -7,29 +7,38 @@ on:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [ 12.x, 14.x, 16.x ]
+
     permissions:
       contents: write
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Get Composer Cache Directory
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+
+      - name: Cache Composer packages
         id: composer-cache
-        run: |
-          echo "::set-output name=dir::$(composer config cache-files-dir)"
-      - uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
-            ${{ runner.os }}-composer-
+            ${{ runner.os }}-php-
 
-      - uses: php-actions/composer@v6
+      - name: Install dependencies
+        run: composer install --no-dev --no-progress
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
-          php_version: 7.4
-          dev: no
-          ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
-          ssh_key_pub: ${{ secrets.SSH_PUB_KEY }}
+          node-version: ${{ matrix.node-version }}
 
       - name: Build
         env:
