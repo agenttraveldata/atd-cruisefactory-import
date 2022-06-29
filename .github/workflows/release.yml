@@ -42,6 +42,7 @@ jobs:
           npm ci
           npm run build
           npm pack
+          npm run plugin-release
 
       - name: Get Node.js cache directory
         id: node-cache-dir
