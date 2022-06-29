@@ -1,7 +1,7 @@
 /.idea
 /vendor
 /node_modules
-/releases
+/release
 /dist
 /var/logs
 !/var/logs/index.php
