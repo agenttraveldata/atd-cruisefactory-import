@@ -56,10 +56,10 @@ jobs:
       - name: Zipping up file
         uses: montudor/action-zip@v1
         with:
-          args: zip -qq -r atd-cf-xml-importer.zip dist includes src templates var vendor atd-cruisefactory-xml.php
+          args: zip -qq -r atd-cruisefactory-xml.zip dist includes src templates var vendor atd-cruisefactory-xml.php
 
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "atd-cf-xml-importer.zip"
+          artifacts: "atd-cruisefactory-xml.zip"
           bodyFile: "release-notes.md"
           token: ${{ secrets.GITHUB_TOKEN }}
