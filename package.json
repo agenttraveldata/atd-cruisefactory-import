@@ -17,8 +17,7 @@
     "scripts": {
         "build": "webpack --mode=production",
         "watch": "webpack --mode=development --watch --progress",
-        "pack-plugin": "rm -rf ./vendor ./release/*; composer install --no-dev; rm -rf ./node_modules; npm ci; npm run build; npm pack",
-        "postpack-plugin": "pkgDir=${PWD/*\\//};pkgName=$(npm list --depth 0 | sed 's/@/-/g; s/ .*//g; 1q;'); tar zxf ./$pkgName.tgz; mv ./package $pkgDir; zip -qr release/atd-cf-xml-importer.zip ./$pkgDir; rm -rf ./$pkgName.tgz ./$pkgDir; rm -rf ./vendor; composer i",
-		"plugin-release": "pkgDir=${PWD/*\\//};pkgName=$(npm list --depth 0 | sed 's/@/-/g; s/ .*//g; 1q;'); tar zxf ./$pkgName.tgz; mv ./package $pkgDir; zip -qr release/atd-cf-xml-importer.zip ./$pkgDir"
+        "pack-plugin": "rm -rf ./vendor ./release/*; composer install --no-dev --no-progress; rm -rf ./node_modules; npm ci; npm run build; npm pack",
+        "postpack-plugin": "pkgDir=${PWD/*\\//};pkgName=$(npm list --depth 0 | sed 's/@/-/g; s/ .*//g; 1q;'); tar zxf ./$pkgName.tgz; mv ./package $pkgDir; zip -qr release/atd-cf-xml-importer.zip ./$pkgDir; rm -rf ./$pkgName.tgz ./$pkgDir; rm -rf ./vendor; composer i"
     }
 }

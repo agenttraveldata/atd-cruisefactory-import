@@ -41,8 +41,6 @@ jobs:
         run: |
           npm ci
           npm run build
-          npm pack
-          npm run plugin-release
 
       - name: Get Node.js cache directory
         id: node-cache-dir
@@ -57,6 +55,6 @@ jobs:
 
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "release/atd-cf-xml-importer.zip"
-          bodyFile: "body.md"
+          artifacts: "composer.json,composer.lock"
+          bodyFile: "release-notes.md"
           token: ${{ secrets.GITHUB_TOKEN }}
