@@ -1,23 +1,23 @@
 {
-	"name": "atd-cf-xml-importer",
-	"version": "1.0.0",
-	"dependencies": {
-		"@hotwired/stimulus": "^3.0.1"
-	},
-	"devDependencies": {
-		"css-loader": "^6.2.0",
-		"mini-css-extract-plugin": "^2.2.2",
-		"sass": "^1.39.0",
-		"sass-loader": "^12.1.0",
-		"style-loader": "^3.2.1",
-		"webpack": "^5.51.1",
-		"webpack-cli": "^4.8.0",
-		"@hotwired/stimulus-webpack-helpers": "^1.0.1"
-	},
-	"scripts": {
-		"build": "webpack --mode=production",
-		"watch": "webpack --mode=development --watch --progress",
-		"pack-plugin": "rm -rf ./vendor ./release/*; composer install --no-dev; rm -rf ./node_modules; npm ci; npm run build; npm pack",
-		"postpack-plugin": "pkgDir=${PWD/*\\//};pkgName=$(npm list --depth 0 | sed 's/@/-/g; s/ .*//g; 1q;'); tar zxf ./$pkgName.tgz; mv ./package $pkgDir; zip -qr release/$pkgName.zip ./$pkgDir; rm -rf ./$pkgName.tgz ./$pkgDir; rm -rf ./vendor; composer i"
-	}
+    "name": "atd-cf-xml-importer",
+    "version": "1.0.0",
+    "dependencies": {
+        "@hotwired/stimulus": "^3.0.1"
+    },
+    "devDependencies": {
+        "css-loader": "^6.2.0",
+        "mini-css-extract-plugin": "^2.2.2",
+        "sass": "^1.39.0",
+        "sass-loader": "^12.1.0",
+        "style-loader": "^3.2.1",
+        "webpack": "^5.51.1",
+        "webpack-cli": "^4.8.0",
+        "@hotwired/stimulus-webpack-helpers": "^1.0.1"
+    },
+    "scripts": {
+        "build": "webpack --mode=production",
+        "watch": "webpack --mode=development --watch --progress",
+        "pack-plugin": "rm -rf ./vendor ./release/*; composer install --no-dev; rm -rf ./node_modules; npm ci; npm run build; npm pack",
+        "postpack-plugin": "pkgDir=${PWD/*\\//};pkgName=$(npm list --depth 0 | sed 's/@/-/g; s/ .*//g; 1q;'); tar zxf ./$pkgName.tgz; mv ./package $pkgDir; zip -qr release/atd-cf-xml-importer.zip ./$pkgDir; rm -rf ./$pkgName.tgz ./$pkgDir; rm -rf ./vendor; composer i"
+    }
 }

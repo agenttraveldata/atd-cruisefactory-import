@@ -12,8 +12,48 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v2
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - uses: php-actions/composer@v6
+        with:
+          php_extensions: gd zip
+          php_version: 7.4
+          dev: no
+          ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh_key_pub: ${{ secrets.SSH_PUB_KEY }}
+
+      - name: Build
+        env:
+          APP_ENV: prod
+          APP_DEBUG: 0
+        run: |
+          npm ci
+          npm run build
+          npm pack
+
+      - name: Get Node.js cache directory
+        id: node-cache-dir
+        run: echo "::set-output name=dir::$(npm config get cache)"
+
+      - name: Cache Node.js dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.node-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-node-
+
       - uses: ncipollo/release-action@v1
-      with:
-        artifacts: "release/atd-cf-xml-importer.tar.gz"
-        bodyFile: "body.md"
-        token: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          artifacts: "release/atd-cf-xml-importer.zip"
+          bodyFile: "body.md"
+          token: ${{ secrets.GITHUB_TOKEN }}
