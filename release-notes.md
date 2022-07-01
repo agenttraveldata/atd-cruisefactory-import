@@ -1,0 +1,2 @@
+ - Fixed `--images=exclude` flag not working
+ - Updated plugin version to match release version.
