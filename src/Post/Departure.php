@@ -165,7 +165,7 @@ class Departure implements Post {
 			wp_set_object_terms( $post_id, (int) $term['term_id'], Taxonomy\Month::$name );
 		}
 
-		if ( ! empty( $details->getCruise()->getPhoto() ) ) {
+		if ( ! defined( 'ATD_CF_XML_IMAGE_EXCLUDE' ) && ! empty( $details->getCruise()->getPhoto() ) ) {
 			$imageUrl       = self::$cfImageUrl . $details->getCruise()->getPhoto();
 			$imageExtension = strtolower( pathinfo( $imageUrl, PATHINFO_EXTENSION ) );
 			$imageFileName  = 'atd-cfi_cruise-' . $details->getCruise()->getId() . ( $imageExtension === '' ? '.jpg' : '.' . $imageExtension );

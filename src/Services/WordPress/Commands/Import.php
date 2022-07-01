@@ -3,7 +3,6 @@
 
 namespace ATD\CruiseFactory\Services\WordPress\Commands;
 
-
 use ATD\CruiseFactory\Feed;
 use ATD\CruiseFactory\Services\Logger;
 use DateTime;
@@ -59,8 +58,9 @@ class Import {
 	 * [--images=<images>]
 	 * : Whether to import images into WordPress
 	 * ---
-	 * default: overwrite
+	 * default: import
 	 * options:
+	 *   - import
 	 *   - overwrite
 	 *   - exclude
 	 * ---
@@ -83,8 +83,15 @@ class Import {
 	 *
 	 */
 	public function services( array $args, array $args_assoc ): void {
-		if ( ! empty( $args_assoc['images'] ) && $args_assoc['images'] === 'overwrite' ) {
-			define( 'ATD_CF_XML_IMAGE_OVERWRITE', true );
+		if ( ! empty( $args_assoc['images'] ) ) {
+			switch ( $args_assoc['images'] ) {
+				case 'overwrite':
+					define( 'ATD_CF_XML_IMAGE_OVERWRITE', true );
+					break;
+				case 'exclude':
+					define( 'ATD_CF_XML_IMAGE_EXCLUDE', true );
+					break;
+			}
 		}
 
 		if ( ! empty( $args_assoc['cache'] ) && $args_assoc['cache'] === 'invalidate' ) {
@@ -165,8 +172,9 @@ class Import {
 	 * [--images=<images>]
 	 * : Whether to import images into WordPress
 	 * ---
-	 * default: overwrite
+	 * default: import
 	 * options:
+	 *   - import
 	 *   - overwrite
 	 *   - exclude
 	 * ---
@@ -192,8 +200,15 @@ class Import {
 		define( 'ATD_CF_XML_LOG_UPDATES', true );
 		Logger::info( 'Incremental import started.' );
 
-		if ( ! empty( $args_assoc['images'] ) && $args_assoc['images'] === 'overwrite' ) {
-			define( 'ATD_CF_XML_IMAGE_OVERWRITE', true );
+		if ( ! empty( $args_assoc['images'] ) ) {
+			switch ( $args_assoc['images'] ) {
+				case 'overwrite':
+					define( 'ATD_CF_XML_IMAGE_OVERWRITE', true );
+					break;
+				case 'exclude':
+					define( 'ATD_CF_XML_IMAGE_EXCLUDE', true );
+					break;
+			}
 		}
 
 		if ( ! empty( $args_assoc['cache'] ) && $args_assoc['cache'] === 'invalidate' ) {

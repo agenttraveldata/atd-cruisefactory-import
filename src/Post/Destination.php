@@ -50,7 +50,7 @@ class Destination implements Post {
 
 		$post_id = wp_insert_post( $post_details );
 
-		if ( ! empty( $details->image ) ) {
+		if ( ! defined( 'ATD_CF_XML_IMAGE_EXCLUDE' ) && ! empty( $details->image ) ) {
 			$imageUrl       = self::$cfImageUrl . $details->image;
 			$imageExtension = strtolower( pathinfo( $imageUrl, PATHINFO_EXTENSION ) );
 			$imageFileName  = 'atd-cfi_destination-' . $details->getId() . ( $imageExtension === '' ? '.jpg' : '.' . $imageExtension );

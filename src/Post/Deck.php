@@ -35,7 +35,7 @@ class Deck {
 			]
 		];
 
-		if ( ! empty( $details->getImage() ) ) {
+		if ( ! defined( 'ATD_CF_XML_IMAGE_EXCLUDE' ) && ! empty( $details->getImage() ) ) {
 			self::createAttachment( self::$imageUrl . $details->getImage(), $shipPost->post->ID, $postData );
 		}
 

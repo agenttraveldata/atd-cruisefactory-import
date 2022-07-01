@@ -50,7 +50,7 @@ class Ship implements Post {
 
 		$post_id = wp_insert_post( $post_details );
 
-		if ( ! empty( $details->getThumbnail() ) ) {
+		if ( ! defined( 'ATD_CF_XML_IMAGE_EXCLUDE' ) && ! empty( $details->getThumbnail() ) ) {
 			$imageUrl      = self::$cfImageUrl . $details->getThumbnail();
 			$imageFileName = 'atd-cfi_' . wp_basename( $imageUrl ) . ( pathinfo( $imageUrl, PATHINFO_EXTENSION ) === '' ? '.jpg' : '' );
 

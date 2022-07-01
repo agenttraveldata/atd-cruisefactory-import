@@ -38,12 +38,12 @@ class Cabin {
 			]
 		];
 
-		if ( ! empty( $details->getImage() ) ) {
+		if ( ! defined( 'ATD_CF_XML_IMAGE_EXCLUDE' ) && ! empty( $details->getImage() ) ) {
 			$postData['meta_input']['atd_cfi_cabin_image_type'] = 'image';
 			self::createAttachment( self::$cabinImageUrl . $details->getImage(), $shipPost->post->ID, $postData );
 		}
 
-		if ( ! empty( $details->getPhoto() ) ) {
+		if ( ! defined( 'ATD_CF_XML_IMAGE_EXCLUDE' ) && ! empty( $details->getPhoto() ) ) {
 			$postData['meta_input']['atd_cfi_cabin_image_type'] = 'photo';
 			self::createAttachment( self::$cabinPhotoUrl . $details->getPhoto(), $shipPost->post->ID, $postData );
 		}

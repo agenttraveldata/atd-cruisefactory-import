@@ -49,7 +49,7 @@ class CruiseLine implements Post {
 
 		$post_id = wp_insert_post( $post_details );
 
-		if ( ! empty( $details->getLogoData() ) ) {
+		if ( ! defined( 'ATD_CF_XML_IMAGE_EXCLUDE' ) && ! empty( $details->getLogoData() ) ) {
 			$logoFileName = 'atd-cfi_cruise-line-logo_' . $details->id . '.' . self::getExtension( $details->getLogoType() );
 
 			$tfp = tmpfile();
