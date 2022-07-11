@@ -4,7 +4,7 @@
 Plugin Name: ATD - Cruisefactory XML
 Plugin URI: https://www.agenttraveldata.com/integrations/wordpress
 Description: Cruise Factory XML import for creating dynamic automatically updated cruise websites. ^Cruise Factory account required.
-Version: 0.1.1
+Version: 0.2.0
 Author: Agent Travel Data
 Author URI: https://www.agenttraveldata.com
 License: GPL2
