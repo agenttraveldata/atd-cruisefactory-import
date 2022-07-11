@@ -1,4 +1,10 @@
-<?php global $atdSpecial, $atdFactory; ?>
+<?php
+/**
+ * @var ATD\CruiseFactory\Entity\Factory $atdFactory
+ * @var ATD\CruiseFactory\Entity\Special $atdSpecial
+ */
+global $atdSpecial, $atdFactory;
+?>
 
 <?php if ( $atdSpecial->getSpecialLeadPrice() ): ?>
     <div class="atd-cfi__mb-2">
@@ -24,7 +30,7 @@
         <select name="cabin_price" class="atd-cfi__input" id="atd-cfi-departure-special-price">
 			<?php foreach ( $atdSpecial->getSpecialPrices() as $price ): ?>
                 <option value="<?php echo $price->getId(); ?>">
-					<?php echo $price->getCabin()->getName(); ?> - <?php echo $atdFactory->getCurrency()->getSign() . number_format( $price->getPrice() ) . 'pp'; ?>
+					<?php echo $price->getCabin()->getName(); ?> - <?php echo $atdSpecial->getCurrency()->getSign() . number_format( $price->getPrice() ) . 'pp'; ?>
                 </option>
 			<?php endforeach; ?>
         </select>

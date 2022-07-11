@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @var ATD\CruiseFactory\Entity\Factory $atdFactory
+ * @var ATD\CruiseFactory\Entity\Departure $atdDeparture
+ * @var ATD\CruiseFactory\Entity\Special $atdSpecial
+ */
 global $atdFactory, $atdDeparture, $atdSpecial;
 $cruiseLinePost = atd_cf_get_post_by_meta_value( 'cruise-line', $atdDeparture->getCruise()->getCruiseLine()->getId(), true );
 $shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruise()->getShip()->getId(), true );
@@ -28,7 +33,7 @@ $shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruis
                         <h3>Special Pricing</h3>
                         <h4 class="atd-cfi__mb-2">
                             <small>From</small>
-                            <small><?php echo $atdFactory->getCurrency()->getSign(); ?></small><?php echo number_format( $atdSpecial->getStartPrice() ); ?>
+                            <small><?php echo $atdSpecial->getCurrency()->getSign(); ?></small><?php echo number_format( $atdSpecial->getStartPrice() ); ?>
                             <small>pp twin share</small>
                         </h4>
 						<?php atd_cf_get_template_part( 'content/departure', 'special-pricing' ); ?>
@@ -36,7 +41,7 @@ $shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruis
                         <h3>Pricing</h3>
                         <h4 class="atd-cfi__mb-2">
                             <small>From</small>
-                            <small><?php echo $atdFactory->getCurrency()->getSign(); ?></small><?php echo number_format( $atdDeparture->getCruisePrices()->get( 0 )->getPriceDouble() ); ?>
+                            <small><?php echo $atdDeparture->getCruisePrices()->get( 0 )->getCurrency(); ?></small><?php echo number_format( $atdDeparture->getCruisePrices()->get( 0 )->getPriceDouble() ); ?>
                             <small>pp twin share</small>
                         </h4>
 						<?php atd_cf_get_template_part( 'content/departure', 'cruise-pricing' ); ?>

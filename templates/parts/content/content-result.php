@@ -2,7 +2,7 @@
 
 <div class="atd-cfi-sr__row">
     <a data-action="atd-cfi-popover#image" class="atd-cfi-sr-row__img" href="<?php echo get_the_post_thumbnail_url(); ?>">
-		<?php the_post_thumbnail('medium'); ?>
+		<?php the_post_thumbnail( 'medium' ); ?>
     </a>
     <div class="atd-cfi-sr-row__details atd-cfi__flex-1">
         <div class="atd-cfi-sr-row-details__title">
@@ -19,7 +19,7 @@
 					<?php echo ! empty( $atdSpecial )
 						? '<sup>' . $atdSpecial->getCurrency()->getSign() . '</sup>' . number_format( $atdSpecial->getStartPrice() )
 						: ( $atdDeparture->getCruisePrices()->count() > 0
-							? '<sup>' . $atdFactory->getCurrency()->getSign() . '</sup>' . number_format( $atdDeparture->getCruisePrices()->get( 0 )->getPriceDouble() )
+							? '<sup>' . $atdDeparture->getCruisePrices()->get( 0 )->getCurrency() . '</sup>' . number_format( $atdDeparture->getCruisePrices()->get( 0 )->getPriceDouble() )
 							: ''
 						);
 					?>
