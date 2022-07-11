@@ -16,6 +16,7 @@ class Special {
 	private string $validity_date_end;
 	private string $type;
 	private float $start_price;
+	private string $main_special;
 	private ?string $advert_code;
 	private ?Currency $currency;
 	private ?Cruise $cruise;
@@ -175,6 +176,20 @@ class Special {
 
 	public function setPromoCode( string $promoCode ): self {
 		$this->advert_code = $promoCode;
+
+		return $this;
+	}
+
+	public function isMainSpecial(): bool {
+		return $this->main_special === 'y';
+	}
+
+	public function getMainSpecial(): string {
+		return $this->main_special;
+	}
+
+	public function setMainSpecial( string $main_special ): self {
+		$this->main_special = $main_special;
 
 		return $this;
 	}

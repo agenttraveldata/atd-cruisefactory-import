@@ -81,6 +81,7 @@ class Departure implements Post {
 			$meta_input['atd_cfi_special_id']                = $special->getId();
 			$meta_input['atd_cfi_valid_from']                = $special->getValidFrom()->getTimestamp();
 			$meta_input['atd_cfi_valid_to']                  = $special->getValidTo()->getTimestamp();
+			$meta_input['atd_cfi_main_special']              = $special->isMainSpecial();
 		}
 
 		$post_details['meta_input'] = $meta_input;
@@ -232,8 +233,6 @@ class Departure implements Post {
 
 					if ( is_wp_error( $id ) ) {
 						@unlink( $file['tmp_name'] );
-					} else {
-//						set_post_thumbnail( $post_id, $id );
 					}
 				}
 			}
@@ -275,6 +274,7 @@ class Departure implements Post {
 			delete_post_meta( $originalPost->ID, 'atd_cfi_special_id' );
 			delete_post_meta( $originalPost->ID, 'atd_cfi_valid_from' );
 			delete_post_meta( $originalPost->ID, 'atd_cfi_valid_to' );
+			delete_post_meta( $originalPost->ID, 'atd_cfi_main_special' );
 
 			// remove terms
 			if ( $terms = wp_get_post_terms( $originalPost->ID, Taxonomy\SpecialType::$name ) ) {
