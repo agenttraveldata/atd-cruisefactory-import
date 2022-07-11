@@ -1,0 +1,2 @@
+* Added boolean metadata named `atd_cfi_main_special` to special departure posts that will be true if marked as "Main" in the Cruise Factory admin.
+* Added cruise specific currencies instead of factory default to allow for multi-currency display of cruise line pricing if enabled in Cruise Factory admin.
