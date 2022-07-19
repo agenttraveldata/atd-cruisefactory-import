@@ -1,0 +1,1 @@
+Fixed missing relationship for currencies and special pricing.
