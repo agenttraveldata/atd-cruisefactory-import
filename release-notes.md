@@ -1,0 +1,1 @@
+Fixed issue with specials that do not have lead pricing loading summary details when enquiring.
