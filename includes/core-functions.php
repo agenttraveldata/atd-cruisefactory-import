@@ -145,7 +145,9 @@ function atd_cf_get_departure_details( int $departure_id, string $departure_type
 			$summary->setSpecial( $departure->getSpecial() );
 			$summary->setCruise( $departure->getSailingdate()->getCruise() );
 			$summary->setSailingDate( $departure->getSailingdate()->getSailingDate() );
-			$summary->setSpecialLeadPrice( $departure->getSpecial()->getSpecialLeadPrice() );
+			if ( $departure->getSpecial()->getSpecialLeadPrice() ) {
+				$summary->setSpecialLeadPrice( $departure->getSpecial()->getSpecialLeadPrice() );
+			}
 			$specialPrice = $departure->getSpecial()->getSpecialPrices()->filter( function ( $p ) {
 				/** @var Entity\SpecialPrice $p */
 				return $p->getId() === (int) get_query_var( 'cabin_price' );
