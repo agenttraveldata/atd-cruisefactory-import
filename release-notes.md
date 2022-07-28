@@ -1,0 +1,1 @@
+Fixed search results with specials not correctly hydrating values.
