@@ -146,14 +146,16 @@ class Hydrator {
 		switch ( $entityClass ) {
 			case Entity\SpecialDeparture::class:
 				$details->getSpecial()->setDepartureId( $details->getId() );
-				$this->setGlobalVariable( 'special', $details->getSpecial() );
-				$this->setGlobalVariable( 'departure', $details->getSailingDate() );
+				$this->setGlobalVariables( [
+					'special'   => $details->getSpecial(),
+					'departure' => $details->getSailingDate()
+				] );
 
 				$this->globalsToUnset = [ 'special', 'departure' ];
 				break;
 			default:
 				$globalName = substr( strrchr( $entityClass, '\\' ), 1 );
-				$this->setGlobalVariable( $globalName, $details );
+				$this->setGlobalVariables( [ $globalName => $details ] );
 
 				$this->globalsToUnset = [ $globalName ];
 		}
@@ -173,13 +175,15 @@ class Hydrator {
 		return $response;
 	}
 
-	private function setGlobalVariable( string $name, $value ) {
+	private function setGlobalVariables( array $namesAndValues ) {
 		foreach ( $this->globalsToUnset as $unsetName ) {
 			unset( $GLOBALS[ $this->getGlobalVariableName( $unsetName ) ] );
 		}
 
-		if ( ! empty( $value ) ) {
-			$GLOBALS[ $this->getGlobalVariableName( $name ) ] = $value;
+		if ( ! empty( $namesAndValues ) ) {
+			foreach ( $namesAndValues as $name => $value ) {
+				$GLOBALS[ $this->getGlobalVariableName( $name ) ] = $value;
+			}
 		}
 	}
 
@@ -189,7 +193,7 @@ class Hydrator {
 
 	private function setFactoryGlobalVariable(): void {
 		if ( $factory = $this->entityManager->getMapper( Entity\Factory::class )->findBy( [ 'id >' => 0 ] ) ) {
-			$this->setGlobalVariable( 'factory', reset( $factory ) );
+			$this->setGlobalVariables( [ 'factory' => reset( $factory ) ] );
 		}
 	}
 }
