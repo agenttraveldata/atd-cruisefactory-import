@@ -16,7 +16,7 @@
 			return $p->getPriceSingle() > 0;
 		} ) ): foreach ( $prices as $price ): ?>
             <option value="<?php echo $price->getId(); ?>">
-				<?php echo $price->getCabin(); ?> - <?php echo $price->getCurrency() . number_format( $price->getPriceSingle() ) . 'pp'; ?>
+				<?php echo $price->getCabin()->getName(); ?> - <?php echo $price->getCurrency() . number_format( $price->getPriceSingle() ) . 'pp'; ?>
             </option>
 		<?php endforeach;
 		else: ?>
@@ -31,7 +31,7 @@
 			return $p->getPriceDouble() > 0;
 		} ) ): foreach ( $prices as $price ): ?>
             <option value="<?php echo $price->getId(); ?>">
-				<?php echo $price->getCabin(); ?> - <?php echo $price->getCurrency() . number_format( $price->getPriceDouble() ) . 'pp'; ?>
+				<?php echo $price->getCabin()->getName(); ?> - <?php echo $price->getCurrency() . number_format( $price->getPriceDouble() ) . 'pp'; ?>
             </option>
 		<?php endforeach;
 		else: ?>
@@ -46,7 +46,7 @@
 			return $p->getPriceTriple() > 0;
 		} ) ): foreach ( $prices as $price ): ?>
             <option value="<?php echo $price->getId(); ?>">
-				<?php echo $price->getCabin(); ?> - <?php echo $price->getCurrency() . number_format( $price->getPriceTriple() ) . 'pp'; ?>
+				<?php echo $price->getCabin()->getName(); ?> - <?php echo $price->getCurrency() . number_format( $price->getPriceTriple() ) . 'pp'; ?>
             </option>
 		<?php endforeach;
 		else: ?>
@@ -61,7 +61,7 @@
 			return $p->getPriceQuad() > 0;
 		} ) ): foreach ( $prices as $price ): ?>
             <option value="<?php echo $price->getId(); ?>">
-				<?php echo $price->getCabin(); ?> - <?php echo $price->getCurrency() . number_format( $price->getPriceQuad() ) . 'pp'; ?>
+				<?php echo $price->getCabin()->getName(); ?> - <?php echo $price->getCurrency() . number_format( $price->getPriceQuad() ) . 'pp'; ?>
             </option>
 		<?php endforeach;
 		else: ?>

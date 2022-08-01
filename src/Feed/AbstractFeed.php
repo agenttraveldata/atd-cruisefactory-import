@@ -25,6 +25,7 @@ abstract class AbstractFeed implements Feed {
 	protected static array $collections = [];
 	protected static array $relationships = [];
 	protected array $xmlFieldModifiers = [];
+	protected array $xmlFieldRename = [];
 	protected int $expiryTime = 600;
 	protected string $updatedAt;
 	protected wpdb $wpdb;
@@ -243,13 +244,21 @@ abstract class AbstractFeed implements Feed {
 
 	private function importXmlToDatabase( string $xmlFileName ): void {
 		foreach ( $this->fetchRowFromXmlFile( $xmlFileName ) as $row ) {
-			if ( sizeof( $this->xmlFieldModifiers ) > 0 ) {
+			if ( !empty( $this->xmlFieldModifiers ) ) {
 				foreach ( $this->xmlFieldModifiers as $field => $modifier ) {
 					if ( isset( $row[ $field ] ) ) {
 						$row[ $field ] = call_user_func( $modifier, $row[ $field ] );
 					}
 				}
 			}
+            if ( !empty( $this->xmlFieldRename ) ) {
+                foreach ( $this->xmlFieldRename as $field => $newName ) {
+                    if ( isset( $row[ $field ] ) ) {
+                        $row[ $newName ] = $row[ $field ];
+                        unset($row[ $field ]);
+                    }
+                }
+            }
 
 			$this->wpdb->replace( $this->wpdb->prefix . static::$tableName, $row );
 		}

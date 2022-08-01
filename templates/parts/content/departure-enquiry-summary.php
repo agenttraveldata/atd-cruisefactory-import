@@ -40,7 +40,7 @@ $leadPrice  = get_query_var( 'lead_price', null );
 			<?php endif; ?>
 		<?php else: ?>
 			<?php if ( $cabinPrice ): ?>
-				<?php echo $departure->getCruisePrice()->getCabin(); ?>
+				<?php echo $departure->getCruisePrice()->getCabin()->getName(); ?>
 			<?php elseif ( ! empty( $leadPrice ) ): ?>
 				<?php echo ucfirst( $leadPrice ); ?>
 			<?php endif; ?>

@@ -11,6 +11,9 @@ class CruisePrice extends AbstractFeed {
 	protected static string $tableName = 'atd_cfi_cruise_price';
 	protected static string $feedName = 'cabincategorypricing';
 	protected static string $entity = Entity\CruisePrice::class;
+    protected static array $relationships = [
+        'cabin_id' => Entity\Cabin::class,
+    ];
 	protected static ?string $forceServiceType = 'services';
 	protected array $xmlFieldModifiers = [
 		'price_single' => [ self::class, 'convertPrice' ],
@@ -18,6 +21,9 @@ class CruisePrice extends AbstractFeed {
 		'price_triple' => [ self::class, 'convertPrice' ],
 		'price_quad'   => [ self::class, 'convertPrice' ]
 	];
+    protected array $xmlFieldRename = [
+        'cabin' => 'cabin_name',
+    ];
 
 	public static function convertPrice( float $value ): ?float {
 		if ( $value < 1 ) {
@@ -43,13 +49,14 @@ class CruisePrice extends AbstractFeed {
 		return <<<SQL
 CREATE TABLE `$tableName` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `cabin` varchar(48) NOT NULL DEFAULT '',
+  `cabin_name` varchar(48) NOT NULL DEFAULT '',
   `sailingdate_id` int NOT NULL,
   `price_single` decimal(10,2) DEFAULT NULL,
   `price_double` decimal(10,2) DEFAULT NULL,
   `price_triple` decimal(10,2) DEFAULT NULL,
   `price_quad` decimal(10,2) DEFAULT NULL,
   `currency` char(8) NOT NULL,
+  `cabin_id` int DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `sailingdateid` (`sailingdate_id`)
