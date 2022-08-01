@@ -161,7 +161,7 @@ class Importer {
 	public function installTables() {
 		if ( ATD_CF_PLUGIN_VERSION !== get_option( ATD_CF_XML_DB_VERSION_FIELD ) ) {
             global $wpdb;
-            if ($wpdb->query('SHOW COLUMNS FROM `wp_atd_cfi_cruise_price` LIKE "cabin"') === 1) {
+            if ($wpdb->query('SHOW COLUMNS FROM `' . Feed\CruisePrice::getTableNameWithPrefix() . '` LIKE "cabin"') === 1) {
                 // this will need to go soon
                 if (false === $wpdb->query('ALTER TABLE ' . Feed\CruisePrice::getTableNameWithPrefix() . ' DROP COLUMN cabin')) {
                     die('failed removing `cabins` column.');
