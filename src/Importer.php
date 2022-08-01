@@ -21,7 +21,11 @@ class Importer {
 			register_activation_hook( ATD_CF_PLUGIN_FILE, [ $this, 'activate' ] );
 			register_deactivation_hook( ATD_CF_PLUGIN_FILE, [ $this, 'deactivate' ] );
 			register_uninstall_hook( ATD_CF_PLUGIN_FILE, [ self::class, 'uninstall' ] );
-		}
+
+            add_action('plugins_loaded', function () {
+                $this->installTables();
+            });
+        }
 	}
 
 	public function init() {
@@ -136,7 +140,6 @@ class Importer {
 
 	public function activate() {
 		Post\Provider::registerPosts();
-		$this->installTables();
 
 		if ( ! get_option( ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD ) ) {
 			$summary     = new Services\WordPress\Blocks\Shortcode( '[atd-cfi-departure-summary/]' );
@@ -156,7 +159,15 @@ class Importer {
 	}
 
 	public function installTables() {
-		if ( ATD_CF_PLUGIN_VERSION !== (int) get_option( ATD_CF_XML_DB_VERSION_FIELD ) ) {
+		if ( ATD_CF_PLUGIN_VERSION !== get_option( ATD_CF_XML_DB_VERSION_FIELD ) ) {
+            global $wpdb;
+            if ($wpdb->query('SHOW COLUMNS FROM `wp_atd_cfi_cruise_price` LIKE "cabin"') === 1) {
+                // this will need to go soon
+                if (false === $wpdb->query('ALTER TABLE ' . Feed\CruisePrice::getTableNameWithPrefix() . ' DROP COLUMN cabin')) {
+                    die('failed removing `cabins` column.');
+                }
+            }
+
 			Feed\Provider::registerTables();
 		}
 	}
