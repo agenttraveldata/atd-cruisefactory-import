@@ -1,0 +1,2 @@
+* Added independent database version number for separation of future changes.
+* Fixed older posts and taxonomies showing if feed hasn't been updated for a while and the posts are still active in WordPress.
