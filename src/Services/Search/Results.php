@@ -108,7 +108,8 @@ class Results {
 			}
 
 			if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
-				$this->searchQueryByTaxonomy( $query, $request->get_query_params()['atd_cf_filter'] );
+                $queryParams = $request->get_query_params()['atd_cf_filter'] ?? [];
+				$this->searchQueryByTaxonomy( $query, $queryParams );
 			}
 
 			$this->searchQueryDateAndKeywords( $query, $_GET );
@@ -126,7 +127,12 @@ class Results {
 	}
 
 	private function searchQueryDateAndKeywords( WP_Query $query, array $criteria ): void {
-		$meta = [];
+        $meta = [[
+            'key'     => 'atd_cfi_sailing_date',
+            'value'   => (new DateTime())->getTimestamp(),
+            'type'    => 'NUMERIC',
+            'compare' => '>='
+        ]];
 
 		foreach ( $criteria as $criterion => $value ) {
 			if ( empty( $value ) ) {

@@ -27,7 +27,14 @@ class SearchController extends AbstractController {
 	}
 
 	public function options( WP_REST_Request $request ): array {
-		$metaQuery = $taxQuery = [];
+		$taxQuery = [];
+        $metaQuery[ Month::$name . '_baseline' ] = [
+            'key'     => 'atd_cfi_sailing_date',
+            'value'   => (new DateTime())->getTimestamp(),
+            'type'    => 'NUMERIC',
+            'compare' => '>='
+        ];
+
 		foreach ( $request->get_query_params() as $param => $value ) {
 			if ( empty( $value ) ) {
 				continue;
