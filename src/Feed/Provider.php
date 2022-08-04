@@ -38,7 +38,7 @@ class Provider {
 			dbDelta( $feed::getCreateTableSchema() );
 		}
 
-		update_option( ATD_CF_XML_DB_VERSION_FIELD, ATD_CF_PLUGIN_VERSION );
+		update_option( ATD_CF_XML_DB_VERSION_FIELD, ATD_CF_DATABASE_VERSION );
 	}
 
 	public static function getFeeds(): array {
