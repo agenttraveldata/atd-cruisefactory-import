@@ -77,11 +77,13 @@ $shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruis
 
             <div class="atd-cfi-tabs__contents" data-atd-cfi-tabs-target="contents">
                 <div id="atd-tab-overview">
+                    <?php if ( $mapImage = atd_cf_get_media_image_by_meta_key_and_id( 'atd_cfi_cruise_id', $atdDeparture->getCruise()->getId() ) ): ?>
                     <div class="atd-cfi__float-end atd-cfi__ml-2 atd-cfi__mb-2 atd-cfi__mw-40">
-                        <a data-action="atd-cfi-popover#image" href="<?php echo get_the_post_thumbnail_url(); ?>">
-                            <img class="atd-cfi__img-fluid" src="<?php echo get_the_post_thumbnail_url(); ?>" alt="">
+                        <a data-action="atd-cfi-popover#image" href="<?php echo $mapImage; ?>">
+                            <img class="atd-cfi__img-fluid" src="<?php echo $mapImage; ?>" alt="Map">
                         </a>
                     </div>
+                    <?php endif; ?>
 
 					<?php the_content(); ?>
                 </div>
