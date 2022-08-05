@@ -26,7 +26,7 @@ global $atdDestination;
         </div>
         <div id="atd-tab-departures"
              data-controller="atd-cfi-ajax-results"
-             data-atd-cfi-ajax-results-param-value='{"atd_cf_destination": "<?php echo $atdDestination->getId(); ?>"}'
+             data-atd-cfi-ajax-results-param-value='{"atd_cf_filter[atd_cf_destination]": "<?php echo $atdDestination->getId(); ?>"}'
              data-atd-cfi-ajax-results-endpoint-value="/wp-json/wp/v2/departure">
             <div class="atd-cfi-sr" data-atd-cfi-ajax-results-target="results">
                 <div class="spinner-loader"></div>

@@ -31,7 +31,7 @@ $cruiseLinePost = atd_cf_get_post_by_meta_value( 'cruise-line', $atdShip->getCru
         </div>
         <div id="atd-tab-departures"
              data-controller="atd-cfi-ajax-results"
-             data-atd-cfi-ajax-results-param-value='{"atd_cf_ship": "<?php echo $atdShip->getId(); ?>"}'
+             data-atd-cfi-ajax-results-param-value='{"atd_cf_filter[atd_cf_ship]": "<?php echo $atdShip->getId(); ?>"}'
              data-atd-cfi-ajax-results-endpoint-value="/wp-json/wp/v2/departure">
             <div class="atd-cfi-sr" data-atd-cfi-ajax-results-target="results">
                 <div class="spinner-loader"></div>
