@@ -12,9 +12,9 @@
 <div class="atd-cfi__mb-2" data-atd-cfi-toggle-element-target="element">
     <label for="atd-cfi-departure-price-single">Single pricing (per person)</label>
     <select name="cabin_price" class="atd-cfi__input" id="atd-cfi-departure-price-single">
-		<?php if ( $prices = $atdDeparture->getCruisePrices()->filter( function ( $p ) {
+		<?php $prices = $atdDeparture->getCruisePrices()->filter( function ( $p ) {
 			return $p->getPriceSingle() > 0;
-		} ) ): foreach ( $prices as $price ): ?>
+		} ); if ( $prices->count() > 0 ): foreach ( $prices as $price ): ?>
             <option value="<?php echo $price->getId(); ?>">
 				<?php echo $price->getCabin()->getName(); ?> - <?php echo $price->getCurrency() . number_format( $price->getPriceSingle() ) . 'pp'; ?>
             </option>
@@ -27,9 +27,9 @@
 <div class="atd-cfi__mb-2" data-atd-cfi-toggle-element-target="element">
     <label for="atd-cfi-departure-price-twin">Twin pricing (per person)</label>
     <select name="cabin_price" class="atd-cfi__input" id="atd-cfi-departure-price-twin">
-		<?php if ( $prices = $atdDeparture->getCruisePrices()->filter( function ( $p ) {
+		<?php $prices = $atdDeparture->getCruisePrices()->filter( function ( $p ) {
 			return $p->getPriceDouble() > 0;
-		} ) ): foreach ( $prices as $price ): ?>
+        } ); if ( $prices->count() > 0 ): foreach ( $prices as $price ): ?>
             <option value="<?php echo $price->getId(); ?>">
 				<?php echo $price->getCabin()->getName(); ?> - <?php echo $price->getCurrency() . number_format( $price->getPriceDouble() ) . 'pp'; ?>
             </option>
@@ -42,9 +42,9 @@
 <div class="atd-cfi__mb-2" data-atd-cfi-toggle-element-target="element">
     <label for="atd-cfi-departure-price-triple">Triple pricing (per person)</label>
     <select name="cabin_price" class="atd-cfi__input" id="atd-cfi-departure-price-triple">
-		<?php if ( $prices = $atdDeparture->getCruisePrices()->filter( function ( $p ) {
+		<?php $prices = $atdDeparture->getCruisePrices()->filter( function ( $p ) {
 			return $p->getPriceTriple() > 0;
-		} ) ): foreach ( $prices as $price ): ?>
+        } ); if ( $prices->count() > 0 ): foreach ( $prices as $price ): ?>
             <option value="<?php echo $price->getId(); ?>">
 				<?php echo $price->getCabin()->getName(); ?> - <?php echo $price->getCurrency() . number_format( $price->getPriceTriple() ) . 'pp'; ?>
             </option>
@@ -57,9 +57,9 @@
 <div class="atd-cfi__mb-2" data-atd-cfi-toggle-element-target="element">
     <label for="atd-cfi-departure-price-quad">Quad pricing (per person)</label>
     <select name="cabin_price" class="atd-cfi__input" id="atd-cfi-departure-price-quad">
-		<?php if ( $prices = $atdDeparture->getCruisePrices()->filter( function ( $p ) {
+		<?php $prices = $atdDeparture->getCruisePrices()->filter( function ( $p ) {
 			return $p->getPriceQuad() > 0;
-		} ) ): foreach ( $prices as $price ): ?>
+        } ); if ( $prices->count() > 0 ): foreach ( $prices as $price ): ?>
             <option value="<?php echo $price->getId(); ?>">
 				<?php echo $price->getCabin()->getName(); ?> - <?php echo $price->getCurrency() . number_format( $price->getPriceQuad() ) . 'pp'; ?>
             </option>
