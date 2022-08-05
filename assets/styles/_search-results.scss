@@ -25,14 +25,12 @@ $search-row-btn-bg: #b10f26;
             flex: 1 0 0;
             max-height: 260px;
             background-color: rgba($search-row-bg, 50%);
+            background-size: cover;
+            background-position: center center;
             overflow: hidden;
 
             @media (min-width: variables.$break-point-mobile) {
                 min-width: 25%;
-            }
-
-            > img {
-                object-fit: cover;
             }
         }
 

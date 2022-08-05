@@ -168,3 +168,34 @@ function atd_cf_get_departure_details( int $departure_id, string $departure_type
 
 	return $summary;
 }
+
+/**
+ * @param string $key
+ * @param int $id
+ * @return string|null
+ */
+function atd_cf_get_media_image_by_meta_key_and_id( string $key, int $id ): ?string {
+    $q = new WP_Query( [
+        'nopaging'               => true,
+        'no_found_rows'          => true,
+        'update_post_term_cache' => false,
+        'posts_per_page'         => 1,
+        'post_type'              => 'attachment',
+        'post_status'            => 'inherit',
+        'meta_query'             => [
+            [
+                'key'     => $key,
+                'value'   => $id,
+                'compare' => '='
+            ]
+        ]
+    ] );
+
+    if ( ! empty( $q->post ) ) {
+        if ( false !== $image = wp_get_attachment_image_url( $q->post->ID, 'full' ) ) {
+            return $image;
+        }
+    }
+
+    return null;
+}
