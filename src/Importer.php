@@ -16,15 +16,14 @@ class Importer {
 		$this->wpdb = $wpdb;
 
 		add_action( 'init', [ $this, 'init' ] );
+        add_action( 'admin_init', function () {
+            $this->installTables();
+        });
 
 		if ( is_admin() ) {
 			register_activation_hook( ATD_CF_PLUGIN_FILE, [ $this, 'activate' ] );
 			register_deactivation_hook( ATD_CF_PLUGIN_FILE, [ $this, 'deactivate' ] );
 			register_uninstall_hook( ATD_CF_PLUGIN_FILE, [ self::class, 'uninstall' ] );
-
-            add_action('plugins_loaded', function () {
-                $this->installTables();
-            });
         }
 	}
 
