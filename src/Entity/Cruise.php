@@ -19,6 +19,7 @@ class Cruise {
 	private ?Ship $ship;
 	private ?Port $embarkPort;
 	private ?Port $disembarkPort;
+    private ?CruiseType $cruiseType;
 	private Collection $itinerary;
 
 	public function __construct() {
@@ -141,15 +142,25 @@ class Cruise {
 		return $this;
 	}
 
-	public function getDisembarkPort(): ?Port {
-		return $this->disembarkPort ?? null;
-	}
+    public function getDisembarkPort(): ?Port {
+        return $this->disembarkPort ?? null;
+    }
 
-	public function setDisembarkPort( Port $disembarkPort ): self {
-		$this->disembarkPort = $disembarkPort;
+    public function setDisembarkPort( Port $disembarkPort ): self {
+        $this->disembarkPort = $disembarkPort;
 
-		return $this;
-	}
+        return $this;
+    }
+
+    public function getCruiseType(): ?CruiseType {
+        return $this->cruiseType ?? null;
+    }
+
+    public function setCruiseType( CruiseType $cruiseType ): self {
+        $this->cruiseType = $cruiseType;
+
+        return $this;
+    }
 
 	public function getItinerary(): Collection {
 		return $this->itinerary;

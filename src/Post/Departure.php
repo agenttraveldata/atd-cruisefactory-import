@@ -162,6 +162,10 @@ class Departure implements Post {
 			wp_set_object_terms( $post_id, (int) $term['term_id'], Taxonomy\DisembarkPort::$name );
 		}
 
+		if ( $term = Taxonomy\CruiseType::addTerm( Taxonomy\CruiseType::$name, $details->getCruise()->getCruiseType()->getName(), (string) $details->getCruise()->getCruiseType()->getId() ) ) {
+			wp_set_object_terms( $post_id, (int) $term['term_id'], Taxonomy\CruiseType::$name );
+		}
+
 		if ( $term = Taxonomy\Month::addTerm( Taxonomy\Month::$name, $details->getSailingDate()->format( 'F Y' ), $details->getSailingDate()->format( 'Ym' ) ) ) {
 			wp_set_object_terms( $post_id, (int) $term['term_id'], Taxonomy\Month::$name );
 		}

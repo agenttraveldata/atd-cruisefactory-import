@@ -19,6 +19,7 @@ class Provider {
 		Deck::class,
 		Amenity::class,
 		Facility::class,
+		CruiseType::class,
 		Cruise::class,
 		Special::class,
 		Itinerary::class,

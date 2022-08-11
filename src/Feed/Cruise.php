@@ -16,7 +16,8 @@ class Cruise extends AbstractFeed {
 		Port::class,
 		Itinerary::class,
 		CruiseLine::class,
-		Ship::class
+		Ship::class,
+		CruiseType::class
 	];
 	protected static array $collections = [ 'cruise_id' => [ Entity\Itinerary::class ] ];
 	protected static array $relationships = [
@@ -24,7 +25,8 @@ class Cruise extends AbstractFeed {
 		'cruiseline_id'    => Entity\CruiseLine::class,
 		'ship_id'          => Entity\Ship::class,
 		'embarkport_id'    => Entity\Port::class,
-		'disembarkport_id' => Entity\Port::class
+		'disembarkport_id' => Entity\Port::class,
+		'cruisetype_id'    => Entity\CruiseType::class
 	];
 
 	public function import( DateTimeInterface $updatedAt ): bool {

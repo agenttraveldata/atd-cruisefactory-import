@@ -5,15 +5,15 @@ namespace ATD\CruiseFactory\Taxonomy;
 
 
 class CruiseType extends AbstractTaxonomy {
-	public static string $name = 'atd_cf_departure_type';
+	public static string $name = 'atd_cf_cruise_type';
 
 	public static function register() {
 		register_taxonomy( self::$name, [ 'departure' ], [
-			'labels'       => [ 'name' => 'Departure Type' ],
+			'labels'       => [ 'name' => 'Cruise Type' ],
 			'show_ui'      => true,
 			'show_in_rest' => true,
 			'query_var'    => true,
-			'rewrite'      => [ 'slug' => 'cruise-search/type' ]
+			'rewrite'      => [ 'slug' => 'cruise-search/style' ]
 		] );
 	}
 }
