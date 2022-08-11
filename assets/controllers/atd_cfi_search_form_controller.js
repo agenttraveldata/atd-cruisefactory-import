@@ -76,7 +76,7 @@ export default class extends Controller {
             this.formData = new FormData(this.element);
         }
 
-        fetch(`${this.apiPath}?${new URLSearchParams(this.formData)}`).then(r => r.json()).then(this.populateDropDowns);
+        this.doFetch(`${this.apiPath}?${new URLSearchParams(this.formData)}`);
     }
 
     reset() {
@@ -89,7 +89,15 @@ export default class extends Controller {
             this.formData.set(el.name, el.value);
         });
 
-        fetch(`${this.apiPath}?${new URLSearchParams(this.formData)}`).then(r => r.json()).then(this.populateDropDowns);
+        this.doFetch(`${this.apiPath}?${new URLSearchParams(this.formData)}`);
+    }
+
+    doFetch = (fetchPath) => {
+        this.element.insertAdjacentHTML('beforeend', `<div id="atd-cf-search-form-spinner"><div class="spinner-loader"></div></div>`)
+        fetch(`${fetchPath}`).then(r => r.json()).then(this.populateDropDowns)
+            .finally(() => {
+                document.getElementById('atd-cf-search-form-spinner').remove();
+            });
     }
 
     snakeToWords = (e) => {
