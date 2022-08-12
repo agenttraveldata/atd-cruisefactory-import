@@ -14,7 +14,9 @@ $shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruis
 <div class="atd-cfi__cols" data-controller="atd-cfi-popover">
     <div class="atd-cfi-cols__column">
         <div class="atd-cfi-departure__logo">
-            <img class="atd-cfi__img-fluid atd-cfi__mb-2" src="data:<?php echo $atdDeparture->getCruise()->getCruiseLine()->getLogoType(); ?>;base64,<?php echo base64_encode( $atdDeparture->getCruise()->getCruiseLine()->getLogoData() ); ?>" alt="Cruise Line">
+            <img class="atd-cfi__img-fluid atd-cfi__mb-2"
+                 src="data:<?php echo $atdDeparture->getCruise()->getCruiseLine()->getLogoType(); ?>;base64,<?php echo base64_encode( $atdDeparture->getCruise()->getCruiseLine()->getLogoData() ); ?>"
+                 alt="Cruise Line">
             <p><?php echo $atdDeparture->getCruise()->getDuration(); ?> nights onboard
                 <a href="<?php echo get_permalink( $shipPost->post->ID ); ?>">
 					<?php echo $atdDeparture->getCruise()->getShip()->getName(); ?>
@@ -24,9 +26,11 @@ $shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruis
                 </a> departing <?php echo $atdDeparture->getSailingDate()->format( 'd M Y' ); ?>
             </p>
         </div>
-        <div class="atd-cfi-departure__pricing atd-cfi__mt-2" data-controller="atd-cfi-toggle-element" data-atd-cfi-toggle-element-prefix-value="atd-cfi-departure-price-">
+        <div class="atd-cfi-departure__pricing atd-cfi__mt-2" data-controller="atd-cfi-toggle-element"
+             data-atd-cfi-toggle-element-prefix-value="atd-cfi-departure-price-">
             <form action="<?php echo get_permalink( get_option( ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD ) ); ?>" method="get">
-                <input type="hidden" name="departure_id" value="<?php echo $atdSpecial ? $atdSpecial->getDepartureId() : $atdDeparture->getId(); ?>">
+                <input type="hidden" name="departure_id"
+                       value="<?php echo $atdSpecial ? $atdSpecial->getDepartureId() : $atdDeparture->getId(); ?>">
                 <input type="hidden" name="departure_type" value="<?php echo $atdSpecial ? 'special' : 'cruise'; ?>">
                 <div class="atd-cfi-departure-pricing__prices">
 					<?php if ( $atdSpecial ): ?>
@@ -77,15 +81,19 @@ $shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruis
 
             <div class="atd-cfi-tabs__contents" data-atd-cfi-tabs-target="contents">
                 <div id="atd-tab-overview">
-                    <?php if ( $mapImage = atd_cf_get_media_image_by_meta_key_and_id( 'atd_cfi_cruise_id', $atdDeparture->getCruise()->getId() ) ): ?>
-                    <div class="atd-cfi__float-end atd-cfi__ml-2 atd-cfi__mb-2 atd-cfi__mw-40">
-                        <a data-action="atd-cfi-popover#image" href="<?php echo $mapImage; ?>">
-                            <img class="atd-cfi__img-fluid" src="<?php echo $mapImage; ?>" alt="Map">
-                        </a>
-                    </div>
-                    <?php endif; ?>
+					<?php if ( $mapImage = atd_cf_get_media_image_by_meta_key_and_id( 'atd_cfi_cruise_id', $atdDeparture->getCruise()->getId() ) ): ?>
+                        <div class="atd-cfi__float-end atd-cfi__ml-2 atd-cfi__mb-2 atd-cfi__mw-40">
+                            <a data-action="atd-cfi-popover#image" href="<?php echo $mapImage; ?>">
+                                <img class="atd-cfi__img-fluid" src="<?php echo $mapImage; ?>" alt="Map">
+                            </a>
+                        </div>
+					<?php endif; ?>
 
-					<?php the_content(); ?>
+					<?php if ( ! empty( get_the_content() ) ): ?>
+						<?php the_content(); ?>
+					<?php else: ?>
+						<?php echo $atdDeparture->getCruise()->getBriefDescription(); ?>
+					<?php endif; ?>
                 </div>
                 <div id="atd-tab-itinerary"
                      data-controller="atd-cfi-ajax-results"
