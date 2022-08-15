@@ -41,7 +41,7 @@ $shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruis
                             <small>pp twin share</small>
                         </h4>
 						<?php atd_cf_get_template_part( 'content/departure', 'special-pricing' ); ?>
-					<?php elseif ( $atdDeparture->getCruisePrices()->count() < 0 ): ?>
+					<?php elseif ( $atdDeparture->getCruisePrices()->count() > 0 ): ?>
                         <h3>Pricing</h3>
                         <h4 class="atd-cfi__mb-2">
                             <small>From</small>
