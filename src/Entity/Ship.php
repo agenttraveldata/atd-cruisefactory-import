@@ -27,10 +27,12 @@ class Ship {
 	private string $nat_officers;
 	private string $nat_dining;
 	private ?CruiseLine $cruiseLine;
+	private Collection $cabins;
 	private Collection $amenities;
 	private Collection $facilities;
 
 	public function __construct() {
+		$this->cabins  = new ArrayCollection();
 		$this->amenities  = new ArrayCollection();
 		$this->facilities = new ArrayCollection();
 	}
@@ -91,6 +93,16 @@ class Ship {
 
 	public function setCruiseLine( CruiseLine $cruiseLine ): self {
 		$this->cruiseLine = $cruiseLine;
+
+		return $this;
+	}
+
+	public function getCabins(): Collection {
+		return $this->cabins;
+	}
+
+	public function setCabins( array $cabins ): self {
+		$this->cabins = new ArrayCollection( $cabins );
 
 		return $this;
 	}
