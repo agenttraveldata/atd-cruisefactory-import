@@ -8,7 +8,7 @@ use ATD\CruiseFactory\Entity;
 
 class Cabin extends AbstractFeed {
 	protected static string $tableName = 'atd_cfi_cabin';
-	protected static string $feedName = 'cabins';
+	protected static string $feedName = 'cabins-with-category';
 	public static string $metaKeyId = 'atd_cfi_cabin_id';
 	protected static string $entity = Entity\Cabin::class;
 	protected static array $relationships = [ 'ship_id' => Entity\Ship::class ];

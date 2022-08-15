@@ -12,6 +12,7 @@ use WP_CLI\ExitException;
 class Import {
 	private array $friendlyFeedNames = [
 		'cruises-with-ports'   => 'cruises',
+		'cabins-with-category' => 'cabins',
 		'deckplans'            => 'decks',
 		'sailingdates'         => 'departures',
 		'specialsailingdates'  => 'special-departures',

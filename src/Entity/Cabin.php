@@ -12,6 +12,7 @@ class Cabin {
 	private string $image;
 	private string $photo;
 	private string $cabin_order;
+	private string $cabin_category;
 
 	public function getId(): int {
 		return $this->id;
@@ -79,6 +80,16 @@ class Cabin {
 
 	public function setOrder( string $order ): self {
 		$this->cabin_order = $order;
+
+		return $this;
+	}
+
+	public function getCategory(): string {
+		return $this->cabin_category;
+	}
+
+	public function setCategory( string $cabinCategory ): self {
+		$this->cabin_category = $cabinCategory;
 
 		return $this;
 	}
