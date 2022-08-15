@@ -21,6 +21,7 @@ class EnquireController extends AbstractController {
 		set_query_var( 'departure_id', (int) $request->get_param( 'departure_id' ) );
 		set_query_var( 'departure_type', $request->get_param( 'departure_type' ) );
 		set_query_var( 'pax', in_array( $request->get_param( 'pax' ), ATD_CF_XML_PAX_TYPES ) ? $request->get_param( 'pax' ) : null );
+		set_query_var( 'request_cabin', (int) $request->get_param( 'request_cabin' ) );
 		set_query_var( 'lead_price', in_array( $request->get_param( 'lead_price' ), ATD_CF_XML_LEAD_CATEGORIES ) ? ucfirst( $request->get_param( 'lead_price' ) ) : null );
 		set_query_var( 'cabin_price', (int) $request->get_param( 'cabin_price' ) );
 
@@ -37,10 +38,11 @@ class EnquireController extends AbstractController {
 
 				$fields = $validator->getSanitizedFields();
 
-				$fields['pax']         = get_query_var( 'pax' );
-				$fields['lead_price']  = get_query_var( 'lead_price' );
-				$fields['cabin_price'] = get_query_var( 'cabin_price' );
-				$fields['summary']     = $summary;
+				$fields['pax']           = get_query_var( 'pax' );
+				$fields['request_cabin'] = get_query_var( 'request_cabin' );
+				$fields['lead_price']    = get_query_var( 'lead_price' );
+				$fields['cabin_price']   = get_query_var( 'cabin_price' );
+				$fields['summary']       = $summary;
 
 				add_filter( 'wp_mail_from', [ $this, 'mailFrom' ], 10, 0 );
 				add_filter( 'wp_mail_from_name', [ $this, 'mailFromName' ], 10, 0 );

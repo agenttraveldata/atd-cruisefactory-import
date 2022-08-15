@@ -8,10 +8,11 @@ if ( $departure->getId() === 0 ) {
 $paxTypes  = ATD_CF_XML_PAX_TYPES;
 $leadTypes = ATD_CF_XML_LEAD_CATEGORIES;
 
-$pax        = get_query_var( 'pax', 'double' );
-$pax        = $pax === 'twin' ? 'double' : $pax;
-$cabinPrice = get_query_var( 'cabin_price', null );
-$leadPrice  = get_query_var( 'lead_price', null );
+$pax          = get_query_var( 'pax', 'double' );
+$pax          = $pax === 'twin' ? 'double' : $pax;
+$cabinPrice   = get_query_var( 'cabin_price', null );
+$requestCabin = get_query_var( 'request_cabin', null );
+$leadPrice    = get_query_var( 'lead_price', null );
 
 ?>
 <h4>Departure Summary</h4>
@@ -38,6 +39,8 @@ $leadPrice  = get_query_var( 'lead_price', null );
 			<?php elseif ( ! empty( $leadPrice ) ): ?>
 				<?php echo ucfirst( $leadPrice ); ?>
 			<?php endif; ?>
+        <?php elseif (!empty($requestCabin)): ?>
+            <?php echo $departure->getRequestCabin()->getName(); ?>
 		<?php else: ?>
 			<?php if ( $cabinPrice ): ?>
 				<?php echo $departure->getCruisePrice()->getCabin()->getName(); ?>

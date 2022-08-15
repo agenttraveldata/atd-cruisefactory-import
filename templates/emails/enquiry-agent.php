@@ -1,4 +1,6 @@
-<p>Enquiry submitted for <?php echo $args['summary']->getSpecial() ? $args['summary']->getSpecial()->getName() : $args['summary']->getCruise()->getName(); ?> departing <?php echo $args['summary']->getSailingDate()->format( 'd/m/Y' ); ?></p>
+<p>Enquiry submitted
+    for <?php echo $args['summary']->getSpecial() ? $args['summary']->getSpecial()->getName() : $args['summary']->getCruise()->getName(); ?>
+    departing <?php echo $args['summary']->getSailingDate()->format( 'd/m/Y' ); ?></p>
 
 <table style="border-spacing: 0;border: none;width: 800px;">
     <tbody>
@@ -16,7 +18,8 @@
                         First Name: <b><?php echo $args['first_name']; ?></b><br>
                         Last Name: <b><?php echo $args['last_name']; ?></b><br>
                         Email:
-                        <b><a href="mailto:<?php echo $args['email_address']; ?>" target="_blank"><?php echo $args['email_address']; ?></a></b><br>
+                        <b><a href="mailto:<?php echo $args['email_address']; ?>"
+                              target="_blank"><?php echo $args['email_address']; ?></a></b><br>
                         Phone Number: <b><?php echo $args['phone_number']; ?></b><br>
                         <p>Passenger Details:<br>
                             <b><?php echo $args['num_adults']; ?> adult(s).</b><br>
@@ -52,6 +55,10 @@
 								<?php else: ?>
                                     Request Price
 								<?php endif; ?>
+                            </strong><br>
+						<?php elseif ( $args['summary']->getRequestCabin() ): ?>
+                            Requested Cabin: <strong>
+								<?php echo $args['summary']->getRequestCabin()->getName(); ?>
                             </strong><br>
 						<?php else: ?>
                             Cabin: <strong>

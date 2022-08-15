@@ -2,6 +2,7 @@
     <input type="hidden" name="departure_type" value="<?php echo get_query_var( 'departure_type' ); ?>">
     <input type="hidden" name="departure_id" value="<?php echo get_query_var( 'departure_id', 0 ); ?>">
     <input type="hidden" name="pax" value="<?php echo get_query_var( 'pax', '' ); ?>">
+    <input type="hidden" name="request_cabin" value="<?php echo get_query_var( 'request_cabin', '' ); ?>">
     <input type="hidden" name="lead_price" value="<?php echo get_query_var( 'lead_price', '' ); ?>">
     <input type="hidden" name="cabin_price" value="<?php echo get_query_var( 'cabin_price', '' ); ?>">
     <div class="atd-cfi__cols-enquiry">

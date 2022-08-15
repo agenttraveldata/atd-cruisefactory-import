@@ -41,7 +41,7 @@ $shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruis
                             <small>pp twin share</small>
                         </h4>
 						<?php atd_cf_get_template_part( 'content/departure', 'special-pricing' ); ?>
-					<?php elseif ( $atdDeparture->getCruisePrices()->count() > 0 ): ?>
+					<?php elseif ( $atdDeparture->getCruisePrices()->count() < 0 ): ?>
                         <h3>Pricing</h3>
                         <h4 class="atd-cfi__mb-2">
                             <small>From</small>
@@ -51,15 +51,7 @@ $shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruis
 						<?php atd_cf_get_template_part( 'content/departure', 'cruise-pricing' ); ?>
 					<?php else: ?>
                         <h4>Request Price</h4>
-                        <div class="atd-cfi__mb-2">
-                            <label for="atd-cfi-departure-price-request">Cabin type</label>
-                            <select name="lead_price" class="atd-cfi__input" id="atd-cfi-departure-price-request">
-                                <option value="inside">Inside</option>
-                                <option value="outside">Outside</option>
-                                <option value="balcony">Balcony</option>
-                                <option value="suite">Suite</option>
-                            </select>
-                        </div>
+                        <?php atd_cf_get_template_part( 'content/departure', 'request-pricing' ); ?>
 					<?php endif; ?>
                 </div>
                 <div class="atd-cfi-departure-pricing__buttons">

@@ -12,6 +12,7 @@ class DepartureSummary {
 	private ?SpecialLeadPrice $specialLeadPrice = null;
 	private ?SpecialPrice $specialPrice = null;
 	private ?CruisePrice $cruisePrice = null;
+	private ?Cabin $requestCabin = null;
 	private ?DateTimeInterface $sailingDate = null;
 
 	public function getId(): ?int {
@@ -60,6 +61,16 @@ class DepartureSummary {
 
 	public function setCruisePrice( ?CruisePrice $cruisePrice ): self {
 		$this->cruisePrice = $cruisePrice;
+
+		return $this;
+	}
+
+	public function getRequestCabin(): ?Cabin {
+		return $this->requestCabin;
+	}
+
+	public function setRequestCabin( ?Cabin $requestCabin ): self {
+		$this->requestCabin = $requestCabin;
 
 		return $this;
 	}

@@ -120,6 +120,7 @@ class Importer {
 				$vars[] = 'departure_id';
 				$vars[] = 'departure_type';
 				$vars[] = 'pax';
+				$vars[] = 'request_cabin';
 				$vars[] = 'lead_price';
 				$vars[] = 'cabin_price';
 
