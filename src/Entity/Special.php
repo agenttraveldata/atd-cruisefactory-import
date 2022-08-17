@@ -12,6 +12,8 @@ use DateTimeInterface;
 class Special {
 	public int $id;
 	private string $special_header;
+	private string $special_text;
+	private string $special_conditions;
 	private string $validity_date_start;
 	private string $validity_date_end;
 	private string $type;
@@ -46,6 +48,26 @@ class Special {
 
 	public function setName( string $name ): self {
 		$this->special_header = $name;
+
+		return $this;
+	}
+
+	public function getInclusions(): string {
+		return $this->special_text;
+	}
+
+	public function setInclusions( string $inclusions ): self {
+		$this->special_text = $inclusions;
+
+		return $this;
+	}
+
+	public function getConditions(): string {
+		return $this->special_conditions;
+	}
+
+	public function setConditions( string $conditions ): self {
+		$this->special_conditions = $conditions;
 
 		return $this;
 	}
