@@ -16,15 +16,15 @@ class Importer {
 		$this->wpdb = $wpdb;
 
 		add_action( 'init', [ $this, 'init' ] );
-        add_action( 'admin_init', function () {
-            $this->installTables();
-        });
+		add_action( 'admin_init', function () {
+			$this->installTables();
+		} );
 
 		if ( is_admin() ) {
 			register_activation_hook( ATD_CF_PLUGIN_FILE, [ $this, 'activate' ] );
 			register_deactivation_hook( ATD_CF_PLUGIN_FILE, [ $this, 'deactivate' ] );
 			register_uninstall_hook( ATD_CF_PLUGIN_FILE, [ self::class, 'uninstall' ] );
-        }
+		}
 	}
 
 	public function init() {
@@ -55,9 +55,11 @@ class Importer {
 				wp_localize_script( 'atd-cf-xml-admin-js', 'atd_cfi', [
 					'verify_xml'             => wp_create_nonce( 'atd_cfi_verify_xml' ),
 					'save_recaptcha'         => wp_create_nonce( 'atd_cfi_save_recaptcha_keys' ),
+					'save_min_capability'    => wp_create_nonce( 'atd_cfi_save_minimum_capability' ),
 					'recaptcha_type_field'   => ATD_CF_XML_GOOGLE_TYPE_FIELD,
 					'recaptcha_site_field'   => ATD_CF_XML_GOOGLE_SITE_KEY_FIELD,
 					'recaptcha_secret_field' => ATD_CF_XML_GOOGLE_SECRET_KEY_FIELD,
+					'min_capability_field'   => ATD_CF_XML_ADMIN_MENU_CAPABILITY_FIELD,
 					'get_feeds'              => wp_create_nonce( 'atd_cfi_get_feeds' ),
 					'xml_import'             => wp_create_nonce( 'atd_cfi_import_xml' )
 				] );
@@ -160,14 +162,14 @@ class Importer {
 
 	public function installTables() {
 		if ( ATD_CF_DATABASE_VERSION !== get_option( ATD_CF_XML_DB_VERSION_FIELD ) ) {
-            global $wpdb;
+			global $wpdb;
 
-            if ($wpdb->query('SHOW COLUMNS FROM `' . Feed\CruisePrice::getTableNameWithPrefix() . '` LIKE "cabin"') === 1) {
-                // this will need to go soon
-                if (false === $wpdb->query('ALTER TABLE ' . Feed\CruisePrice::getTableNameWithPrefix() . ' DROP COLUMN cabin')) {
-                    die('failed removing `cabins` column.');
-                }
-            }
+			if ( $wpdb->query( 'SHOW COLUMNS FROM `' . Feed\CruisePrice::getTableNameWithPrefix() . '` LIKE "cabin"' ) === 1 ) {
+				// this will need to go soon
+				if ( false === $wpdb->query( 'ALTER TABLE ' . Feed\CruisePrice::getTableNameWithPrefix() . ' DROP COLUMN cabin' ) ) {
+					die( 'failed removing `cabins` column.' );
+				}
+			}
 
 			Feed\Provider::registerTables();
 		}

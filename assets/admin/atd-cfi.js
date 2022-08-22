@@ -37,7 +37,28 @@ jQuery(function () {
                 }, 2000);
             }
         });
-    })
+    });
+
+    var capabilityNotification;
+    jQuery('#atd-cfi-capability-save').on('click', function () {
+        var saveButton = jQuery(this);
+        var data = {save_min_capability: atd_cfi.save_min_capability};
+        data[atd_cfi.min_capability_field] = jQuery('#' + atd_cfi.min_capability_field).val();
+        wp.ajax.post('atd_cfi_save_minimum_capability', data).done(function (r) {
+            if (r.hasOwnProperty('message')) {
+                if (capabilityNotification) {
+                    capabilityNotification.remove();
+                }
+
+                capabilityNotification = document.createElement('span');
+                capabilityNotification.innerHTML = r.message;
+                saveButton.parent()[0].insertBefore(capabilityNotification, saveButton.nextSibling);
+                setTimeout(function () {
+                    jQuery(capabilityNotification).fadeOut(2000);
+                }, 2000);
+            }
+        });
+    });
 
     jQuery('#atd-cfi-increment-import').on('click', function () {
         var button = jQuery(this);

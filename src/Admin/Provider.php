@@ -40,6 +40,15 @@ class Provider {
 			wp_send_json_error( [ 'message' => 'Failed to update keys.' ] );
 		} );
 
+		add_action( 'wp_ajax_atd_cfi_save_minimum_capability', function () {
+			if ( false !== check_ajax_referer( 'atd_cfi_save_minimum_capability', 'save_min_capability' ) ) {
+				update_option( ATD_CF_XML_ADMIN_MENU_CAPABILITY_FIELD, $_POST[ ATD_CF_XML_ADMIN_MENU_CAPABILITY_FIELD ] ?? '' );
+				wp_send_json_success( [ 'message' => 'Successfully updated minimum capability.' ] );
+			}
+
+			wp_send_json_error( [ 'message' => 'Failed to update minimum capability.' ] );
+		} );
+
 		add_action( 'wp_ajax_atd_cfi_get_feeds', function () {
 			if ( false !== check_ajax_referer( 'atd_cfi_get_feeds', 'get_feeds' ) ) {
 				wp_send_json_success( [ 'feeds' => \ATD\CruiseFactory\Feed\Provider::getPublicFeeds() ] );
