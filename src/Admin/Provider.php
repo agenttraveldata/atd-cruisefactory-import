@@ -16,7 +16,7 @@ class Provider {
 		add_action( 'wp_ajax_atd_cfi_verify_xml', function () {
 			if ( false !== check_ajax_referer( 'atd_cfi_verify_xml', 'verify_xml' ) ) {
 				define( 'ATD_CF_XML_IMPORT_NO_CACHE', true );
-				update_option( ATD_CF_XML_KEY_FIELD, $_POST['key'] );
+				update_option( ATD_CF_XML_KEY_FIELD, $_POST['key'] ?? null );
 
 				if ( $updatedAt = ( new Factory() )->fetchServices() ) {
 					/* Successfully added factory details, we can assume XML key worked */
