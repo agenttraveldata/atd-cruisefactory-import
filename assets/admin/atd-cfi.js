@@ -4,7 +4,7 @@ jQuery(function () {
 
         wp.ajax.post('atd_cfi_verify_xml', {
             verify_xml: atd_cfi.verify_xml,
-            key: jQuery('#atd_cf_xml_key').val()
+            key: jQuery('#' + atd_cfi.atd_cf_xml_key_field).val()
         }).done(function (r) {
             if (r.hasOwnProperty('services')) {
                 if (r.services !== false) {
