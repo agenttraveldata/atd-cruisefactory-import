@@ -75,7 +75,7 @@ class Provider {
 				$command = new Import();
 				$command->increment( [ 'departures', 'special-departures', 'destinations', 'cruise-lines', 'ships' ], [
 					'wordpress' => 'import',
-					'images'    => 'exclude',
+					'images'    => 'overwrite',
 					'cache'     => 'invalidate'
 				] );
 
