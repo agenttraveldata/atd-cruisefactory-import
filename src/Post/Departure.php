@@ -56,7 +56,7 @@ class Departure implements Post {
 			}
 		}
 
-		$postTitle = isset( $special ) && ! empty( get_option( ATD_CF_XML_SLUG_FIELD, false ) )
+		$postTitle = isset( $special ) && empty( get_option( ATD_CF_XML_SLUG_FIELD, false ) )
 			? $special->getName()
 			: $details->getCruise()->getName() . ' - ' . $details->getSailingDate()->format( 'd/m/Y' );
 
