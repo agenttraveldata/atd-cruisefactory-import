@@ -109,11 +109,6 @@ class Departure implements Post {
 		}
 
 		if ( ! empty( $originalPost ) && empty( $specialDepartureId ) ) {
-			/*
-			 * Only cruises will keep title and update, specials will
-			 * be fully replaced
-			*/
-			unset( $post_details['post_title'] );
 			$post_id = wp_update_post( $post_details );
 		} else {
 			$post_id = wp_insert_post( $post_details );
