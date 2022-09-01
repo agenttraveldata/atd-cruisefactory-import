@@ -188,42 +188,48 @@ class Departure implements Post {
 
 			if ( $attachment->post_count === 1 ) {
 				if ( defined( 'ATD_CF_XML_IMAGE_OVERWRITE' ) ) {
-					$thumb     = wp_get_attachment_image_url( $attachment->post->ID );
-					$uploadDir = wp_get_upload_dir();
-					$subPath   = str_replace( $uploadDir['baseurl'], '', $thumb );
-					$thumbPath = $uploadDir['basedir'] . $subPath;
-					file_put_contents( $thumbPath, file_get_contents( $imageUrl ) );
-				}
-			} else {
-				require_once( ABSPATH . 'wp-admin/includes/file.php' );
-
-				$file = [
-					'name'     => $imageFileName,
-					'tmp_name' => download_url( $imageUrl )
-				];
-
-				if ( ! is_wp_error( $file['tmp_name'] ) ) {
-					require_once( ABSPATH . 'wp-admin/includes/image.php' );
-					require_once( ABSPATH . 'wp-admin/includes/media.php' );
-
-					$attachmentPostData = [
-						'post_title'  => 'Map image for cruise ID ' . $details->getCruise()->getId(),
-						'post_status' => 'publish',
-						'meta_input'  => [
-							$attachmentMetaKey => $details->getCruise()->getId()
-						]
-					];
-
-					$id = media_handle_sideload( $file, $post_id, null, $attachmentPostData );
-
-					if ( is_wp_error( $id ) ) {
-						@unlink( $file['tmp_name'] );
+					if ( self::createMedia( $post_id, $details, $imageFileName, $imageUrl, $attachmentMetaKey ) ) {
+						wp_delete_attachment( $attachment->post->ID, true );
 					}
 				}
+			} else {
+				self::createMedia( $post_id, $details, $imageFileName, $imageUrl, $attachmentMetaKey );
 			}
 		}
 
 		return true;
+	}
+
+	private static function createMedia( int $post_id, object $details, string $imageFileName, string $imageUrl, string $attachmentMetaKey ): bool {
+		require_once( ABSPATH . 'wp-admin/includes/file.php' );
+
+		$file = [
+			'name'     => $imageFileName,
+			'tmp_name' => download_url( $imageUrl )
+		];
+
+		if ( ! is_wp_error( $file['tmp_name'] ) ) {
+			require_once( ABSPATH . 'wp-admin/includes/image.php' );
+			require_once( ABSPATH . 'wp-admin/includes/media.php' );
+
+			$attachmentPostData = [
+				'post_title'  => 'Map image for cruise ID ' . $details->getCruise()->getId(),
+				'post_status' => 'publish',
+				'meta_input'  => [
+					$attachmentMetaKey => $details->getCruise()->getId()
+				]
+			];
+
+			$id = media_handle_sideload( $file, $post_id, null, $attachmentPostData );
+
+			if ( ! is_wp_error( $id ) ) {
+				return true;
+			}
+
+			@unlink( $file['tmp_name'] );
+		}
+
+		return false;
 	}
 
 	private static function findOriginalPost( $metaQuery ): ?WP_Post {
