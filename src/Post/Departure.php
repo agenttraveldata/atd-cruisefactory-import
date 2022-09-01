@@ -174,18 +174,6 @@ class Departure implements Post {
 			$imageExtension = strtolower( pathinfo( $imageUrl, PATHINFO_EXTENSION ) );
 			$imageFileName  = 'atd-cfi_cruise-' . $details->getCruise()->getId() . ( $imageExtension === '' ? '.jpg' : '.' . $imageExtension );
 
-//			if ( has_post_thumbnail( $post_id ) ) {
-//				if ( defined( 'ATD_CF_XML_IMAGE_OVERWRITE' ) ) {
-//					$thumb     = get_the_post_thumbnail_url( $post_id );
-//					$uploadDir = wp_get_upload_dir();
-//					$subPath   = str_replace( $uploadDir['baseurl'], '', $thumb );
-//					$thumbPath = $uploadDir['basedir'] . $subPath;
-//					file_put_contents( $thumbPath, file_get_contents( $imageUrl ) );
-//				}
-//
-//				return true;
-//			}
-
 			$attachmentMetaKey = 'atd_cfi_cruise_id';
 
 			$attachment = new WP_Query( [
@@ -204,7 +192,6 @@ class Departure implements Post {
 			] );
 
 			if ( $attachment->post_count === 1 ) {
-//				set_post_thumbnail( $post_id, $attachment->post->ID );
 				if ( defined( 'ATD_CF_XML_IMAGE_OVERWRITE' ) ) {
 					$thumb     = wp_get_attachment_image_url( $attachment->post->ID );
 					$uploadDir = wp_get_upload_dir();

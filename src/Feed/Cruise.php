@@ -34,9 +34,27 @@ class Cruise extends AbstractFeed {
 		return true;
 	}
 
-	public function xmlSynchronizationUpdate( ): void {
-		foreach ( $this->xmlSynchronizationRows as $id ) {
+	public function xmlSynchronizationUpdate(): void {
+		$specialRows = [];
+
+		$rows = array_filter( $this->xmlSynchronizationRows, function ( $id ) use ( &$specialRows ) {
+			if ( $result = $this->wpdb->get_row( $this->wpdb->prepare( 'SELECT d.id FROM ' . Departure::getTableNameWithPrefix() . ' d WHERE d.cruise_id=%d AND EXISTS(
+				SELECT * FROM ' . SpecialDeparture::getTableNameWithPrefix() . ' s WHERE s.sailingdate_id=d.id
+			)', $id ), ARRAY_A ) ) {
+				$specialRows[] = $result['id'];
+
+				return false;
+			}
+
+			return true;
+		} );
+
+		foreach ( $rows as $id ) {
 			Departure::addForceUpdateRow( [ 'cruise_id' => $id ] );
+		}
+
+		foreach ( $specialRows as $id ) {
+			SpecialDeparture::addForceUpdateRow( [ 'sailingdate_id' => $id ] );
 		}
 	}
 
