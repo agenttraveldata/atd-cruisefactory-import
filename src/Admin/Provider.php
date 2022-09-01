@@ -76,7 +76,7 @@ class Provider {
 				$command->increment( [ 'departures', 'special-departures', 'destinations', 'cruise-lines', 'ships' ], [
 					'wordpress' => 'import',
 					'images'    => 'exclude',
-					'cache'     => 'cache'
+					'cache'     => 'invalidate'
 				] );
 
 				wp_send_json_success( [ 'success' => true ] );

@@ -56,15 +56,14 @@ class Departure implements Post {
 			}
 		}
 
-		$postTitle = isset( $special ) && empty( get_option( ATD_CF_XML_SLUG_FIELD, false ) )
-			? $special->getName()
-			: $details->getCruise()->getName() . ' - ' . $details->getSailingDate()->format( 'd/m/Y' );
+		$cruiseName        = $details->getCruise()->getName() . ' - ' . $details->getSailingDate()->format( 'd/m/Y' );
+		$cruiseDescription = trim( $details->getCruise()->getDescription() );
 
 		$post_details = [
 			'post_type'    => self::$postType,
-			'post_title'   => $postTitle,
-			'post_name'    => sanitize_title( $postTitle ),
-			'post_content' => ( new Blocks\Paragraph( nl2br( trim( $details->getCruise()->getDescription() ) ) ) )->render(),
+			'post_title'   => isset( $special ) ? $special->getName() : $cruiseName,
+			'post_name'    => sanitize_title( isset( $special ) && empty( get_option( ATD_CF_XML_SLUG_FIELD, false ) ) ? $special->getName() : $cruiseName ),
+			'post_content' => ( new Blocks\Paragraph( nl2br( ! empty( $cruiseDescription ) ? $cruiseDescription : $details->getCruise()->getBriefDescription() ) ) )->render(),
 			'post_excerpt' => $details->getCruise()->getBriefDescription(),
 			'post_status'  => 'publish'
 		];

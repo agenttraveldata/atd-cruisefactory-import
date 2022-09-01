@@ -13,6 +13,7 @@ class SpecialDeparture extends AbstractFeed {
 	protected static string $feedName = 'specialsailingdates';
 	public static string $metaKeyId = 'atd_cfi_special_departure_id';
 	protected static string $entity = Entity\SpecialDeparture::class;
+	protected static array $forceUpdateRows = [];
 	public array $dependencies = [
 		Departure::class,
 		Special::class
@@ -28,6 +29,10 @@ class SpecialDeparture extends AbstractFeed {
 		}
 
 		return true;
+	}
+
+	public static function addForceUpdateRow( array $row ): void {
+		static::$forceUpdateRows[] = $row;
 	}
 
 	public static function getTableNameWithPrefix(): string {

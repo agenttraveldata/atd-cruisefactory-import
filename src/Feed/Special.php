@@ -27,9 +27,16 @@ class Special extends AbstractFeed {
 		'currency_id'                  => Entity\Currency::class,
 		Entity\SpecialLeadPrice::class => 'special_id'
 	];
+	protected string $xmlSynchronizationField = 'id';
 
 	public function import( DateTimeInterface $updatedAt ): bool {
 		return true;
+	}
+
+	public function xmlSynchronizationUpdate(): void {
+		foreach ( $this->xmlSynchronizationRows as $id ) {
+			SpecialDeparture::addForceUpdateRow( [ 'special_id' => $id ] );
+		}
 	}
 
 	public static function getTableNameWithPrefix(): string {

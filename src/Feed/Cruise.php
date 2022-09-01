@@ -28,9 +28,16 @@ class Cruise extends AbstractFeed {
 		'disembarkport_id' => Entity\Port::class,
 		'cruisetype_id'    => Entity\CruiseType::class
 	];
+	protected string $xmlSynchronizationField = 'id';
 
 	public function import( DateTimeInterface $updatedAt ): bool {
 		return true;
+	}
+
+	public function xmlSynchronizationUpdate( ): void {
+		foreach ( $this->xmlSynchronizationRows as $id ) {
+			Departure::addForceUpdateRow( [ 'cruise_id' => $id ] );
+		}
 	}
 
 	public static function getTableNameWithPrefix(): string {

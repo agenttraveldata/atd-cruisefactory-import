@@ -10,9 +10,14 @@ class Departure extends AbstractFeed {
 	protected static string $tableName = 'atd_cfi_departure';
 	protected static string $feedName = 'sailingdates';
 	protected static string $entity = Entity\Departure::class;
+	protected static array $forceUpdateRows = [];
 	public array $dependencies = [ Cruise::class ];
 	protected static array $relationships = [ 'cruise_id' => Entity\Cruise::class ];
 	protected static array $collections = [ 'sailingdate_id' => [ Entity\CruisePrice::class ] ];
+
+	public static function addForceUpdateRow( array $row ): void {
+		static::$forceUpdateRows[] = $row;
+	}
 
 	public static function getTableNameWithPrefix(): string {
 		global $wpdb;

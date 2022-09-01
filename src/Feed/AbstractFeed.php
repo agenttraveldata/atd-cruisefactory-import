@@ -26,6 +26,8 @@ abstract class AbstractFeed implements Feed {
 	protected static array $relationships = [];
 	protected array $xmlFieldModifiers = [];
 	protected array $xmlFieldRename = [];
+	protected string $xmlSynchronizationField = '';
+	protected array $xmlSynchronizationRows = [];
 	protected int $expiryTime = 600;
 	protected string $updatedAt;
 	protected wpdb $wpdb;
@@ -244,23 +246,38 @@ abstract class AbstractFeed implements Feed {
 
 	private function importXmlToDatabase( string $xmlFileName ): void {
 		foreach ( $this->fetchRowFromXmlFile( $xmlFileName ) as $row ) {
-			if ( !empty( $this->xmlFieldModifiers ) ) {
+			if ( ! empty( $this->xmlFieldModifiers ) ) {
 				foreach ( $this->xmlFieldModifiers as $field => $modifier ) {
 					if ( isset( $row[ $field ] ) ) {
 						$row[ $field ] = call_user_func( $modifier, $row[ $field ] );
 					}
 				}
 			}
-            if ( !empty( $this->xmlFieldRename ) ) {
-                foreach ( $this->xmlFieldRename as $field => $newName ) {
-                    if ( isset( $row[ $field ] ) ) {
-                        $row[ $newName ] = $row[ $field ];
-                        unset($row[ $field ]);
-                    }
-                }
-            }
+			if ( ! empty( $this->xmlFieldRename ) ) {
+				foreach ( $this->xmlFieldRename as $field => $newName ) {
+					if ( isset( $row[ $field ] ) ) {
+						$row[ $newName ] = $row[ $field ];
+						unset( $row[ $field ] );
+					}
+				}
+			}
+			if ( ! empty( $this->xmlSynchronizationField ) ) {
+				$this->xmlSynchronizationRows[] = $row[ $this->xmlSynchronizationField ];
+			}
 
 			$this->wpdb->replace( $this->wpdb->prefix . static::$tableName, $row );
+		}
+
+		if ( ! empty( $this->xmlSynchronizationRows ) ) {
+			if (method_exists($this, 'xmlSynchronizationUpdate')) {
+				$this->xmlSynchronizationUpdate();
+			}
+		}
+
+		if ( ! empty( static::$forceUpdateRows ) ) {
+			foreach ( static::$forceUpdateRows as $where ) {
+				$this->wpdb->update( $this->wpdb->prefix . static::$tableName, [ 'updated_at' => $this->updatedAt ], $where );
+			}
 		}
 	}
 
