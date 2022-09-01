@@ -56,6 +56,7 @@ class Importer {
 					'verify_xml'             => wp_create_nonce( 'atd_cfi_verify_xml' ),
 					'save_recaptcha'         => wp_create_nonce( 'atd_cfi_save_recaptcha_keys' ),
 					'save_min_capability'    => wp_create_nonce( 'atd_cfi_save_minimum_capability' ),
+					'save_options'           => wp_create_nonce( 'atd_cfi_save_options' ),
 					'atd_cf_xml_key_field'   => ATD_CF_XML_KEY_FIELD,
 					'recaptcha_type_field'   => ATD_CF_XML_GOOGLE_TYPE_FIELD,
 					'recaptcha_site_field'   => ATD_CF_XML_GOOGLE_SITE_KEY_FIELD,

@@ -97,6 +97,23 @@ global $current_user; ?>
                         <button id="atd-cfi-capability-save" class="button-primary">Save</button>
                     </fieldset>
                 </div>
+                <div class="inside">
+                    <h3>Options</h3>
+
+                    <fieldset>
+                        <legend class="screen-reader-text">
+                            <span>Retain original post slug when cruise is converted to special</span>
+                        </legend>
+                        <label for="<?php echo ATD_CF_XML_SLUG_FIELD; ?>">
+                            <input class="atd-cfi-options" name="atd_cf_options[<?php echo ATD_CF_XML_SLUG_FIELD; ?>]" type="checkbox"
+                                   id="<?php echo ATD_CF_XML_SLUG_FIELD; ?>" value="1"
+								<?php echo get_option( ATD_CF_XML_SLUG_FIELD, false ) ? 'checked="checked"' : ''; ?>/>
+                            <span>Retain original post slug when cruise is converted to special</span>
+                        </label>
+                    </fieldset>
+
+                    <button id="atd-cfi-options-save" class="button-primary" style="margin-top: 10px;">Save</button>
+                </div>
             </div>
 		<?php endif; ?>
 	<?php endif; ?>

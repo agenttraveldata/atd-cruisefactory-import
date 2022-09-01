@@ -25,6 +25,7 @@ const ATD_CF_XML_PAX_TYPES                   = [ 'single', 'double', 'triple', '
 const ATD_CF_XML_LEAD_CATEGORIES             = [ 'inside', 'outside', 'balcony', 'suite' ];
 const ATD_CF_XML_MENU_SLUG                   = 'atd-cruisefactory-xml';
 const ATD_CF_XML_KEY_FIELD                   = 'atd_cf_xml_key';
+const ATD_CF_XML_SLUG_FIELD                  = 'atd_cf_retain_slug';
 const ATD_CF_XML_DB_VERSION_FIELD            = 'atd_cfi_db_version';
 const ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD       = 'atd_cfi_enquiry_page_id';
 const ATD_CF_XML_GOOGLE_TYPE_FIELD           = 'atd_cfi_recaptcha_type';

@@ -39,6 +39,38 @@ jQuery(function () {
         });
     });
 
+    var optionsNotification;
+    jQuery('#atd-cfi-options-save').on('click', function () {
+        var saveButton = jQuery(this);
+        var data = {save_options: atd_cfi.save_options};
+        jQuery.find('.atd-cfi-options').map(function (el) {
+            switch (el.type) {
+                case 'checkbox':
+                    if (el.checked) {
+                        data[el.id] = '1';
+                    }
+                    break;
+                default:
+                    data[el.id] = el.value;
+            }
+        });
+
+        wp.ajax.post('atd_cfi_save_options', data).done(function (r) {
+            if (r.hasOwnProperty('message')) {
+                if (optionsNotification) {
+                    optionsNotification.remove();
+                }
+
+                optionsNotification = document.createElement('span');
+                optionsNotification.innerHTML = r.message;
+                saveButton.parent()[0].insertBefore(optionsNotification, saveButton.nextSibling);
+                setTimeout(function () {
+                    jQuery(optionsNotification).fadeOut(2000);
+                }, 2000);
+            }
+        });
+    });
+
     var capabilityNotification;
     jQuery('#atd-cfi-capability-save').on('click', function () {
         var saveButton = jQuery(this);
