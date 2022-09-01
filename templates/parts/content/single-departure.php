@@ -51,7 +51,7 @@ $shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruis
 						<?php atd_cf_get_template_part( 'content/departure', 'cruise-pricing' ); ?>
 					<?php else: ?>
                         <h4>Request Price</h4>
-                        <?php atd_cf_get_template_part( 'content/departure', 'request-pricing' ); ?>
+						<?php atd_cf_get_template_part( 'content/departure', 'request-pricing' ); ?>
 					<?php endif; ?>
                 </div>
                 <div class="atd-cfi-departure-pricing__buttons">
@@ -63,6 +63,9 @@ $shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruis
     <div class="atd-cfi-cols__column atd-cfi-cols-column-2">
         <div class="atd-cfi__tabs" data-controller="atd-cfi-tabs">
             <div class="atd-cfi-tabs__anchors" data-atd-cfi-tabs-target="anchors">
+				<?php if ( ! empty( $atdSpecial ) ): ?>
+                    <a href="#atd-tab-offer">Offer Details</a>
+				<?php endif; ?>
                 <a href="#atd-tab-overview">Overview</a>
                 <a href="#atd-tab-itinerary">Itinerary</a>
                 <a href="#atd-tab-cruise-line">Cruise Line</a>
@@ -72,6 +75,27 @@ $shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruis
             </div>
 
             <div class="atd-cfi-tabs__contents" data-atd-cfi-tabs-target="contents">
+				<?php if ( ! empty( $atdSpecial ) ): ?>
+                    <div id="atd-tab-offer">
+                        <p>
+                            Valid from
+							<?php echo $atdSpecial->getValidFrom()->format( get_option( 'date_format' ) ); ?>
+                            until
+							<?php echo $atdSpecial->getValidTo()->format( get_option( 'date_format' ) ); ?>
+                        </p>
+                        <br>
+                        <p><?php echo nl2br( $atdSpecial->getInclusions() ); ?></p>
+						<?php if ( ! empty( $atdSpecial->getConditions() ) ): ?>
+                            <br>
+                            <p>
+                                <small>
+                                    <strong>Terms &amp; Conditions</strong><br>
+									<?php echo nl2br( $atdSpecial->getConditions() ); ?>
+                                </small>
+                            </p>
+						<?php endif; ?>
+                    </div>
+				<?php endif; ?>
                 <div id="atd-tab-overview">
 					<?php if ( $mapImage = atd_cf_get_media_image_by_meta_key_and_id( 'atd_cfi_cruise_id', $atdDeparture->getCruise()->getId() ) ): ?>
                         <div class="atd-cfi__float-end atd-cfi__ml-2 atd-cfi__mb-2 atd-cfi__mw-40">
@@ -81,8 +105,9 @@ $shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruis
                         </div>
 					<?php endif; ?>
 
-					<?php if ( ! empty( get_the_content() ) ): ?>
-						<?php the_content(); ?>
+					<?php $the_content = apply_filters( 'the_content', get_the_content() );
+					if ( ! empty( $the_content ) ): ?>
+						<?php echo $the_content; ?>
 					<?php else: ?>
 						<?php echo $atdDeparture->getCruise()->getBriefDescription(); ?>
 					<?php endif; ?>
