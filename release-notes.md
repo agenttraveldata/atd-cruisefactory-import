@@ -1,0 +1,1 @@
+* Added special brief description to Special entity.
