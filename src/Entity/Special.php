@@ -12,6 +12,7 @@ use DateTimeInterface;
 class Special {
 	public int $id;
 	private string $special_header;
+	private string $special_brief;
 	private string $special_text;
 	private string $special_conditions;
 	private string $validity_date_start;
@@ -48,6 +49,16 @@ class Special {
 
 	public function setName( string $name ): self {
 		$this->special_header = $name;
+
+		return $this;
+	}
+
+	public function getBriefDescription(): string {
+		return $this->special_brief;
+	}
+
+	public function setBriefDescription( string $briefDescription ): self {
+		$this->special_brief = $briefDescription;
 
 		return $this;
 	}
