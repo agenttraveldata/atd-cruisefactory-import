@@ -20,6 +20,7 @@ class Special {
 	private string $type;
 	private float $start_price;
 	private string $main_special;
+	private ?string $uploaded_pdf;
 	private ?string $advert_code;
 	private ?Currency $currency;
 	private ?Cruise $cruise;
@@ -223,6 +224,20 @@ class Special {
 
 	public function setMainSpecial( string $main_special ): self {
 		$this->main_special = $main_special;
+
+		return $this;
+	}
+
+	public function hasUploadedPdf(): bool {
+		return ! empty( $this->uploaded_pdf );
+	}
+
+	public function getUploadedPdf(): ?string {
+		return $this->uploaded_pdf;
+	}
+
+	public function setUploadedPdf( string $uploadedPdf ): self {
+		$this->uploaded_pdf = $uploadedPdf;
 
 		return $this;
 	}
