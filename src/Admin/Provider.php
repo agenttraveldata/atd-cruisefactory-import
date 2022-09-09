@@ -42,7 +42,12 @@ class Provider {
 
 		add_action( 'wp_ajax_atd_cfi_save_options', function () {
 			if ( false !== check_ajax_referer( 'atd_cfi_save_options', 'save_options' ) ) {
-				$options = [ ATD_CF_XML_SLUG_FIELD, ATD_CF_XML_RESULTS_SPECIALS_FIRST_FIELD ];
+				$options = [
+					ATD_CF_XML_SLUG_FIELD,
+					ATD_CF_XML_RESULTS_SPECIALS_FIRST_FIELD,
+					ATD_CF_XML_AGENT_EMAIL_FIELD,
+					ATD_CF_XML_BCC_EMAIL_FIELD
+				];
 				foreach ( $options as $option ) {
 					update_option( $option, $_POST[ $option ] ?? null );
 				}

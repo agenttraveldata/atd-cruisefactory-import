@@ -101,9 +101,23 @@ global $current_user; ?>
                     <h3>Options</h3>
 
                     <fieldset>
-                        <legend class="screen-reader-text">
-                            <span>Retain original post slug when cruise is converted to special</span>
-                        </legend>
+                        <p><strong><span>Email address configuration for enquiries</span></strong></p>
+                        <label for="<?php echo ATD_CF_XML_AGENT_EMAIL_FIELD; ?>">Agent email address</label><br>
+                        <input size="50" type="text" id="<?php echo ATD_CF_XML_AGENT_EMAIL_FIELD; ?>"
+                               class="atd-cfi-options regular-textbutton-primary"
+                               name="atd_cf_options[<?php echo ATD_CF_XML_AGENT_EMAIL_FIELD; ?>"
+                               value="<?php echo get_option( ATD_CF_XML_AGENT_EMAIL_FIELD, get_option( 'admin_email' ) ); ?>">
+                        <br><br>
+                        <label for="<?php echo ATD_CF_XML_BCC_EMAIL_FIELD; ?>">BCC email address (leave blank to
+                            skip)</label><br>
+                        <input size="50" type="text" id="<?php echo ATD_CF_XML_BCC_EMAIL_FIELD; ?>"
+                               class="atd-cfi-options regular-textbutton-primary"
+                               name="atd_cf_options[<?php echo ATD_CF_XML_BCC_EMAIL_FIELD; ?>]"
+                               value="<?php echo get_option( ATD_CF_XML_BCC_EMAIL_FIELD, null ); ?>">
+                    </fieldset>
+                    <br>
+                    <fieldset>
+                        <p><strong><span>Post options</span></strong></p>
                         <label for="<?php echo ATD_CF_XML_SLUG_FIELD; ?>">
                             <input class="atd-cfi-options" name="atd_cf_options[<?php echo ATD_CF_XML_SLUG_FIELD; ?>]"
                                    type="checkbox"

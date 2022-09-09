@@ -48,10 +48,11 @@ class EnquireController extends AbstractController {
 				add_filter( 'wp_mail_from_name', [ $this, 'mailFromName' ], 10, 0 );
 				add_filter( 'wp_mail_content_type', [ $this, 'mailContentType' ], 10, 0 );
 
-				$to      = get_option( 'admin_email' );
+				$to      = get_option( ATD_CF_XML_AGENT_EMAIL_FIELD, get_option( 'admin_email' ) );
+				$bcc     = get_option( ATD_CF_XML_BCC_EMAIL_FIELD, null );
 				$subject = sprintf( '%s enquiry sent from %s website', $summary->getSpecial() ? 'Special' : 'Cruise', get_bloginfo( 'name' ) );
 
-				if ( $this->dispatchEmail( 'agent', $fields, $to, $subject ) ) {
+				if ( $this->dispatchEmail( 'agent', $fields, $to, $subject, $bcc ) ) {
 					$to      = $fields['email_address'];
 					$subject = sprintf( 'Thank you for your enquiry on %s', get_bloginfo( 'name' ) );
 
@@ -71,13 +72,18 @@ class EnquireController extends AbstractController {
 		wp_send_json_error( [ 'message' => 'The departure you are enquiring for is no longer valid.' ] );
 	}
 
-	private function dispatchEmail( string $templatePart, array $fields, string $to, string $subject ): bool {
+	private function dispatchEmail( string $templatePart, array $fields, string $to, string $subject, ?string $bcc = null ): bool {
 		ob_start();
 		atd_cf_get_template_part( 'emails/enquiry', $templatePart, $fields );
-		$body = ob_get_clean();
+		$body    = ob_get_clean();
+		$headers = [ 'Content-Type: text/html; charset=UTF-8' ];
+
+		if ( ! empty( $bcc ) ) {
+			$headers[] = 'Bcc: ' . $bcc;
+		}
 
 		if ( ! empty( $body ) ) {
-			return wp_mail( $to, $subject, $body, [ 'Content-Type: text/html; charset=UTF-8' ] );
+			return wp_mail( $to, $subject, $body, $headers );
 		}
 
 		return false;
