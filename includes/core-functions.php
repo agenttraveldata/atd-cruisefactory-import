@@ -139,6 +139,12 @@ function atd_cf_get_departure_details( int $departure_id, string $departure_type
 	$summary->setId( $departure_id );
 	$summary->setType( $departure_type );
 
+	if ( $post = Finder::getPostByPostTypeAndId( ATD\CruiseFactory\Post\Departure::$postType, $departure_id ) ) {
+		if ( is_a( $post, WP_Post::class ) ) {
+			$summary->setPost( $post );
+		}
+	}
+
 	switch ( $departure_type ) {
 		case 'special':
 			/** @var Entity\SpecialDeparture $departure */

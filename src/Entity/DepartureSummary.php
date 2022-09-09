@@ -3,6 +3,7 @@
 namespace ATD\CruiseFactory\Entity;
 
 use DateTimeInterface;
+use WP_Post;
 
 class DepartureSummary {
 	private ?int $id = null;
@@ -14,6 +15,7 @@ class DepartureSummary {
 	private ?CruisePrice $cruisePrice = null;
 	private ?Cabin $requestCabin = null;
 	private ?DateTimeInterface $sailingDate = null;
+	private ?WP_Post $post = null;
 
 	public function getId(): ?int {
 		return $this->id;
@@ -101,6 +103,16 @@ class DepartureSummary {
 
 	public function setSailingDate( DateTimeInterface $sailingDate ): self {
 		$this->sailingDate = $sailingDate;
+
+		return $this;
+	}
+
+	public function getPost(): ?WP_Post {
+		return $this->post;
+	}
+
+	public function setPost( WP_Post $post ): self {
+		$this->post = $post;
 
 		return $this;
 	}

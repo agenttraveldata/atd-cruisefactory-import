@@ -32,8 +32,9 @@
                 </tr>
                 <tr>
                     <td style="padding: 15px;">
-                        Departure Id: <b><?php echo $args['summary']->getId(); ?></b><br>
-						<?php echo $args['summary']->getSpecial() ? 'Special' : 'Cruise'; ?> Id:
+                        WordPress Post ID: <b><?php echo $args['summary']->getPost() ? $args['summary']->getPost()->ID : 'N/A'; ?></b><br>
+                        Departure ID: <b><?php echo $args['summary']->getId(); ?></b><br>
+						<?php echo $args['summary']->getSpecial() ? 'Special' : 'Cruise'; ?> ID:
                         <b><?php echo $args['summary']->getSpecial() ? $args['summary']->getSpecial()->getId() : $args['summary']->getCruise()->getId(); ?></b><br>
                         Cruise Line:
                         <b><?php echo $args['summary']->getCruise()->getCruiseLine()->getName(); ?></b><br>
