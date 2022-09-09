@@ -1,0 +1,1 @@
+* Added error checking fix for importing specials, where the cruise post is already converted to a special post.
