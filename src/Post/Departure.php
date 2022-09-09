@@ -56,6 +56,10 @@ class Departure implements Post {
 			}
 		}
 
+		if ( isset( $special ) ) {
+			$special->setName( $special->getName() . ' - ' . $details->getSailingDate()->format( 'd/m/Y' ) );
+		}
+
 		$cruiseName        = $details->getCruise()->getName() . ' - ' . $details->getSailingDate()->format( 'd/m/Y' );
 		$cruiseDescription = trim( $details->getCruise()->getDescription() );
 

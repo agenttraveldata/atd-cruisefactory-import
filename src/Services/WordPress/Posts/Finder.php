@@ -72,9 +72,9 @@ class Finder {
 	public static function getQueryByPostTypeAndMetaValues( string $postType, array $metaValues ): WP_Query {
 		$queryParams = [];
 
-		/** @var class-string<Post\Post> $postClass */
+		/** @var Post\Post $postClass */
 		if ( $postClass = Post\Provider::getPostClassByPostType( $postType ) ) {
-			/** @var class-string<Feed\Feed> $feedClass */
+			/** @var Feed\Feed $feedClass */
 			$feedClass = ConvertClass::toFeedFromPost( $postClass );
 
 			$queryParams = [

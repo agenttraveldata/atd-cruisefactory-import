@@ -105,10 +105,25 @@ global $current_user; ?>
                             <span>Retain original post slug when cruise is converted to special</span>
                         </legend>
                         <label for="<?php echo ATD_CF_XML_SLUG_FIELD; ?>">
-                            <input class="atd-cfi-options" name="atd_cf_options[<?php echo ATD_CF_XML_SLUG_FIELD; ?>]" type="checkbox"
+                            <input class="atd-cfi-options" name="atd_cf_options[<?php echo ATD_CF_XML_SLUG_FIELD; ?>]"
+                                   type="checkbox"
                                    id="<?php echo ATD_CF_XML_SLUG_FIELD; ?>" value="1"
 								<?php echo get_option( ATD_CF_XML_SLUG_FIELD, false ) ? 'checked="checked"' : ''; ?>/>
                             <span>Retain original post slug when cruise is converted to special</span>
+                        </label>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend class="screen-reader-text">
+                            <span>Display "special" departures first when viewing search results</span>
+                        </legend>
+                        <label for="<?php echo ATD_CF_XML_RESULTS_SPECIALS_FIRST_FIELD; ?>">
+                            <input class="atd-cfi-options"
+                                   name="atd_cf_options[<?php echo ATD_CF_XML_RESULTS_SPECIALS_FIRST_FIELD; ?>]"
+                                   type="checkbox"
+                                   id="<?php echo ATD_CF_XML_RESULTS_SPECIALS_FIRST_FIELD; ?>" value="1"
+								<?php echo get_option( ATD_CF_XML_RESULTS_SPECIALS_FIRST_FIELD, false ) ? 'checked="checked"' : ''; ?>/>
+                            <span>Display "special" departures first when viewing search results</span>
                         </label>
                     </fieldset>
 

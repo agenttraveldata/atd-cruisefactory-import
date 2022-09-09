@@ -92,12 +92,31 @@ class Results {
 		$query->set( 'post_type', 'departure' );
 		$query->set( 'post_status', 'public' );
 		$query->set( 'posts_per_page', get_option( 'posts_per_page' ) );
-
 		$query->set( 'meta_query', [
-			'relation'             => 'AND',
-			'atd_cfi_sailing_date' => $this->getMetaArray( 'sailing_date', ( new DateTime() )->setTime( 0, 0 )->getTimestamp(), '>=' )
+			[
+				'relation'             => 'AND',
+				'atd_cfi_sailing_date' => $this->getMetaArray( 'sailing_date', ( new DateTime() )->setTime( 0, 0 )->getTimestamp(), '>=', 'NUMERIC' )
+			]
 		] );
-		$query->set( 'orderby', [ 'atd_cfi_sailing_date' => 'ASC' ] );
+
+		$orderBy = [ 'atd_cfi_sailing_date' => 'ASC' ];
+		if ( get_option( ATD_CF_XML_RESULTS_SPECIALS_FIRST_FIELD, false ) ) {
+			$query->set( 'meta_query', array_merge( $query->get( 'meta_query' ), [
+				[
+					'relation'            => 'OR',
+					'atd_cfi_is_special'  => [
+						'key' => 'atd_cfi_special_id',
+					],
+					'atd_cfi_result_sort' => [
+						'key'     => 'atd_cfi_special_id',
+						'compare' => 'NOT EXISTS',
+					],
+				]
+			] ) );
+			$orderBy = array_merge( [ 'atd_cfi_result_sort' => 'DESC' ], $orderBy );
+		}
+
+		$query->set( 'orderby', $orderBy );
 
 		if ( isset( $_GET ) && sizeof( $_GET ) > 0 ) {
 			if ( isset( $query->query[ Taxonomy\DepartureType::$name ] ) && $query->query[ Taxonomy\DepartureType::$name ] === 'special' ) {
@@ -108,13 +127,13 @@ class Results {
 			}
 
 			if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
-                $queryParams = $request->get_query_params()['atd_cf_filter'] ?? [];
+				$queryParams = $request->get_query_params()['atd_cf_filter'] ?? [];
 				$this->searchQueryByTaxonomy( $query, $queryParams );
 			}
 
 			$this->searchQueryDateAndKeywords( $query, $_GET );
 		} elseif ( isset( $query->query[ Taxonomy\SpecialType::$name ] ) ) {
-			$GLOBALS['showing-top-deals'] = true;
+			$GLOBALS['showing_main_specials'] = true;
 
 			$query->set( 'no_found_rows', true );
 			$query->set( 'meta_query', array_merge( [
@@ -127,12 +146,9 @@ class Results {
 	}
 
 	private function searchQueryDateAndKeywords( WP_Query $query, array $criteria ): void {
-        $meta = [[
-            'key'     => 'atd_cfi_sailing_date',
-            'value'   => (new DateTime())->getTimestamp(),
-            'type'    => 'NUMERIC',
-            'compare' => '>='
-        ]];
+		if ( empty( $query->query_vars['meta_query'][0] ) ) {
+			$query->query_vars['meta_query'] = [];
+		}
 
 		foreach ( $criteria as $criterion => $value ) {
 			if ( empty( $value ) ) {
@@ -142,7 +158,7 @@ class Results {
 			switch ( $criterion ) {
 				case Taxonomy\Month::$name . '_from':
 					if ( $dateValue = DateTime::createFromFormat( 'Ymd', $value . '01' ) ) {
-						$meta[] = $this->getMetaArray( 'sailing_date', $dateValue->setTime( 0, 0 )->getTimestamp(), '>=' );
+						$query->query_vars['meta_query'][0][] = $this->getMetaArray( 'sailing_date', $dateValue->setTime( 0, 0 )->getTimestamp(), '>=', 'NUMERIC' );
 					}
 					break;
 				case Taxonomy\Month::$name . '_to':
@@ -150,20 +166,13 @@ class Results {
 						/* get last day of month */
 						$dateValue = DateTime::createFromFormat( 'Ymd', $dateValue->format( 'Ymt' ) );
 
-						$meta[] = $this->getMetaArray( 'sailing_date', $dateValue->setTime( 0, 0 )->getTimestamp(), '<=' );
+						$query->query_vars['meta_query'][0][] = $this->getMetaArray( 'sailing_date', $dateValue->setTime( 0, 0 )->getTimestamp(), '<=', 'NUMERIC' );
 					}
 					break;
 				case 'atd_cf_keyword':
 					$query->set( 's', $value );
 					break;
 			}
-		}
-
-		if ( ! empty( $meta ) ) {
-			$query->set( 'meta_query', [
-				'relation' => 'AND',
-				$meta
-			] );
 		}
 	}
 
@@ -206,11 +215,12 @@ class Results {
 		}
 	}
 
-	private function getMetaArray( string $key, $value, string $compare = '=' ): array {
+	private function getMetaArray( string $key, $value, string $compare = '=', string $type = 'CHAR' ): array {
 		return [
 			'key'     => 'atd_cfi_' . $key,
 			'value'   => $value,
-			'compare' => $compare
+			'compare' => $compare,
+			'type'    => $type
 		];
 	}
 
