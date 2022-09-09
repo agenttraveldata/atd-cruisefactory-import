@@ -34,14 +34,17 @@ class Departure implements Post {
 				]
 			] ) ) {
 			$originalType = 'special';
-		} else if ( $originalPost = self::findOriginalPost( [
-			'relation'     => 'AND',
-			'departure_id' => [
-				'key'   => Feed\Departure::$metaKeyId,
-				'value' => $details->getId()
-			]
-		] ) ) {
+		} else if ( empty( $specialDepartureId ) && $originalPost = self::findOriginalPost( [
+				'relation'     => 'AND',
+				'departure_id' => [
+					'key'   => Feed\Departure::$metaKeyId,
+					'value' => $details->getId()
+				]
+			] ) ) {
 			if ( get_metadata_raw( 'post', $originalPost->ID, Feed\SpecialDeparture::$metaKeyId, true ) ) {
+				// something is not right here, this should not be a special
+				Logger::error( sprintf( '[%d] Error, trying to convert special post (%d) to special post', $details->getId(), $originalPost->ID ) );
+
 				return $originalPost->ID;
 			}
 
