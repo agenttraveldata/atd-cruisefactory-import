@@ -1,0 +1,1 @@
+* Fixed importing specials for the same departure date.
