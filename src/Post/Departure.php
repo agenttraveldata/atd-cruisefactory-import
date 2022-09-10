@@ -34,18 +34,17 @@ class Departure implements Post {
 				]
 			] ) ) {
 			$originalType = 'special';
-		} else if ( empty( $specialDepartureId ) && $originalPost = self::findOriginalPost( [
-				'relation'     => 'AND',
-				'departure_id' => [
-					'key'   => Feed\Departure::$metaKeyId,
-					'value' => $details->getId()
-				]
-			] ) ) {
-			if ( get_metadata_raw( 'post', $originalPost->ID, Feed\SpecialDeparture::$metaKeyId, true ) ) {
-				// something is not right here, this should not be a special
-				Logger::error( sprintf( '[%d] Error, trying to convert special post (%d) to special post', $details->getId(), $originalPost->ID ) );
-
-				return $originalPost->ID;
+		} else if ( $originalPost = self::findOriginalPost( [
+			'relation'     => 'AND',
+			'departure_id' => [
+				'key'   => Feed\Departure::$metaKeyId,
+				'value' => $details->getId()
+			]
+		] ) ) {
+			if ( ! empty( $specialDepartureId ) && get_metadata_raw( 'post', $originalPost->ID, Feed\SpecialDeparture::$metaKeyId, true ) ) {
+				$originalPost              = new \stdClass();
+				$originalPost->post_title  = $details->getCruise()->getName() . ' - ' . $details->getSailingDate()->format( 'd/m/Y' );
+				$originalPost->post_author = 0;
 			}
 
 			$originalType = 'cruise';
@@ -92,7 +91,7 @@ class Departure implements Post {
 
 		$post_details['meta_input'] = $meta_input;
 
-		if ( $originalPost ) {
+		if ( $originalPost && ! empty( $originalPost->ID ) ) {
 			$post_details['ID'] = $originalPost->ID;
 		}
 
