@@ -63,7 +63,7 @@
                             </strong><br>
 						<?php else: ?>
                             Cabin: <strong>
-								<?php echo $args['cabin_price'] ? $args['summary']->getCruisePrice()->getCabin() : $args['lead_price']; ?>
+								<?php echo $args['cabin_price'] ? $args['summary']->getCruisePrice()->getCabin()->getName() : $args['lead_price']; ?>
                             </strong><br>
                             Pricing: <strong>
 								<?php if ( $args['pax'] && $args['summary']->getCruisePrice() ): ?>
