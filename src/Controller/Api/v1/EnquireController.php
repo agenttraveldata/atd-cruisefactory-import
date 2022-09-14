@@ -90,7 +90,7 @@ class EnquireController extends AbstractController {
 	}
 
 	public function mailFrom(): string {
-		return get_option( 'admin_email' );
+		return get_option( ATD_CF_XML_SEND_FROM_EMAIL_FIELD, get_option( 'admin_email' ) );
 	}
 
 	public function mailFromName(): string {

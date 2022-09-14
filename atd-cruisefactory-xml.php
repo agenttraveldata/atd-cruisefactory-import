@@ -5,7 +5,7 @@ Plugin Name: Cruisefactory XML integration
 Plugin URI: https://www.agenttraveldata.com/integrations/wordpress
 Description: Cruise Factory XML import for creating dynamic automatically updated cruise websites. ^Cruise Factory account required.
 Tested up to: 6.0.2
-Version: 0.6.4
+Version: 0.6.5
 Author: Agent Travel Data Pty Ltd
 Author URI: https://www.agenttraveldata.com
 License: GPL2
@@ -19,7 +19,7 @@ require __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/includes/core-functions.php';
 
 const ATD_CF_PLUGIN_FILE                      = __FILE__;
-const ATD_CF_PLUGIN_VERSION                   = '0.6.4';
+const ATD_CF_PLUGIN_VERSION                   = '0.6.5';
 const ATD_CF_DATABASE_VERSION                 = '1.1.0';
 const ATD_CF_XML_PAX_TYPES                    = [ 'single', 'double', 'triple', 'quad' ];
 const ATD_CF_XML_LEAD_CATEGORIES              = [ 'inside', 'outside', 'balcony', 'suite' ];
@@ -28,6 +28,7 @@ const ATD_CF_XML_KEY_FIELD                    = 'atd_cf_xml_key';
 const ATD_CF_XML_SLUG_FIELD                   = 'atd_cf_retain_slug';
 const ATD_CF_XML_BCC_EMAIL_FIELD              = 'atd_cf_email_bcc';
 const ATD_CF_XML_AGENT_EMAIL_FIELD            = 'atd_cf_email_agent';
+const ATD_CF_XML_SEND_FROM_EMAIL_FIELD        = 'atd_cf_email_from';
 const ATD_CF_XML_DB_VERSION_FIELD             = 'atd_cfi_db_version';
 const ATD_CF_XML_RESULTS_SPECIALS_FIRST_FIELD = 'atd_cf_order_specials_first';
 const ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD        = 'atd_cfi_enquiry_page_id';

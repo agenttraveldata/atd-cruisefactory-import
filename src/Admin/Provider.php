@@ -46,6 +46,7 @@ class Provider {
 					ATD_CF_XML_SLUG_FIELD,
 					ATD_CF_XML_RESULTS_SPECIALS_FIRST_FIELD,
 					ATD_CF_XML_AGENT_EMAIL_FIELD,
+					ATD_CF_XML_SEND_FROM_EMAIL_FIELD,
 					ATD_CF_XML_BCC_EMAIL_FIELD
 				];
 				foreach ( $options as $option ) {

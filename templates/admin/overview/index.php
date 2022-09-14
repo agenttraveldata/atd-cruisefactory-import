@@ -108,12 +108,19 @@ global $current_user; ?>
                                name="atd_cf_options[<?php echo ATD_CF_XML_AGENT_EMAIL_FIELD; ?>"
                                value="<?php echo get_option( ATD_CF_XML_AGENT_EMAIL_FIELD, get_option( 'admin_email' ) ); ?>">
                         <br><br>
-                        <label for="<?php echo ATD_CF_XML_BCC_EMAIL_FIELD; ?>">BCC email address (leave blank to
-                            skip)</label><br>
-                        <input size="50" type="text" id="<?php echo ATD_CF_XML_BCC_EMAIL_FIELD; ?>"
+                        <label for="<?php echo ATD_CF_XML_SEND_FROM_EMAIL_FIELD; ?>">Sent From email address</label><br>
+                        <input size="50" type="text" id="<?php echo ATD_CF_XML_SEND_FROM_EMAIL_FIELD; ?>"
                                class="atd-cfi-options regular-textbutton-primary"
-                               name="atd_cf_options[<?php echo ATD_CF_XML_BCC_EMAIL_FIELD; ?>]"
-                               value="<?php echo get_option( ATD_CF_XML_BCC_EMAIL_FIELD, null ); ?>">
+                               name="atd_cf_options[<?php echo ATD_CF_XML_SEND_FROM_EMAIL_FIELD; ?>]"
+                               value="<?php echo get_option( ATD_CF_XML_SEND_FROM_EMAIL_FIELD, get_option( 'admin_email' ) ); ?>">
+                    </fieldset>
+                    <br><br>
+                    <label for="<?php echo ATD_CF_XML_BCC_EMAIL_FIELD; ?>">BCC email address (leave blank to
+                        skip)</label><br>
+                    <input size="50" type="text" id="<?php echo ATD_CF_XML_BCC_EMAIL_FIELD; ?>"
+                           class="atd-cfi-options regular-textbutton-primary"
+                           name="atd_cf_options[<?php echo ATD_CF_XML_BCC_EMAIL_FIELD; ?>]"
+                           value="<?php echo get_option( ATD_CF_XML_BCC_EMAIL_FIELD, null ); ?>">
                     </fieldset>
                     <br>
                     <fieldset>
