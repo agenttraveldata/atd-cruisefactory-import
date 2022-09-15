@@ -51,7 +51,9 @@ class Hydrator {
 
 			foreach ( array_column( $query->posts, 'ID' ) as $id ) {
 				if ( $meta = get_metadata_raw( 'post', $id ) ) {
-					$meta = array_map( 'reset', $meta );
+					foreach ( $meta as $key => $value ) {
+						$meta[ $key ] = reset( $value );
+					}
 
 					/** @var ?string $entityClass */
 					$entityClass = null;
