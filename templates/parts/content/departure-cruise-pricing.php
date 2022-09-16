@@ -1,7 +1,13 @@
-<?php global $atdDeparture, $atdFactory; ?>
+<?php global $atdDeparture, $atdSpecial, $atdFactory; ?>
+<input type="hidden" name="departure_id" value="<?php echo $atdSpecial
+	? $atdSpecial->getDepartureId()
+	: $atdDeparture->getId(); ?>">
+<input type="hidden" name="departure_type" value="<?php echo $atdSpecial ? 'special' : 'cruise'; ?>">
+
 <div class="atd-cfi-departure-pricing__type atd-cfi__mb-2">
     <label for="atd-cfi-select-pax-pricing">Passenger pricing</label>
-    <select name="pax" class="atd-cfi__input" id="atd-cfi-select-pax-pricing" data-atd-cfi-toggle-element-target="selector" data-action="atd-cfi-toggle-element#toggle">
+    <select name="pax" class="atd-cfi__input" id="atd-cfi-select-pax-pricing"
+            data-atd-cfi-toggle-element-target="selector" data-action="atd-cfi-toggle-element#toggle">
         <option value="single">Single</option>
         <option value="twin" selected>Twin</option>
         <option value="triple">Triple</option>
@@ -14,9 +20,11 @@
     <select name="cabin_price" class="atd-cfi__input" id="atd-cfi-departure-price-single">
 		<?php $prices = $atdDeparture->getCruisePrices()->filter( function ( $p ) {
 			return $p->getPriceSingle() > 0;
-		} ); if ( $prices->count() > 0 ): foreach ( $prices as $price ): ?>
+		} );
+		if ( $prices->count() > 0 ): foreach ( $prices as $price ): ?>
             <option value="<?php echo $price->getId(); ?>">
-				<?php echo $price->getCabin()->getName(); ?> - <?php echo $price->getCurrency() . number_format( $price->getPriceSingle() ) . 'pp'; ?>
+				<?php echo $price->getCabin()->getName(); ?>
+                - <?php echo $price->getCurrency(); ?><?php number_format( $price->getPriceSingle() ); ?>pp
             </option>
 		<?php endforeach;
 		else: ?>
@@ -29,9 +37,11 @@
     <select name="cabin_price" class="atd-cfi__input" id="atd-cfi-departure-price-twin">
 		<?php $prices = $atdDeparture->getCruisePrices()->filter( function ( $p ) {
 			return $p->getPriceDouble() > 0;
-        } ); if ( $prices->count() > 0 ): foreach ( $prices as $price ): ?>
+		} );
+		if ( $prices->count() > 0 ): foreach ( $prices as $price ): ?>
             <option value="<?php echo $price->getId(); ?>">
-				<?php echo $price->getCabin()->getName(); ?> - <?php echo $price->getCurrency() . number_format( $price->getPriceDouble() ) . 'pp'; ?>
+				<?php echo $price->getCabin()->getName(); ?>
+                - <?php echo $price->getCurrency(); ?><?php number_format( $price->getPriceDouble() ); ?>pp
             </option>
 		<?php endforeach;
 		else: ?>
@@ -44,9 +54,11 @@
     <select name="cabin_price" class="atd-cfi__input" id="atd-cfi-departure-price-triple">
 		<?php $prices = $atdDeparture->getCruisePrices()->filter( function ( $p ) {
 			return $p->getPriceTriple() > 0;
-        } ); if ( $prices->count() > 0 ): foreach ( $prices as $price ): ?>
+		} );
+		if ( $prices->count() > 0 ): foreach ( $prices as $price ): ?>
             <option value="<?php echo $price->getId(); ?>">
-				<?php echo $price->getCabin()->getName(); ?> - <?php echo $price->getCurrency() . number_format( $price->getPriceTriple() ) . 'pp'; ?>
+				<?php echo $price->getCabin()->getName(); ?>
+                - <?php echo $price->getCurrency(); ?><?php number_format( $price->getPriceTriple() ); ?>pp
             </option>
 		<?php endforeach;
 		else: ?>
@@ -59,9 +71,11 @@
     <select name="cabin_price" class="atd-cfi__input" id="atd-cfi-departure-price-quad">
 		<?php $prices = $atdDeparture->getCruisePrices()->filter( function ( $p ) {
 			return $p->getPriceQuad() > 0;
-        } ); if ( $prices->count() > 0 ): foreach ( $prices as $price ): ?>
+		} );
+		if ( $prices->count() > 0 ): foreach ( $prices as $price ): ?>
             <option value="<?php echo $price->getId(); ?>">
-				<?php echo $price->getCabin()->getName(); ?> - <?php echo $price->getCurrency() . number_format( $price->getPriceQuad() ) . 'pp'; ?>
+				<?php echo $price->getCabin()->getName(); ?>
+                - <?php echo $price->getCurrency(); ?><?php number_format( $price->getPriceQuad() ); ?>pp
             </option>
 		<?php endforeach;
 		else: ?>

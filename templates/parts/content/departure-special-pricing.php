@@ -1,10 +1,14 @@
 <?php
 /**
+ * @var ATD\CruiseFactory\Entity\Departure $atdDeparture
  * @var ATD\CruiseFactory\Entity\Factory $atdFactory
  * @var ATD\CruiseFactory\Entity\Special $atdSpecial
  */
-global $atdSpecial, $atdFactory;
-?>
+global $atdDeparture, $atdSpecial, $atdFactory; ?>
+    <input type="hidden" name="departure_id" value="<?php echo $atdSpecial
+		? $atdSpecial->getDepartureId()
+		: $atdDeparture->getId(); ?>">
+    <input type="hidden" name="departure_type" value="<?php echo $atdSpecial ? 'special' : 'cruise'; ?>">
 
 <?php if ( $atdSpecial->getSpecialLeadPrice() ): ?>
     <div class="atd-cfi__mb-2">
@@ -14,9 +18,11 @@ global $atdSpecial, $atdFactory;
 				continue;
 			endif; ?>
             <div>
-                <input type="radio" name="lead_price" value="<?php echo $price; ?>" id="atd-cfi-special-lead-pricing-<?php echo $price; ?>">
+                <input type="radio" name="lead_price" value="<?php echo $price; ?>"
+                       id="atd-cfi-special-lead-pricing-<?php echo $price; ?>">
                 <label for="atd-cfi-special-lead-pricing-<?php echo $price; ?>">
-					<?php echo ucfirst( $price ); ?> from <?php echo $atdSpecial->getCurrency()->getSign(); ?><?php echo number_format( $atdSpecial->getSpecialLeadPrice()->{'getPrice' . ucfirst( $price )}() ); ?>
+					<?php echo ucfirst( $price ); ?>
+                    from <?php echo $atdSpecial->getCurrency()->getSign(); ?><?php echo number_format( $atdSpecial->getSpecialLeadPrice()->{'getPrice' . ucfirst( $price )}() ); ?>
                 </label>
             </div>
 		<?php endforeach; ?>
@@ -30,7 +36,8 @@ global $atdSpecial, $atdFactory;
         <select name="cabin_price" class="atd-cfi__input" id="atd-cfi-departure-special-price">
 			<?php foreach ( $atdSpecial->getSpecialPrices() as $price ): ?>
                 <option value="<?php echo $price->getId(); ?>">
-					<?php echo $price->getCabin()->getName(); ?> - <?php echo $atdSpecial->getCurrency()->getSign() . number_format( $price->getPrice() ) . 'pp'; ?>
+					<?php echo $price->getCabin()->getName(); ?>
+                    - <?php echo $atdSpecial->getCurrency()->getSign() . number_format( $price->getPrice() ) . 'pp'; ?>
                 </option>
 			<?php endforeach; ?>
         </select>
