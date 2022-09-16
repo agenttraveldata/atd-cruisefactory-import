@@ -32,8 +32,12 @@
                 </tr>
                 <tr>
                     <td style="padding: 15px;">
-                        WordPress Post ID: <b><?php echo $args['summary']->getPost() ? $args['summary']->getPost()->ID : 'N/A'; ?></b><br>
-                        Departure ID: <b><?php echo $args['summary']->getId(); ?></b><br>
+                        WordPress Post: <b><?php if ( $args['summary']->getPost() ): ?>
+                                <a href="<?php echo get_permalink( $args['summary']->getPost()->ID ); ?>"><?php echo $args['summary']->getPost()->post_title; ?></a>
+							<?php else: ?>
+                                N/A
+							<?php endif; ?></b><br>
+                        Reference ID: <b><?php echo $args['summary']->getId(); ?></b><br>
 						<?php echo $args['summary']->getSpecial() ? 'Special' : 'Cruise'; ?> ID:
                         <b><?php echo $args['summary']->getSpecial() ? $args['summary']->getSpecial()->getId() : $args['summary']->getCruise()->getId(); ?></b><br>
                         Cruise Line:
@@ -46,7 +50,7 @@
                         <b><?php echo $args['summary']->getSailingDate()->format( 'd/m/Y' ); ?></b><br>
 						<?php if ( $args['summary']->getSpecial() ): ?>
                             Cabin: <strong>
-								<?php echo $args['cabin_price'] ? $args['summary']->getSpecial()->getSpecialPrice()->getCabin()->getName() : $args['lead_price']; ?>
+								<?php echo $args['cabin_price'] ? $args['summary']->getSpecialPrice()->getCabin()->getName() : $args['lead_price']; ?>
                             </strong><br>
                             Pricing: <strong>
 								<?php if ( $args['summary']->getSpecialPrice() ): ?>

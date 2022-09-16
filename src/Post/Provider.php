@@ -21,7 +21,7 @@ class Provider {
 	}
 
 	public static function unregisterPosts() {
-		/** @var class-string<Post> $post */
+		/** @var Post $post */
 		foreach ( self::$posts as $post ) {
 			unregister_post_type( $post::$postType );
 		}

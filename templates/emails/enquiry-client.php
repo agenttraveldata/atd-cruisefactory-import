@@ -7,6 +7,14 @@ $ship       = atd_cf_get_post_by_meta_value( 'ship', $args['summary']->getCruise
 <h4>Thank you for your enquiry, <?php echo $args['first_name']; ?>!</h4>
 <p>You have enquired on the following:</p>
 <ul>
+    Reference ID: <?php echo $args['summary']->getId(); ?>
+	<?php if ( $args['summary']->getPost() ): ?>
+        <li>
+            Departure: <strong>
+                <a href="<?php echo get_permalink( $args['summary']->getPost()->ID ); ?>"><?php echo $args['summary']->getPost()->post_title; ?></a>
+            </strong>
+        </li>
+	<?php endif; ?>
     <li>
         Cruise Line: <strong>
             <a href="<?php echo get_permalink( $cruiseLine->ID ); ?>"><?php echo $cruiseLine->post_title; ?></a>

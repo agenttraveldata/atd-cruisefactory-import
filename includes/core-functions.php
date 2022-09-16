@@ -139,7 +139,9 @@ function atd_cf_get_departure_details( int $departure_id, string $departure_type
 	$summary->setId( $departure_id );
 	$summary->setType( $departure_type );
 
-	if ( $post = Finder::getPostByPostTypeAndId( ATD\CruiseFactory\Post\Departure::$postType, $departure_id ) ) {
+	if ( $post = Finder::getPostByFeedAndId( $departure_type === 'cruise'
+		? ATD\CruiseFactory\Feed\Departure::class
+		: ATD\CruiseFactory\Feed\SpecialDeparture::class, $departure_id ) ) {
 		if ( is_a( $post, WP_Post::class ) ) {
 			$summary->setPost( $post );
 		}

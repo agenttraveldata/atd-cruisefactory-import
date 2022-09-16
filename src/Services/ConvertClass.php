@@ -2,6 +2,8 @@
 
 namespace ATD\CruiseFactory\Services;
 
+use ATD\CruiseFactory\Feed;
+
 class ConvertClass {
 	/**
 	 * @param string|object $feedClassName
@@ -11,6 +13,10 @@ class ConvertClass {
 	public static function toPostFromFeed( $feedClassName ): ?string {
 		if ( is_object( $feedClassName ) ) {
 			$feedClassName = get_class( $feedClassName );
+		}
+
+		if ( $feedClassName === Feed\SpecialDeparture::class ) {
+			$feedClassName = Feed\Departure::class;
 		}
 
 		$postClassName = str_replace( '\Feed\\', '\Post\\', $feedClassName );

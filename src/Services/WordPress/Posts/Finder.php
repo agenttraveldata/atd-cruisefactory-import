@@ -69,6 +69,38 @@ class Finder {
 		return false;
 	}
 
+	/**
+	 * @param string $feedClass
+	 * @param int $id
+	 *
+	 * @return false|WP_Post|null
+	 */
+	public static function getPostByFeedAndId( string $feedClass, int $id ) {
+		$postClass = ConvertClass::toPostFromFeed( $feedClass );
+
+		if ( class_exists( $feedClass ) && class_exists( $postClass ) ) {
+			/**
+			 * @var Post\Post $postClass
+			 * @var Feed\Feed $feedClass
+			 */
+			$query = new WP_Query( [
+				'post_type'      => $postClass::$postType,
+				'nopaging'       => true,
+				'no_found_rows'  => true,
+				'posts_per_page' => 1,
+				'post_status'    => 'publish',
+				'meta_key'       => $feedClass::$metaKeyId,
+				'meta_value'     => $id
+			] );
+
+			if ( $query->post_count === 1 ) {
+				return $query->post;
+			}
+		}
+
+		return false;
+	}
+
 	public static function getQueryByPostTypeAndMetaValues( string $postType, array $metaValues ): WP_Query {
 		$queryParams = [];
 
