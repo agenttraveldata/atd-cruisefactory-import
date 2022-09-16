@@ -53,10 +53,12 @@ class EnquireController extends AbstractController {
 				$subject = sprintf( '%s enquiry sent from %s website', $summary->getSpecial() ? 'Special' : 'Cruise', get_bloginfo( 'name' ) );
 
 				if ( $this->dispatchEmail( 'agent', $fields, $to, $subject, $bcc ) ) {
-					$to      = $fields['email_address'];
-					$subject = sprintf( 'Thank you for your enquiry on %s', get_bloginfo( 'name' ) );
+					if ( get_option( ATD_CF_XML_ENQUIRY_EMAIL_CLIENT_FIELD, true ) ) {
+						$to      = $fields['email_address'];
+						$subject = sprintf( 'Thank you for your enquiry on %s', get_bloginfo( 'name' ) );
 
-					$this->dispatchEmail( 'client', $fields, $to, $subject );
+						$this->dispatchEmail( 'client', $fields, $to, $subject );
+					}
 				}
 
 				remove_filter( 'wp_mail_from', [ $this, 'mailFrom' ] );

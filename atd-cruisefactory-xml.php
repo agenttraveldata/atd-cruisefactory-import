@@ -30,6 +30,7 @@ const ATD_CF_XML_BCC_EMAIL_FIELD              = 'atd_cf_email_bcc';
 const ATD_CF_XML_AGENT_EMAIL_FIELD            = 'atd_cf_email_agent';
 const ATD_CF_XML_SEND_FROM_EMAIL_FIELD        = 'atd_cf_email_from';
 const ATD_CF_XML_DB_VERSION_FIELD             = 'atd_cfi_db_version';
+const ATD_CF_XML_ENQUIRY_EMAIL_CLIENT_FIELD   = 'atd_cf_enquiry_email_client';
 const ATD_CF_XML_RESULTS_SPECIALS_FIRST_FIELD = 'atd_cf_order_specials_first';
 const ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD        = 'atd_cfi_enquiry_page_id';
 const ATD_CF_XML_GOOGLE_TYPE_FIELD            = 'atd_cfi_recaptcha_type';
