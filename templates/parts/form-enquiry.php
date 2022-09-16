@@ -28,12 +28,12 @@
         </div>
         <div class="atd-cfi-cols__column atd-cfi-cols-column__half atd-cfi__mb-2">
             <label for="num_adults">
-                <input id="num_adults" name="num_adults" type="number" class="atd-cfi__input" placeholder="Number of adults">
+                <input id="num_adults" name="num_adults" type="number" value="2" class="atd-cfi__input" placeholder="Number of adults">
             </label>
         </div>
         <div class="atd-cfi-cols__column atd-cfi-cols-column__half atd-cfi__mb-2">
             <label for="num_children">
-                <input id="num_children" name="num_children" type="number" class="atd-cfi__input" placeholder="Number of children">
+                <input id="num_children" name="num_children" type="number" value="0" class="atd-cfi__input" placeholder="Number of children">
             </label>
         </div>
         <div class="atd-cfi-cols__column atd-cfi-cols-column__stretch atd-cfi__mb-2">
