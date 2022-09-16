@@ -7,7 +7,7 @@ use ATD\CruiseFactory\Feed;
 class Search {
 	public static function parseQuery( \WP_Query $query ): void {
 		if ( $query->is_search() ) {
-			if ( ! preg_match( '/([sd])i:([0-9]+)/', $query->query['s'], $m ) ) {
+			if ( ! preg_match( '/d:([0-9]+)/', $query->query['s'], $m ) ) {
 				return;
 			}
 
@@ -16,9 +16,16 @@ class Search {
 
 			$metaQuery   = $query->get( 'meta_query', [] );
 			$metaQuery[] = [
-				'atd_search_by_departure' => [
-					'key'     => $m[1] === 'd' ? Feed\Departure::$metaKeyId : Feed\SpecialDeparture::$metaKeyId,
-					'value'   => $m[2],
+				'relation'                        => 'OR',
+				'atd_search_by_departure'         => [
+					'key'     => Feed\Departure::$metaKeyId,
+					'value'   => $m[1],
+					'type'    => 'NUMERIC',
+					'compare' => '='
+				],
+				'atd_search_by_special_departure' => [
+					'key'     => Feed\SpecialDeparture::$metaKeyId,
+					'value'   => $m[1],
 					'type'    => 'NUMERIC',
 					'compare' => '='
 				]
