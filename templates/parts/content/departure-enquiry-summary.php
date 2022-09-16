@@ -18,6 +18,10 @@ $leadPrice    = get_query_var( 'lead_price', null );
 <h4>Departure Summary</h4>
 <ul>
     <li>
+        <strong>Reference ID:</strong>
+		<?php echo $departure->getId(); ?>
+    </li>
+    <li>
         <strong>Cruise Name:</strong>
 		<?php echo $departure->getSpecial() ? $departure->getSpecial()->getName() : $departure->getCruise()->getName(); ?>
     </li>
@@ -39,8 +43,8 @@ $leadPrice    = get_query_var( 'lead_price', null );
 			<?php elseif ( ! empty( $leadPrice ) ): ?>
 				<?php echo ucfirst( $leadPrice ); ?>
 			<?php endif; ?>
-        <?php elseif (!empty($requestCabin)): ?>
-            <?php echo $departure->getRequestCabin()->getName(); ?>
+		<?php elseif ( ! empty( $requestCabin ) ): ?>
+			<?php echo $departure->getRequestCabin()->getName(); ?>
 		<?php else: ?>
 			<?php if ( $cabinPrice ): ?>
 				<?php echo $departure->getCruisePrice()->getCabin()->getName(); ?>
