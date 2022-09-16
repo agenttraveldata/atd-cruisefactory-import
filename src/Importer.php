@@ -120,6 +120,11 @@ class Importer {
 				'sortAttachedMediaQuery'
 			], 10, 3 );
 
+			/*
+			 * Check if user is trying to search for a departure ID
+			 */
+			add_action( 'parse_query', [ Services\WordPress\Search::class, 'parseQuery' ] );
+
 			add_filter( 'query_vars', function ( array $vars ) {
 				$vars[] = 'departure_id';
 				$vars[] = 'departure_type';
