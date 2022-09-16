@@ -38,6 +38,11 @@ class Results {
 		} elseif ( isset( $query->query[ Taxonomy\PromoCode::$name ] ) || isset( $query->query[ Taxonomy\SpecialType::$name ] ) || isset( $query->query[ Taxonomy\DepartureType::$name ] ) ) {
 			$this->setupSearchQuery( $query );
 		}
+
+		if ( sizeof( $query->tax_query->queried_terms ) === 0 ) {
+			$query->set( 'posts_per_page', get_option( 'posts_per_page' ) );
+			$query->set( 'no_found_rows', true );
+		}
 	}
 
 	public function restDepartureQuery( array $args, WP_REST_Request $request ): array {
