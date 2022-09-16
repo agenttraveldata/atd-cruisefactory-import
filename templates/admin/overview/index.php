@@ -114,7 +114,8 @@ global $current_user; ?>
                                name="atd_cf_options[<?php echo ATD_CF_XML_SEND_FROM_EMAIL_FIELD; ?>]"
                                value="<?php echo get_option( ATD_CF_XML_SEND_FROM_EMAIL_FIELD, get_option( 'admin_email' ) ); ?>">
                     </fieldset>
-                    <br><br>
+                    <br>
+                    <fieldset>
                     <label for="<?php echo ATD_CF_XML_BCC_EMAIL_FIELD; ?>">BCC email address (leave blank to
                         skip)</label><br>
                     <input size="50" type="text" id="<?php echo ATD_CF_XML_BCC_EMAIL_FIELD; ?>"
@@ -153,33 +154,4 @@ global $current_user; ?>
             </div>
 		<?php endif; ?>
 	<?php endif; ?>
-
-    <div class="tablenav bottom">
-        <div class="alignright actions bulkactions">
-            <button id="atd-cfi-increment-import" class="button action" role="button">Synchronize Now</button>
-        </div>
-    </div>
-
-    <table id="atd-cfi-services" class="widefat striped table-view-list">
-        <thead>
-        <tr>
-            <th class="row-title">Service</th>
-            <th>Last Updated</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td colspan="2" style="text-align: center;">
-                <div class="spinner is-active"
-                     style="float:none;width:auto;height:auto;padding:10px 0 10px 50px;background-position:20px 0;"></div>
-            </td>
-        </tr>
-        </tbody>
-        <tfoot>
-        <tr>
-            <th class="row-title">Service</th>
-            <th>Last Updated</th>
-        </tr>
-        </tfoot>
-    </table>
 </div>
