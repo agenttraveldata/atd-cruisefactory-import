@@ -1,48 +1,48 @@
-<?php $isTax = is_tax( 'atd_cf_departure_type', 'special' ); ?>
-<form class="atd-cfi-sf" action="<?php echo $isTax ? get_term_link( 'special', 'atd_cf_departure_type' ) : get_post_type_archive_link( 'departure' ); ?>" data-controller="atd-cfi-search-form">
+<?php $isTax = is_tax( ATD\CruiseFactory\Taxonomy\DepartureType::$name, 'special' ); ?>
+<form class="atd-cfi-sf" action="<?php echo $isTax ? get_term_link( 'special', ATD\CruiseFactory\Taxonomy\DepartureType::$name ) : get_post_type_archive_link( ATD\CruiseFactory\Post\Departure::$postType ); ?>" data-controller="atd-cfi-search-form">
 	<?php if ( $isTax ): ?>
-        <input type="hidden" name="<?php echo 'atd_cf_departure_type'; ?>" value="special">
+        <input type="hidden" name="<?php echo ATD\CruiseFactory\Taxonomy\DepartureType::$name; ?>" value="special">
 	<?php endif; ?>
     <div class="atd-cfi-sf__col">
-        <label for="atd_cf_destination" class="form-label visually-hidden">Destination</label>
-        <select id="atd_cf_destination" name="atd_cf_destination" class="atd-cfi__input" data-atd-cfi-search-form-target="dropDown" data-action="atd-cfi-search-form#update">
+        <label for="<?php echo ATD\CruiseFactory\Taxonomy\Destination::$name; ?>" class="form-label visually-hidden">Destination</label>
+        <select id="<?php echo ATD\CruiseFactory\Taxonomy\Destination::$name; ?>" name="<?php echo ATD\CruiseFactory\Taxonomy\Destination::$name; ?>" class="atd-cfi__input" data-atd-cfi-search-form-target="dropDown" data-action="atd-cfi-search-form#update">
             <option value="">Any Destination...</option>
         </select>
     </div>
     <div class="atd-cfi-sf__col">
-        <label for="atd_cf_cruise_line" class="form-label visually-hidden">Cruise Line</label>
-        <select id="atd_cf_cruise_line" name="atd_cf_cruise_line" class="atd-cfi__input" data-atd-cfi-search-form-target="dropDown" data-action="atd-cfi-search-form#update">
+        <label for="<?php echo ATD\CruiseFactory\Taxonomy\CruiseLine::$name; ?>" class="form-label visually-hidden">Cruise Line</label>
+        <select id="<?php echo ATD\CruiseFactory\Taxonomy\CruiseLine::$name; ?>" name="<?php echo ATD\CruiseFactory\Taxonomy\CruiseLine::$name; ?>" class="atd-cfi__input" data-atd-cfi-search-form-target="dropDown" data-action="atd-cfi-search-form#update">
             <option value="">Any Cruise Line...</option>
         </select>
     </div>
     <div class="atd-cfi-sf__col">
-        <label for="atd_cf_ship" class="form-label visually-hidden">Ship</label>
-        <select id="atd_cf_ship" name="atd_cf_ship" class="atd-cfi__input" data-atd-cfi-search-form-target="dropDown" data-action="atd-cfi-search-form#update">
+        <label for="<?php echo ATD\CruiseFactory\Taxonomy\Ship::$name; ?>" class="form-label visually-hidden">Ship</label>
+        <select id="<?php echo ATD\CruiseFactory\Taxonomy\Ship::$name; ?>" name="<?php echo ATD\CruiseFactory\Taxonomy\Ship::$name; ?>" class="atd-cfi__input" data-atd-cfi-search-form-target="dropDown" data-action="atd-cfi-search-form#update">
             <option value="">Any Ship...</option>
         </select>
     </div>
     <div class="atd-cfi-sf__col">
-        <label for="atd_cf_month_from" class="form-label visually-hidden">Month from</label>
-        <select id="atd_cf_month_from" name="atd_cf_month_from" class="atd-cfi__input" data-atd-cfi-search-form-target="dropDown" data-action="atd-cfi-search-form#update">
+        <label for="<?php echo ATD\CruiseFactory\Taxonomy\Month::$name; ?>_from" class="form-label visually-hidden">Month from</label>
+        <select id="<?php echo ATD\CruiseFactory\Taxonomy\Month::$name; ?>_from" name="<?php echo ATD\CruiseFactory\Taxonomy\Month::$name; ?>_from" class="atd-cfi__input" data-atd-cfi-search-form-target="dropDown" data-action="atd-cfi-search-form#update">
             <option value="">Any Month From...</option>
         </select>
     </div>
     <div class="atd-cfi-sf__col">
-        <label for="atd_cf_month_to" class="form-label visually-hidden">Month to</label>
-        <select id="atd_cf_month_to" name="atd_cf_month_to" class="atd-cfi__input" data-atd-cfi-search-form-target="dropDown" data-action="atd-cfi-search-form#update">
+        <label for="<?php echo ATD\CruiseFactory\Taxonomy\Month::$name; ?>_to" class="form-label visually-hidden">Month to</label>
+        <select id="<?php echo ATD\CruiseFactory\Taxonomy\Month::$name; ?>_to" name="<?php echo ATD\CruiseFactory\Taxonomy\Month::$name; ?>_to" class="atd-cfi__input" data-atd-cfi-search-form-target="dropDown" data-action="atd-cfi-search-form#update">
             <option value="">Any Month To...</option>
         </select>
     </div>
     <div class="atd-cfi-sf__col">
-        <label for="atd_cf_duration" class="form-label visually-hidden">Duration</label>
-        <select id="atd_cf_duration" name="atd_cf_duration" class="atd-cfi__input" data-atd-cfi-search-form-target="dropDown" data-action="atd-cfi-search-form#update">
+        <label for="<?php echo ATD\CruiseFactory\Taxonomy\Duration::$name; ?>" class="form-label visually-hidden">Duration</label>
+        <select id="<?php echo ATD\CruiseFactory\Taxonomy\Duration::$name; ?>" name="<?php echo ATD\CruiseFactory\Taxonomy\Duration::$name; ?>" class="atd-cfi__input" data-atd-cfi-search-form-target="dropDown" data-action="atd-cfi-search-form#update">
             <option value="">Any Duration...</option>
         </select>
     </div>
 	<?php if ( $isTax ): ?>
         <div class="atd-cfi-sf__col">
-            <label for="atd_cf_special_type" class="form-label visually-hidden">Special Type</label>
-            <select id="atd_cf_special_type" name="atd_cf_special_type" class="atd-cfi__input" data-atd-cfi-search-form-target="dropDown" data-action="atd-cfi-search-form#update">
+            <label for="<?php echo ATD\CruiseFactory\Taxonomy\SpecialType::$name; ?>" class="form-label visually-hidden">Special Type</label>
+            <select id="<?php echo ATD\CruiseFactory\Taxonomy\SpecialType::$name; ?>" name="<?php echo ATD\CruiseFactory\Taxonomy\SpecialType::$name; ?>" class="atd-cfi__input" data-atd-cfi-search-form-target="dropDown" data-action="atd-cfi-search-form#update">
                 <option value="">Any Special Type...</option>
             </select>
         </div>

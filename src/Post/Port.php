@@ -11,7 +11,7 @@ use ATD\CruiseFactory\Services\WordPress\Blocks\Paragraph;
 use WP_Query;
 
 class Port implements Post {
-	public static string $postType = 'port';
+	public static string $postType = 'atd_cf_port';
 
 	public static function add( Entity\Port $details ): ?int {
 		$originalPost = new WP_Query( [
@@ -83,7 +83,10 @@ class Port implements Post {
 			'show_ui'             => true,
 			'show_in_menu'        => ATD_CF_XML_MENU_SLUG,
 			'show_in_rest'        => true,
-			'has_archive'         => 'Ports',
+			'has_archive'         => 'ports',
+			'rewrite'             => [
+				'slug' => 'port'
+			],
 			'menu_position'       => 35,
 			'menu_icon'           => 'dashicons-media-text',
 			'exclude_from_search' => false,

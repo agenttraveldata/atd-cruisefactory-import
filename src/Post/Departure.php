@@ -13,7 +13,7 @@ use WP_Post;
 use WP_Query;
 
 class Departure implements Post {
-	public static string $postType = 'departure';
+	public static string $postType = 'atd_cf_departure';
 	private static string $cfImageUrl = 'https://ik.imagekit.io/atd/cruises/';
 
 	public static function add( object $details ): ?int {
@@ -336,6 +336,9 @@ class Departure implements Post {
 			'show_in_menu'        => ATD_CF_XML_MENU_SLUG,
 			'show_in_rest'        => true,
 			'has_archive'         => 'cruise-search',
+			'rewrite'             => [
+				'slug' => 'departure'
+			],
 			'menu_position'       => 30,
 			'menu_icon'           => 'dashicons-media-text',
 			'exclude_from_search' => false,

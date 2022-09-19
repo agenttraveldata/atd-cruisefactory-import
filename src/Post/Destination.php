@@ -11,7 +11,7 @@ use ATD\CruiseFactory\Services\WordPress\Blocks\Paragraph;
 use WP_Query;
 
 class Destination implements Post {
-	public static string $postType = 'destination';
+	public static string $postType = 'atd_cf_destination';
 	private static string $cfImageUrl = 'https://ik.imagekit.io/atd/destinations/image/';
 
 	public static function add( Entity\Destination $details ): ?int {
@@ -141,6 +141,9 @@ class Destination implements Post {
 			'show_in_menu'        => ATD_CF_XML_MENU_SLUG,
 			'show_in_rest'        => true,
 			'has_archive'         => 'destinations',
+			'rewrite'             => [
+				'slug' => 'destination'
+			],
 			'menu_position'       => 35,
 			'menu_icon'           => 'dashicons-media-text',
 			'exclude_from_search' => false,

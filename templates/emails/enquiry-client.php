@@ -1,7 +1,7 @@
 <?php
 
-$cruiseLine = atd_cf_get_post_by_meta_value( 'cruise-line', $args['summary']->getCruise()->getCruiseLine()->getId() );
-$ship       = atd_cf_get_post_by_meta_value( 'ship', $args['summary']->getCruise()->getShip()->getId() );
+$cruiseLine = atd_cf_get_post_by_meta_value( ATD\CruiseFactory\Post\CruiseLine::$postType, $args['summary']->getCruise()->getCruiseLine()->getId() );
+$ship       = atd_cf_get_post_by_meta_value( ATD\CruiseFactory\Post\Ship::$postType, $args['summary']->getCruise()->getShip()->getId() );
 
 ?>
 <h4>Thank you for your enquiry, <?php echo $args['first_name']; ?>!</h4>

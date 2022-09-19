@@ -11,7 +11,7 @@ use ATD\CruiseFactory\Services\WordPress\Blocks\Paragraph;
 use WP_Query;
 
 class CruiseLine implements Post {
-	public static string $postType = 'cruise-line';
+	public static string $postType = 'atd_cf_cruise_line';
 
 	public static function add( Entity\CruiseLine $details ): ?int {
 		$originalPost = new WP_Query( [
@@ -132,6 +132,9 @@ class CruiseLine implements Post {
 			'show_in_menu'        => ATD_CF_XML_MENU_SLUG,
 			'show_in_rest'        => true,
 			'has_archive'         => 'cruise-lines',
+			'rewrite'             => [
+				'slug' => 'cruise-line'
+			],
 			'menu_position'       => 35,
 			'menu_icon'           => 'dashicons-media-text',
 			'exclude_from_search' => false,

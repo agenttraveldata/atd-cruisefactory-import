@@ -6,8 +6,8 @@
  * @var ATD\CruiseFactory\Entity\Special $atdSpecial
  */
 global $atdFactory, $atdDeparture, $atdSpecial;
-$cruiseLinePost = atd_cf_get_post_by_meta_value( 'cruise-line', $atdDeparture->getCruise()->getCruiseLine()->getId(), true );
-$shipPost       = atd_cf_get_post_by_meta_value( 'ship', $atdDeparture->getCruise()->getShip()->getId(), true );
+$cruiseLinePost = atd_cf_get_post_by_meta_value( ATD\CruiseFactory\Post\CruiseLine::$postType, $atdDeparture->getCruise()->getCruiseLine()->getId(), true );
+$shipPost       = atd_cf_get_post_by_meta_value( ATD\CruiseFactory\Post\Ship::$postType, $atdDeparture->getCruise()->getShip()->getId(), true );
 
 ?>
 <h2><?php the_title(); ?></h2>
