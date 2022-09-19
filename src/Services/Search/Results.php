@@ -31,14 +31,9 @@ class Results {
 				case Post\Ship::$postType:
 				case Post\CruiseLine::$postType:
 				case Post\Destination::$postType:
-					$query->set( 'orderby', 'title' );
+					$query->set( 'orderby', 'post_title' );
 					$query->set( 'order', 'ASC' );
 					break;
-			}
-
-			if ( ! empty( $query->tax_query ) && sizeof( $query->tax_query->queried_terms ) === 0 ) {
-				$query->set( 'posts_per_page', get_option( 'posts_per_page' ) );
-				$query->set( 'no_found_rows', true );
 			}
 		} elseif ( isset( $query->query[ Taxonomy\PromoCode::$name ] ) || isset( $query->query[ Taxonomy\SpecialType::$name ] ) || isset( $query->query[ Taxonomy\DepartureType::$name ] ) ) {
 			$this->setupSearchQuery( $query );
@@ -94,7 +89,7 @@ class Results {
 	}
 
 	private function setupSearchQuery( WP_Query $query, WP_REST_Request $request = null ): void {
-		$query->set( 'post_type', 'departure' );
+		$query->set( 'post_type', Post\Departure::$postType );
 		$query->set( 'post_status', 'public' );
 		$query->set( 'posts_per_page', get_option( 'posts_per_page' ) );
 		$query->set( 'meta_query', [
@@ -137,13 +132,18 @@ class Results {
 			}
 
 			$this->searchQueryDateAndKeywords( $query, $_GET );
+
+			if ( ( ! empty( $query->tax_query ) && sizeof( $query->tax_query->queried_terms ) === 0 )
+			     && ( ! empty( $query->query_vars['meta_query'] ) && sizeof( $query->query_vars['meta_query'][0] ) < 3 )
+			     && empty( $query->get( 's', null ) ) ) {
+				$query->set( 'posts_per_page', get_option( 'posts_per_page' ) );
+				$query->set( 'no_found_rows', true );
+			}
 		} elseif ( isset( $query->query[ Taxonomy\SpecialType::$name ] ) ) {
 			$GLOBALS['showing_main_specials'] = true;
 
 			$query->set( 'no_found_rows', true );
-			$query->set( 'meta_query', array_merge( [
-				'atd_cfi_special_order' => $this->getMetaArray( 'special_order', '>' )
-			], $query->get( 'meta_query' ) ) );
+			$query->set( 'meta_query', array_merge( [ 'atd_cfi_special_order' => $this->getMetaArray( 'special_order', '>' ) ], $query->get( 'meta_query' ) ) );
 			$query->set( 'orderby', array_merge( [ 'atd_cfi_special_order' => 'DESC' ], $query->get( 'orderby' ) ) );
 		}
 
@@ -151,9 +151,7 @@ class Results {
 	}
 
 	private function searchQueryDateAndKeywords( WP_Query $query, array $criteria ): void {
-		if ( empty( $query->query_vars['meta_query'][0] ) ) {
-			$query->query_vars['meta_query'] = [];
-		}
+		$metaQuery = $query->get( 'meta_query', [] );
 
 		foreach ( $criteria as $criterion => $value ) {
 			if ( empty( $value ) ) {
@@ -163,7 +161,7 @@ class Results {
 			switch ( $criterion ) {
 				case Taxonomy\Month::$name . '_from':
 					if ( $dateValue = DateTime::createFromFormat( 'Ymd', $value . '01' ) ) {
-						$query->query_vars['meta_query'][0][] = $this->getMetaArray( 'sailing_date', $dateValue->setTime( 0, 0 )->getTimestamp(), '>=', 'NUMERIC' );
+						$metaQuery[0]['atd_cf_sailing_date_from'] = $this->getMetaArray( 'sailing_date', $dateValue->setTime( 0, 0 )->getTimestamp(), '>=', 'NUMERIC' );
 					}
 					break;
 				case Taxonomy\Month::$name . '_to':
@@ -171,13 +169,17 @@ class Results {
 						/* get last day of month */
 						$dateValue = DateTime::createFromFormat( 'Ymd', $dateValue->format( 'Ymt' ) );
 
-						$query->query_vars['meta_query'][0][] = $this->getMetaArray( 'sailing_date', $dateValue->setTime( 0, 0 )->getTimestamp(), '<=', 'NUMERIC' );
+						$metaQuery[0]['atd_cf_sailing_date_to'] = $this->getMetaArray( 'sailing_date', $dateValue->setTime( 0, 0 )->getTimestamp(), '<=', 'NUMERIC' );
 					}
 					break;
 				case 'atd_cf_keyword':
 					$query->set( 's', $value );
 					break;
 			}
+		}
+
+		if ( ! empty( $metaQuery ) ) {
+			$query->set( 'meta_query', $metaQuery );
 		}
 	}
 
