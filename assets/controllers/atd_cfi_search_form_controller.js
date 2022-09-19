@@ -51,11 +51,12 @@ export default class extends Controller {
 
     sortAndPopulateDropDown = (key, value) => {
         const el = this.element.querySelector(`#${key}`);
-        const dateKeys = ['atd_cf_month_from', 'atd_cf_month_to', 'atd_cf_duration'];
+        const dateKeys = atd_cfi.date_keys;
 
         if (el) {
+            const firstTitle = el.options[0].text;
             el.innerHTML = '';
-            el.options.add(new Option(`Any ${this.snakeToWords(key.slice(6))}...`, ''));
+            el.options.add(new Option(firstTitle, ''));
 
             Object.entries(value).sort(dateKeys.includes(key) ? this.compareKeyDates : this.compareKeyStrings).forEach(([id, name]) => {
                 el.options.add(new Option(name, id, false,

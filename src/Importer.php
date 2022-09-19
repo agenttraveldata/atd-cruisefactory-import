@@ -5,6 +5,7 @@ namespace ATD\CruiseFactory;
 
 
 use ATD\CruiseFactory\Services;
+use ATD\CruiseFactory\Taxonomy;
 use wpdb;
 
 class Importer {
@@ -141,7 +142,12 @@ class Importer {
 				wp_enqueue_style( 'atd-cf-xml-css', plugins_url( '/dist/main.css', ATD_CF_PLUGIN_FILE ) );
 
 				wp_localize_script( 'atd-cf-xml-js', 'atd_cfi', [
-					'recaptcha_site_key' => get_option( ATD_CF_XML_GOOGLE_SITE_KEY_FIELD )
+					'recaptcha_site_key' => get_option( ATD_CF_XML_GOOGLE_SITE_KEY_FIELD ),
+					'date_keys'          => [
+						Taxonomy\Month::$name . '_from',
+						Taxonomy\Month::$name . '_to',
+						Taxonomy\Duration::$name
+					],
 				] );
 			} );
 		}
