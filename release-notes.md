@@ -1,0 +1,1 @@
+* Changed when "specials first" results query is modified to prevent running if no options have been selected.
