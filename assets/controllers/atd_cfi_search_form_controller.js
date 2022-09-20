@@ -90,6 +90,12 @@ export default class extends Controller {
             this.formData.set(el.name, el.value);
         });
 
+        const el = this.element.querySelector('input[id="atd_cf_keyword"]');
+        if (el) {
+            el.setAttribute('value', '');
+            el.value = '';
+        }
+
         this.doFetch(`${this.apiPath}?${new URLSearchParams(this.formData)}`);
     }
 
