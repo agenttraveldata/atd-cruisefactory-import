@@ -99,24 +99,7 @@ class Results {
 			]
 		] );
 
-		$orderBy = [ 'atd_cfi_sailing_date' => 'ASC' ];
-		if ( get_option( ATD_CF_XML_RESULTS_SPECIALS_FIRST_FIELD, false ) ) {
-			$query->set( 'meta_query', array_merge( $query->get( 'meta_query' ), [
-				[
-					'relation'            => 'OR',
-					'atd_cfi_is_special'  => [
-						'key' => 'atd_cfi_special_id',
-					],
-					'atd_cfi_result_sort' => [
-						'key'     => 'atd_cfi_special_id',
-						'compare' => 'NOT EXISTS',
-					],
-				]
-			] ) );
-			$orderBy = array_merge( [ 'atd_cfi_result_sort' => 'DESC' ], $orderBy );
-		}
-
-		$query->set( 'orderby', $orderBy );
+		$query->set( 'orderby', [ 'atd_cfi_sailing_date' => 'ASC' ] );
 
 		if ( isset( $_GET ) && sizeof( $_GET ) > 0 ) {
 			if ( isset( $query->query[ Taxonomy\DepartureType::$name ] ) && $query->query[ Taxonomy\DepartureType::$name ] === 'special' ) {
@@ -138,6 +121,27 @@ class Results {
 			     && empty( $query->get( 's', null ) ) ) {
 				$query->set( 'posts_per_page', get_option( 'posts_per_page' ) );
 				$query->set( 'no_found_rows', true );
+			} else if ( get_option( ATD_CF_XML_RESULTS_SPECIALS_FIRST_FIELD, false ) ) {
+				/*
+				 * this will only function if an option have been selected
+				 */
+				$orderBy = $query->get( 'orderby', [] );
+
+				$query->set( 'meta_query', array_merge( $query->get( 'meta_query' ), [
+					[
+						'relation'            => 'OR',
+						'atd_cfi_is_special'  => [
+							'key' => 'atd_cfi_special_id',
+						],
+						'atd_cfi_result_sort' => [
+							'key'     => 'atd_cfi_special_id',
+							'compare' => 'NOT EXISTS',
+						],
+					]
+				] ) );
+
+				$orderBy = array_merge( [ 'atd_cfi_result_sort' => 'DESC' ], $orderBy );
+				$query->set( 'orderby', $orderBy );
 			}
 		} elseif ( isset( $query->query[ Taxonomy\SpecialType::$name ] ) ) {
 			$GLOBALS['showing_main_specials'] = true;
