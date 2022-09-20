@@ -1,0 +1,1 @@
+* Fixed keyword search field not resetting when clicking "reset" button in cruise search form.
