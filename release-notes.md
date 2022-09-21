@@ -1,0 +1,1 @@
+* Changed enqueued JS/CSS to use plugin version instead of WordPress version.
