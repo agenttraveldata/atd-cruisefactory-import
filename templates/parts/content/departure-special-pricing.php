@@ -1,14 +1,11 @@
 <?php
 /**
- * @var ATD\CruiseFactory\Entity\Departure $atdDeparture
  * @var ATD\CruiseFactory\Entity\Factory $atdFactory
  * @var ATD\CruiseFactory\Entity\Special $atdSpecial
  */
-global $atdDeparture, $atdSpecial, $atdFactory; ?>
-    <input type="hidden" name="departure_id" value="<?php echo $atdSpecial
-		? $atdSpecial->getDepartureId()
-		: $atdDeparture->getId(); ?>">
-    <input type="hidden" name="departure_type" value="<?php echo $atdSpecial ? 'special' : 'cruise'; ?>">
+global $atdSpecial, $atdFactory; ?>
+    <input type="hidden" name="departure_id" value="<?php echo $atdSpecial->getDepartureId(); ?>">
+    <input type="hidden" name="departure_type" value="special">
 
 <?php if ( $atdSpecial->getSpecialLeadPrice() ): ?>
     <div class="atd-cfi__mb-2">

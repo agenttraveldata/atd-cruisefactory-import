@@ -1,8 +1,6 @@
-<?php global $atdDeparture, $atdSpecial, $atdFactory; ?>
-<input type="hidden" name="departure_id" value="<?php echo $atdSpecial
-	? $atdSpecial->getDepartureId()
-	: $atdDeparture->getId(); ?>">
-<input type="hidden" name="departure_type" value="<?php echo $atdSpecial ? 'special' : 'cruise'; ?>">
+<?php global $atdDeparture, $atdFactory; ?>
+<input type="hidden" name="departure_id" value="<?php echo $atdDeparture->getId(); ?>">
+<input type="hidden" name="departure_type" value="cruise">
 
 <div class="atd-cfi-departure-pricing__type atd-cfi__mb-2">
     <label for="atd-cfi-select-pax-pricing">Passenger pricing</label>
