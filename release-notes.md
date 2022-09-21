@@ -1,0 +1,1 @@
+* Fixed incorrect hidden fields in pricing templates.
