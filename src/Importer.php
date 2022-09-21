@@ -138,8 +138,8 @@ class Importer {
 			} );
 
 			add_action( 'wp_enqueue_scripts', function () {
-				wp_enqueue_script( 'atd-cf-xml-js', plugins_url( '/dist/main.js', ATD_CF_PLUGIN_FILE ), [], false, true );
-				wp_enqueue_style( 'atd-cf-xml-css', plugins_url( '/dist/main.css', ATD_CF_PLUGIN_FILE ) );
+				wp_enqueue_script( 'atd-cf-xml-js', plugins_url( '/dist/main.js', ATD_CF_PLUGIN_FILE ), [], ATD_CF_PLUGIN_VERSION, true );
+				wp_enqueue_style( 'atd-cf-xml-css', plugins_url( '/dist/main.css', ATD_CF_PLUGIN_FILE ), [], ATD_CF_PLUGIN_VERSION );
 
 				wp_localize_script( 'atd-cf-xml-js', 'atd_cfi', [
 					'recaptcha_site_key' => get_option( ATD_CF_XML_GOOGLE_SITE_KEY_FIELD ),
