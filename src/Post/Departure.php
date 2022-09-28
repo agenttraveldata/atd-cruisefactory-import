@@ -58,19 +58,20 @@ class Departure implements Post {
 			}
 		}
 
-		if ( isset( $special ) ) {
-			$special->setName( $special->getName() . ' - ' . $details->getSailingDate()->format( 'd/m/Y' ) );
-		}
-
-		$cruiseName        = $details->getCruise()->getName() . ' - ' . $details->getSailingDate()->format( 'd/m/Y' );
 		$cruiseDescription = trim( $details->getCruise()->getDescription() );
+		$post_title        = apply_filters(
+			'atd_cfi_filter_departure_post_title',
+			isset( $special ) ? $special->getName() : $details->getCruise()->getName(),
+			$details->getSailingDate(),
+			isset( $special )
+		);
 
 		$post_details = [
 			'post_type'    => self::$postType,
-			'post_title'   => isset( $special ) ? $special->getName() : $cruiseName,
-			'post_name'    => sanitize_title( isset( $special ) && empty( get_option( ATD_CF_XML_SLUG_FIELD, false ) ) ? $special->getName() : $cruiseName ),
+			'post_title'   => $post_title,
+			'post_name'    => sanitize_title( ( isset( $special ) && empty( get_option( ATD_CF_XML_SLUG_FIELD, false ) ) ? $special->getName() : $details->getCruise()->getName() ) . ' - ' . $details->getSailingDate()->format( 'd/m/Y' ) ),
 			'post_content' => ( new Blocks\Paragraph( nl2br( ! empty( $cruiseDescription ) ? $cruiseDescription : $details->getCruise()->getBriefDescription() ) ) )->render(),
-			'post_excerpt' => $details->getCruise()->getBriefDescription(),
+			'post_excerpt' => isset( $special ) ? $special->getBriefDescription() : $details->getCruise()->getBriefDescription(),
 			'post_status'  => 'publish'
 		];
 
