@@ -218,5 +218,5 @@ function atd_cf_get_media_image_by_meta_key_and_id( string $key, int $id ): ?str
 }
 
 add_filter( 'atd_cfi_filter_departure_post_title', function ( string $title, DateTimeInterface $date, bool $is_special ) {
-	return $title . ' - ' . $date->format( 'd M Y' );
+	return $title . ' - ' . $date->format( 'd/m/Y' );
 }, 10, 3 );
