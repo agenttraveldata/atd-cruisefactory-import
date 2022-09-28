@@ -1,0 +1,1 @@
+* Changed departure post filter to allow deconstructing title further down.
