@@ -58,10 +58,12 @@ class Departure implements Post {
 			}
 		}
 
+		$departureName     = isset( $special ) ? $special->getName() : $details->getCruise()->getName();
 		$cruiseDescription = trim( $details->getCruise()->getDescription() );
 		$post_title        = apply_filters(
 			'atd_cfi_filter_departure_post_title',
-			isset( $special ) ? $special->getName() : $details->getCruise()->getName(),
+			$departureName . ' - ' . $details->getSailingDate()->format( 'd/m/Y' ),
+			$departureName,
 			$details->getSailingDate(),
 			isset( $special )
 		);
