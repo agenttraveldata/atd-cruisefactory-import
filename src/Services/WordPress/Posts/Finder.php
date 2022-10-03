@@ -133,9 +133,13 @@ class Finder {
 
 		if ( $attachedMedia = get_attached_media( $imageType ?? 'image', $postId ) ) {
 			foreach ( $attachedMedia as $image ) {
-				$metaData = array_filter( array_map( 'reset', get_metadata_raw( 'post', $image->ID ) ), function ( $k ) {
-					return substr( $k, 0, 6 ) === 'atd_cf';
-				}, ARRAY_FILTER_USE_KEY );
+				if ( $rawMetaData = get_metadata_raw( 'post', $image->ID ) ) {
+					foreach ( $rawMetaData as $key => $datum ) {
+						if ( substr( $key, 0, 6 ) === 'atd_cf' ) {
+							$metaData[ $key ] = reset( $datum );
+						}
+					}
+				}
 
 				if ( ! empty( $metaData ) ) {
 					/*
