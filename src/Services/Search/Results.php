@@ -101,7 +101,13 @@ class Results {
 
 		$query->set( 'orderby', [ 'atd_cfi_sailing_date' => 'ASC' ] );
 
-		if ( isset( $_GET ) && sizeof( $_GET ) > 0 ) {
+		if ( isset( $query->query[ Taxonomy\DepartureType::$name ] ) ) {
+			$GLOBALS['showing_main_specials'] = true;
+
+			$query->set( 'no_found_rows', true );
+			$query->set( 'meta_query', array_merge( [ 'atd_cfi_main_special' => $this->getMetaArray( 'main_special', 1, '=', 'NUMERIC' ) ], $query->get( 'meta_query' ) ) );
+			$query->set( 'orderby', array_merge( [ 'atd_cfi_special_order' => 'DESC' ], $query->get( 'orderby' ) ) );
+		} else {
 			if ( isset( $query->query[ Taxonomy\DepartureType::$name ] ) && $query->query[ Taxonomy\DepartureType::$name ] === 'special' ) {
 				$_GET['offerType_id'] = 'special';
 			}
@@ -143,12 +149,6 @@ class Results {
 				$orderBy = array_merge( [ 'atd_cfi_result_sort' => 'DESC' ], $orderBy );
 				$query->set( 'orderby', $orderBy );
 			}
-		} elseif ( isset( $query->query[ Taxonomy\SpecialType::$name ] ) ) {
-			$GLOBALS['showing_main_specials'] = true;
-
-			$query->set( 'no_found_rows', true );
-			$query->set( 'meta_query', array_merge( [ 'atd_cfi_special_order' => $this->getMetaArray( 'special_order', '>' ) ], $query->get( 'meta_query' ) ) );
-			$query->set( 'orderby', array_merge( [ 'atd_cfi_special_order' => 'DESC' ], $query->get( 'orderby' ) ) );
 		}
 
 		remove_action( 'pre_get_posts', [ $this, 'searchQuery' ] );
