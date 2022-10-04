@@ -1,4 +1,5 @@
-<form id="atd-cfi-enquiry-form" action="/wp-json/atd/cfi/v1/enquire" method="post" data-controller="atd-cfi-submit-form" data-action="atd-cfi-submit-form#submit">
+<form id="atd-cfi-enquiry-form" action="/wp-json/atd/cfi/v1/enquire" method="post" data-controller="atd-cfi-submit-form"
+      data-action="atd-cfi-submit-form#submit">
     <input type="hidden" name="departure_type" value="<?php echo get_query_var( 'departure_type' ); ?>">
     <input type="hidden" name="departure_id" value="<?php echo get_query_var( 'departure_id', 0 ); ?>">
     <input type="hidden" name="pax" value="<?php echo get_query_var( 'pax', '' ); ?>">
@@ -8,12 +9,14 @@
     <div class="atd-cfi__cols-enquiry">
         <div class="atd-cfi-cols__column atd-cfi-cols-column-3 atd-cfi__mb-2">
             <label for="email_address">
-                <input id="email_address" name="email_address" type="text" class="atd-cfi__input" placeholder="Email address">
+                <input id="email_address" name="email_address" type="text" class="atd-cfi__input"
+                       placeholder="Email address">
             </label>
         </div>
         <div class="atd-cfi-cols__column atd-cfi-cols-column-2 atd-cfi__mb-2">
             <label for="phone_number">
-                <input id="phone_number" name="phone_number" type="text" class="atd-cfi__input" placeholder="Phone Number">
+                <input id="phone_number" name="phone_number" type="text" class="atd-cfi__input"
+                       placeholder="Phone Number">
             </label>
         </div>
         <div class="atd-cfi-cols__column atd-cfi-cols-column__half atd-cfi__mb-2">
@@ -28,17 +31,20 @@
         </div>
         <div class="atd-cfi-cols__column atd-cfi-cols-column__half atd-cfi__mb-2">
             <label for="num_adults">
-                <input id="num_adults" name="num_adults" type="number" value="2" class="atd-cfi__input" placeholder="Number of adults">
+                <input id="num_adults" name="num_adults" type="number" value="2" min="1" class="atd-cfi__input"
+                       placeholder="Number of adults">
             </label>
         </div>
         <div class="atd-cfi-cols__column atd-cfi-cols-column__half atd-cfi__mb-2">
             <label for="num_children">
-                <input id="num_children" name="num_children" type="number" value="0" class="atd-cfi__input" placeholder="Number of children">
+                <input id="num_children" name="num_children" type="number" value="0" min="0" class="atd-cfi__input"
+                       placeholder="Number of children">
             </label>
         </div>
         <div class="atd-cfi-cols__column atd-cfi-cols-column__stretch atd-cfi__mb-2">
             <label for="message">
-                <textarea class="atd-cfi__input" name="message" id="message" cols="30" rows="10" placeholder="Tell us about your enquiry"></textarea>
+                <textarea class="atd-cfi__input" name="message" id="message" cols="30" rows="10"
+                          placeholder="Tell us about your enquiry"></textarea>
             </label>
         </div>
 		<?php atd_cf_get_template_part( 'form', 'recaptcha' ); ?>
