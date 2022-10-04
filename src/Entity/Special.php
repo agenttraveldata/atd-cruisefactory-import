@@ -15,6 +15,7 @@ class Special {
 	private string $special_brief;
 	private string $special_text;
 	private string $special_conditions;
+	private int $special_order;
 	private string $validity_date_start;
 	private string $validity_date_end;
 	private string $type;
@@ -238,6 +239,16 @@ class Special {
 
 	public function setUploadedPdf( string $uploadedPdf ): self {
 		$this->uploaded_pdf = $uploadedPdf;
+
+		return $this;
+	}
+
+	public function getOrder(): int {
+		return $this->special_order ?? 1;
+	}
+
+	public function setOrder( int $order ): self {
+		$this->special_order = $order;
 
 		return $this;
 	}
