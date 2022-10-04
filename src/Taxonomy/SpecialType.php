@@ -15,7 +15,7 @@ class SpecialType extends AbstractTaxonomy {
 			'show_ui'      => true,
 			'show_in_rest' => true,
 			'query_var'    => true,
-			'rewrite'      => [ 'slug' => 'cruise-search/type/special/type' ]
+			'rewrite'      => [ 'slug' => 'cruise-search/special' ]
 		] );
 	}
 }
