@@ -73,7 +73,7 @@ class Departure {
 				return - 1;
 			}
 
-			return $a->getPriceDouble() > $b->getPriceDouble();
+			return $a->getPriceDouble() <=> $b->getPriceDouble();
 		} );
 
 		$this->cruisePrices = new ArrayCollection( $cruisePrices );

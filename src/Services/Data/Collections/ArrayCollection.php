@@ -30,7 +30,7 @@ class ArrayCollection implements Collection {
 		return empty( $this->elements );
 	}
 
-	public function remove( $key ) {
+	public function remove( $key ): mixed {
 		if ( $this->containsKey( $key ) ) {
 
 			$removed = $this->elements[ $key ];
@@ -56,7 +56,7 @@ class ArrayCollection implements Collection {
 		return isset( $this->elements[ $key ] ) || array_key_exists( $key, $this->elements );
 	}
 
-	public function get( $key ) {
+	public function get( $key ): mixed {
 		return $this->elements[ $key ] ?? null;
 	}
 
@@ -76,23 +76,23 @@ class ArrayCollection implements Collection {
 		return $this->elements;
 	}
 
-	public function first() {
+	public function first(): mixed {
 		return reset( $this->elements );
 	}
 
-	public function last() {
+	public function last(): mixed {
 		return end( $this->elements );
 	}
 
-	public function key() {
+	public function key(): int {
 		return key( $this->elements );
 	}
 
-	public function current() {
+	public function current(): mixed {
 		return current( $this->elements );
 	}
 
-	public function next() {
+	public function next(): mixed {
 		return next( $this->elements );
 	}
 
@@ -110,7 +110,7 @@ class ArrayCollection implements Collection {
 		return new static( array_filter( $this->elements, $closure ) );
 	}
 
-	public function indexOf( $element ) {
+	public function indexOf( $element ): false|int {
 		return array_search( $element, $this->elements, true );
 	}
 
@@ -134,11 +134,11 @@ class ArrayCollection implements Collection {
 		return $this->containsKey( $offset );
 	}
 
-	public function offsetGet( $offset ) {
+	public function offsetGet( $offset ): mixed {
 		return $this->get( $offset );
 	}
 
-	public function offsetSet( $offset, $value ) {
+	public function offsetSet( $offset, $value ): void {
 		if ( ! isset( $offset ) ) {
 			$this->add( $value );
 
@@ -148,7 +148,7 @@ class ArrayCollection implements Collection {
 		$this->set( $offset, $value );
 	}
 
-	public function offsetUnset( $offset ) {
+	public function offsetUnset( $offset ): void {
 		$this->remove( $offset );
 	}
 
