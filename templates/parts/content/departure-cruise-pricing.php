@@ -1,4 +1,4 @@
-<?php global $atdDeparture, $atdFactory; ?>
+<?php global $atdDeparture; ?>
 <input type="hidden" name="departure_id" value="<?php echo $atdDeparture->getId(); ?>">
 <input type="hidden" name="departure_type" value="cruise">
 

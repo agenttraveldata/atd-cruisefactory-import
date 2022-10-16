@@ -1,11 +1,10 @@
 <?php
 
 /**
- * @var ATD\CruiseFactory\Entity\Factory $atdFactory
  * @var ATD\CruiseFactory\Entity\Departure $atdDeparture
  * @var ATD\CruiseFactory\Entity\Special $atdSpecial
  */
-global $atdFactory, $atdDeparture, $atdSpecial;
+global $atdDeparture, $atdSpecial;
 $cruiseLinePost = atd_cf_get_post_by_meta_value( ATD\CruiseFactory\Post\CruiseLine::$postType, $atdDeparture->getCruise()->getCruiseLine()->getId(), true );
 $shipPost       = atd_cf_get_post_by_meta_value( ATD\CruiseFactory\Post\Ship::$postType, $atdDeparture->getCruise()->getShip()->getId(), true );
 
@@ -17,7 +16,8 @@ $shipPost       = atd_cf_get_post_by_meta_value( ATD\CruiseFactory\Post\Ship::$p
             <img class="atd-cfi__img-fluid atd-cfi__mb-2"
                  src="data:<?php echo $atdDeparture->getCruise()->getCruiseLine()->getLogoType(); ?>;base64,<?php echo base64_encode( $atdDeparture->getCruise()->getCruiseLine()->getLogoData() ); ?>"
                  alt="Cruise Line">
-            <p><?php echo $atdDeparture->getCruise()->getDuration(); ?> nights onboard
+            <p>
+                <?php echo $atdDeparture->getCruise()->getDuration(); ?> nights onboard
                 <a href="<?php echo get_permalink( $shipPost->post->ID ); ?>">
 					<?php echo $atdDeparture->getCruise()->getShip()->getName(); ?>
                 </a> from
