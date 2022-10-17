@@ -95,10 +95,11 @@ class CleanUp {
 	private function getPostTypeByTableName( string $tableName ): ?string {
 		foreach ( Provider::getFeeds() as $feed ) {
 			if ( $feed::getTableNameWithPrefix() === $tableName ) {
-				$postClass = ConvertClass::toPostFromFeed( $feed );
-				if ( class_exists( $postClass ) && property_exists( $postClass, 'postType' ) ) {
-					/** @var Post\Post $postClass */
-					return $postClass::$postType;
+				if ( $postClass = ConvertClass::toPostFromFeed( $feed ) ) {
+					if ( class_exists( $postClass ) && property_exists( $postClass, 'postType' ) ) {
+						/** @var Post\Post $postClass */
+						return $postClass::$postType;
+					}
 				}
 			}
 		}
