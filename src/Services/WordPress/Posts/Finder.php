@@ -5,18 +5,10 @@ namespace ATD\CruiseFactory\Services\WordPress\Posts;
 use ATD\CruiseFactory\Feed;
 use ATD\CruiseFactory\Post;
 use ATD\CruiseFactory\Services\ConvertClass;
-use Exception;
 use WP_Post;
 use WP_Query;
 
 class Finder {
-	/**
-	 * @param int $departureId
-	 * @param string $type
-	 *
-	 * @return object
-	 * @throws Exception
-	 */
 	public static function getDepartureByIdAndType( int $departureId, string $type ): ?object {
 		switch ( $type ) {
 			case 'special':
@@ -27,21 +19,17 @@ class Finder {
 				break;
 		}
 
-		if ( ! empty( $feed ) && ( $departure = $feed->getEntityManager()->getMapper( $feed->getEntity() )->find( $departureId ) ) ) {
-			return $departure;
+		try {
+			if ( ! empty( $feed ) && ( $departure = $feed->getEntityManager()->getMapper( $feed->getEntity() )->find( $departureId ) ) ) {
+				return $departure;
+			}
+		} catch ( \Exception ) {
 		}
 
 		return null;
 	}
 
-	/**
-	 * @param string $postType
-	 * @param int $id
-	 * @param bool $returnQuery
-	 *
-	 * @return false|WP_Post|WP_Query|null
-	 */
-	public static function getPostByPostTypeAndId( string $postType, int $id, bool $returnQuery = false ) {
+	public static function getPostByPostTypeAndId( string $postType, int $id, bool $returnQuery = false ): false|WP_Post|WP_Query {
 		if ( $postClass = Post\Provider::getPostClassByPostType( $postType ) ) {
 			$feedClass = ConvertClass::toFeedFromPost( $postClass );
 
@@ -61,7 +49,11 @@ class Finder {
 				] );
 
 				if ( $query->post_count === 1 ) {
-					return $returnQuery ? $query : $query->post;
+					if ( $returnQuery ) {
+						return $query;
+					}
+
+					return $query->post ?? false;
 				}
 			}
 		}
@@ -69,13 +61,7 @@ class Finder {
 		return false;
 	}
 
-	/**
-	 * @param string $feedClass
-	 * @param int $id
-	 *
-	 * @return false|WP_Post|null
-	 */
-	public static function getPostByFeedAndId( string $feedClass, int $id ) {
+	public static function getPostByFeedAndId( string $feedClass, int $id ): false|WP_Post {
 		$postClass = ConvertClass::toPostFromFeed( $feedClass );
 
 		if ( class_exists( $feedClass ) && class_exists( $postClass ) ) {
@@ -94,7 +80,7 @@ class Finder {
 			] );
 
 			if ( $query->post_count === 1 ) {
-				return $query->post;
+				return $query->post ?? false;
 			}
 		}
 
@@ -135,7 +121,7 @@ class Finder {
 			foreach ( $attachedMedia as $image ) {
 				if ( $rawMetaData = get_metadata_raw( 'post', $image->ID ) ) {
 					foreach ( $rawMetaData as $key => $datum ) {
-						if ( substr( $key, 0, 6 ) === 'atd_cf' ) {
+						if ( str_starts_with( $key, 'atd_cf' ) ) {
 							$metaData[ $key ] = reset( $datum );
 						}
 					}
@@ -166,11 +152,11 @@ class Finder {
 					} elseif ( isset( $metaData[ Feed\Deck::$metaKeyId ] ) ) {
 						$details['meta']  = $metaData[ Feed\Deck::$metaKeyId ];
 						$details['type']  = 'deck';
-						$details['image'] = wp_get_attachment_url( $image->ID );
+						$details['image'] = wp_get_attachment_image_url( $image->ID );
 					} else {
 						$details['meta']  = $metaData;
 						$details['type']  = 'general';
-						$details['image'] = wp_get_attachment_url( $image->ID );
+						$details['image'] = wp_get_attachment_image_url( $image->ID );
 					}
 
 					$images[] = $details;
