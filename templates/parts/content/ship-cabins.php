@@ -5,12 +5,12 @@
                 <div class="atd-cfi-ar-col__img">
 					<?php if ( ! empty( $image['image'] ) ): ?>
                         <a data-action="atd-cfi-popover#image" href="<?php echo wp_get_attachment_image_url( $image['image'], 'full-size' ); ?>">
-                            <img src="<?php echo wp_get_attachment_thumb_url( $image['image'] ); ?>" alt="">
+                            <img src="<?php echo wp_get_attachment_image_url( $image['image'] ); ?>" alt="">
                         </a>
 					<?php endif; ?>
 					<?php if ( ! empty( $image['photo'] ) ): ?>
                         <a data-action="atd-cfi-popover#image" href="<?php echo wp_get_attachment_image_url( $image['photo'], 'full-size' ); ?>">
-                            <img src="<?php echo wp_get_attachment_thumb_url( $image['photo'] ); ?>" alt="">
+                            <img src="<?php echo wp_get_attachment_image_url( $image['photo'] ); ?>" alt="">
                         </a>
 					<?php endif; ?>
                 </div>

@@ -4,7 +4,7 @@
             <div class="atd-cfi-ar__col">
                 <div class="atd-cfi-ar-col__img">
                     <a data-action="atd-cfi-popover#image" href="<?php echo wp_get_attachment_image_url( $image['id'], 'full-size' ); ?>">
-                        <img src="<?php echo wp_get_attachment_thumb_url( $image['id'] ); ?>" alt="">
+                        <img src="<?php echo wp_get_attachment_image_url( $image['id'] ); ?>" alt="">
                     </a>
                 </div>
                 <div class="atd-cfi-ar-col__details">
