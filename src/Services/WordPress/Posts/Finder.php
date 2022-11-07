@@ -149,6 +149,8 @@ class Finder {
 						$details['meta']  = $metaData[ Feed\Cabin::$metaKeyId ];
 						$details['type']  = 'cabin';
 						$details[ $type ] = $image->ID;
+
+						$details['atd_cfi_cabin_id'] = (int) $metaData['atd_cfi_cabin_id'];
 					} elseif ( isset( $metaData[ Feed\Deck::$metaKeyId ] ) ) {
 						$details['meta']  = $metaData[ Feed\Deck::$metaKeyId ];
 						$details['type']  = 'deck';
