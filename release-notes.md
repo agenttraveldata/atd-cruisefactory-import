@@ -1,0 +1,1 @@
+* Changed cruise search options to be easier switching between values after selections have been made.
