@@ -207,6 +207,9 @@ abstract class AbstractFeed implements Feed {
 	}
 
 	public function fetchIncrement(): ?string {
+		/* Add class to fetched list to prevent is being imported twice */
+		self::$fetchedFeeds[ static::class ] = true;
+
 		foreach ( $this->dependencies as $dependency ) {
 			if ( ! isset( self::$fetchedFeeds[ $dependency ] ) ) {
 				self::$fetchedFeeds[ $dependency ] = true;
@@ -234,9 +237,6 @@ abstract class AbstractFeed implements Feed {
 			}
 
 			$this->performCleanUp();
-
-			/* Add class to fetched list to prevent is being imported twice */
-			self::$fetchedFeeds[ static::class ] = true;
 
 			return $this->updatedAt;
 		}
@@ -269,7 +269,7 @@ abstract class AbstractFeed implements Feed {
 		}
 
 		if ( ! empty( $this->xmlSynchronizationRows ) ) {
-			if (method_exists($this, 'xmlSynchronizationUpdate')) {
+			if ( method_exists( $this, 'xmlSynchronizationUpdate' ) ) {
 				$this->xmlSynchronizationUpdate();
 			}
 		}
