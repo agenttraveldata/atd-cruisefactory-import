@@ -52,12 +52,6 @@ class Departure implements Post {
 			$originalType = null;
 		}
 
-		if ( ! defined( 'ATD_CF_XML_IMPORT_FORCE_OVERWRITE' ) ) {
-			if ( $originalPost && $originalPost->post_author > 0 ) {
-				return $originalPost->ID;
-			}
-		}
-
 		$departureName     = isset( $special ) ? $special->getName() : $details->getCruise()->getName();
 		$cruiseDescription = trim( $details->getCruise()->getDescription() );
 		$post_title        = apply_filters(
@@ -239,8 +233,6 @@ class Departure implements Post {
 			if ( ! is_wp_error( $id ) ) {
 				return true;
 			}
-
-			@unlink( $file['tmp_name'] );
 		}
 
 		return false;
