@@ -28,7 +28,7 @@ class Importer {
 		}
 	}
 
-	public function init() {
+	public function init(): void {
 		if ( class_exists( 'WP_CLI' ) ) {
 			Services\WordPress\Commands\Provider::registerCommands();
 		}
@@ -51,7 +51,7 @@ class Importer {
 				wp_enqueue_script( 'atd-cf-xml-admin-js', plugins_url( '/dist/admin/atd-cfi.js', ATD_CF_PLUGIN_FILE ), [
 					'jquery',
 					'wp-util'
-				], ATD_CF_PLUGIN_VERSION, false );
+				], ATD_CF_PLUGIN_VERSION );
 
 				wp_localize_script( 'atd-cf-xml-admin-js', 'atd_cfi', [
 					'verify_xml'             => wp_create_nonce( 'atd_cfi_verify_xml' ),
@@ -153,7 +153,7 @@ class Importer {
 		}
 	}
 
-	public function activate() {
+	public function activate(): void {
 		Post\Provider::registerPosts();
 
 		if ( ! get_option( ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD ) ) {
@@ -173,7 +173,7 @@ class Importer {
 		flush_rewrite_rules();
 	}
 
-	public function installTables() {
+	public function installTables(): void {
 		if ( ATD_CF_DATABASE_VERSION !== get_option( ATD_CF_XML_DB_VERSION_FIELD ) ) {
 			global $wpdb;
 
@@ -188,12 +188,12 @@ class Importer {
 		}
 	}
 
-	public function deactivate() {
+	public function deactivate(): void {
 		Post\Provider::unregisterPosts();
 		flush_rewrite_rules();
 	}
 
-	public static function uninstall() {
+	public static function uninstall(): void {
 		global $wpdb;
 
 		foreach ( Feed\Provider::getFeeds() as $feed ) {

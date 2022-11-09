@@ -4,7 +4,7 @@
 namespace ATD\CruiseFactory\Post;
 
 
-use ATD\CruiseFactory\Entity\SpecialDeparture;
+use ATD\CruiseFactory\Entity;
 use ATD\CruiseFactory\Feed;
 use ATD\CruiseFactory\Services\Logger;
 use ATD\CruiseFactory\Services\WordPress\Blocks;
@@ -17,7 +17,7 @@ class Departure implements Post {
 	private static string $cfImageUrl = 'https://ik.imagekit.io/atd/cruises/';
 
 	public static function add( object $details ): ?int {
-		if ( $details instanceof SpecialDeparture ) {
+		if ( $details instanceof Entity\SpecialDeparture ) {
 			$specialDepartureId = $details->getId();
 			$special            = $details->getSpecial();
 
@@ -174,6 +174,12 @@ class Departure implements Post {
 			wp_set_object_terms( $post_id, (int) $term['term_id'], Taxonomy\Month::$name );
 		}
 
+		self::attachMedia( $post_id, $details );
+
+		return true;
+	}
+
+	private static function attachMedia( int $post_id, Entity\Departure $details ): void {
 		if ( ! defined( 'ATD_CF_XML_IMAGE_EXCLUDE' ) && ! empty( $details->getCruise()->getPhoto() ) ) {
 			$imageUrl       = self::$cfImageUrl . $details->getCruise()->getPhoto();
 			$imageExtension = strtolower( pathinfo( $imageUrl, PATHINFO_EXTENSION ) );
@@ -206,8 +212,6 @@ class Departure implements Post {
 				self::createMedia( $post_id, $details, $imageFileName, $imageUrl, $attachmentMetaKey );
 			}
 		}
-
-		return true;
 	}
 
 	private static function createMedia( int $post_id, object $details, string $imageFileName, string $imageUrl, string $attachmentMetaKey ): bool {
@@ -258,7 +262,7 @@ class Departure implements Post {
 		return null;
 	}
 
-	public static function convertBackToCruise( SpecialDeparture $details ): bool {
+	public static function convertBackToCruise( Entity\SpecialDeparture $details ): bool {
 		if ( $originalPost = self::findOriginalPost( [
 			'relation'             => 'AND',
 			'special_departure_id' => [
