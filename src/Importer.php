@@ -1,8 +1,6 @@
 <?php
 
-
 namespace ATD\CruiseFactory;
-
 
 use ATD\CruiseFactory\Services;
 use ATD\CruiseFactory\Taxonomy;
@@ -17,9 +15,7 @@ class Importer {
 		$this->wpdb = $wpdb;
 
 		add_action( 'init', [ $this, 'init' ] );
-		add_action( 'admin_init', function () {
-			$this->installTables();
-		} );
+		add_action( 'admin_init', [ $this, 'admin_init' ] );
 
 		if ( is_admin() ) {
 			register_activation_hook( ATD_CF_PLUGIN_FILE, [ $this, 'activate' ] );
@@ -151,6 +147,11 @@ class Importer {
 				] );
 			} );
 		}
+	}
+
+	public function admin_init(): void {
+		$this->installTables();
+		( new Services\WordPress\Plugin\Updater() );
 	}
 
 	public function activate(): void {
