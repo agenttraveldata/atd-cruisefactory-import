@@ -1,0 +1,1 @@
+* Added ability to update plugin directly from WordPress administration area.
