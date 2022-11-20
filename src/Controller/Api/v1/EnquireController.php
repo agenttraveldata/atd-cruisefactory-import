@@ -50,12 +50,12 @@ class EnquireController extends AbstractController {
 
 				$to      = get_option( ATD_CF_XML_AGENT_EMAIL_FIELD, get_option( 'admin_email' ) );
 				$bcc     = get_option( ATD_CF_XML_BCC_EMAIL_FIELD, null );
-				$subject = sprintf( '%s enquiry sent from %s website', $summary->getSpecial() ? 'Special' : 'Cruise', get_bloginfo( 'name' ) );
+				$subject = apply_filters( 'atd_cfi_filter_email_agent_subject', sprintf( '%s enquiry sent from %s website', $summary->getSpecial() ? 'Special' : 'Cruise', get_bloginfo( 'name' ) ), $fields );
 
 				if ( $this->dispatchEmail( 'agent', $fields, $to, $subject, $bcc ) ) {
 					if ( get_option( ATD_CF_XML_ENQUIRY_EMAIL_CLIENT_FIELD, true ) ) {
 						$to      = $fields['email_address'];
-						$subject = sprintf( 'Thank you for your enquiry on %s', get_bloginfo( 'name' ) );
+						$subject = apply_filters( 'atd_cfi_filter_email_client_subject', sprintf( 'Thank you for your enquiry on %s', get_bloginfo( 'name' ) ), $fields );
 
 						$this->dispatchEmail( 'client', $fields, $to, $subject );
 					}
