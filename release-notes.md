@@ -1,0 +1,1 @@
+* Added filters for both agent & client email subject text.
