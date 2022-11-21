@@ -13,14 +13,14 @@ class Provider {
 		Departure::class
 	];
 
-	public static function registerPosts() {
+	public static function registerPosts(): void {
 		/** @var Post $post */
 		foreach ( self::$posts as $post ) {
 			$post::register();
 		}
 	}
 
-	public static function unregisterPosts() {
+	public static function unregisterPosts(): void {
 		/** @var Post $post */
 		foreach ( self::$posts as $post ) {
 			unregister_post_type( $post::$postType );

@@ -93,29 +93,35 @@ class Departure implements Post {
 			$post_details['ID'] = $originalPost->ID;
 		}
 
-		switch ( $originalType ) {
-			case 'special':
-				if ( ! empty( $specialDepartureId ) ) {
-					Logger::modify( sprintf( '[%d] Updated special %s post %s', $meta_input['atd_cfi_id'], $post_details['post_type'], $originalPost->post_title ) );
-				} else {
-					Logger::modify( sprintf( '[%d] Converted special %s post %s to cruise %s', $meta_input['atd_cfi_id'], $post_details['post_type'], $originalPost->post_title, $post_details['post_title'] ) );
-				}
-				break;
-			case 'cruise':
-				if ( ! empty( $specialDepartureId ) ) {
-					Logger::modify( sprintf( '[%d] Converted cruise %s post %s to special %s', $meta_input['atd_cfi_id'], $post_details['post_type'], $originalPost->post_title, $post_details['post_title'] ) );
-				} else {
-					Logger::modify( sprintf( '[%d] Updated cruise %s post %s', $meta_input['atd_cfi_id'], $post_details['post_type'], $originalPost->post_title ) );
-				}
-				break;
-			default:
-				Logger::add( sprintf( '[%d] Added %s post %s', $meta_input['atd_cfi_id'], $post_details['post_type'], $post_details['post_title'] ) );
-		}
-
 		if ( ! empty( $originalPost ) && empty( $specialDepartureId ) ) {
 			$post_id = wp_update_post( $post_details );
 		} else {
 			$post_id = wp_insert_post( $post_details );
+		}
+
+		if ( is_wp_error( $post_id ) ) {
+			Logger::error( "[{$meta_input['atd_cfi_id']}] Departure error: {$post_id->get_error_message()}" );
+
+			return null;
+		}
+
+		switch ( $originalType ) {
+			case 'special':
+				if ( ! empty( $specialDepartureId ) ) {
+					Logger::modify( "[{$meta_input['atd_cfi_id']}] Updated special {$post_details['post_type']} post $originalPost->post_title" );
+				} else {
+					Logger::modify( "[{$meta_input['atd_cfi_id']}] Converted special {$post_details['post_type']} post $originalPost->post_title to cruise {$post_details['post_title']}" );
+				}
+				break;
+			case 'cruise':
+				if ( ! empty( $specialDepartureId ) ) {
+					Logger::modify( "[{$meta_input['atd_cfi_id']}] Converted cruise {$post_details['post_type']} post $originalPost->post_title to special {$post_details['post_title']}" );
+				} else {
+					Logger::modify( "[{$meta_input['atd_cfi_id']}] Updated cruise {$post_details['post_type']} post $originalPost->post_title" );
+				}
+				break;
+			default:
+				Logger::add( "[{$meta_input['atd_cfi_id']}] Added {$post_details['post_type']} post {$post_details['post_title']}" );
 		}
 
 		if ( $term = Taxonomy\Destination::addTerm( Taxonomy\Destination::$name, $details->getCruise()->getDestination()->getName(), (string) $details->getCruise()->getDestination()->getId() ) ) {
@@ -296,7 +302,7 @@ class Departure implements Post {
 
 			wp_update_post( $post_details );
 
-			Logger::modify( sprintf( '[%d] Converted special %s post %s to cruise %s', $post_details['meta_input']['atd_cfi_id'], $originalPost->post_type, $originalPost->post_title, $post_details['post_title'] ) );
+			Logger::modify( "[{$post_details['meta_input']['atd_cfi_id']}] Converted special $originalPost->post_type post $originalPost->post_title to cruise {$post_details['post_title']}" );
 
 			return true;
 		}

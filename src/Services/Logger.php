@@ -26,23 +26,23 @@ class Logger {
 		'error'  => 'x'
 	];
 
-	public static function add( string $message ) {
+	public static function add( string $message ): void {
 		self::createLog( 'add', '[' . self::$typeIcons['add'] . '] ' . $message );
 	}
 
-	public static function modify( string $message ) {
+	public static function modify( string $message ): void {
 		self::createLog( 'modify', '[' . self::$typeIcons['modify'] . '] ' . $message );
 	}
 
-	public static function remove( string $message ) {
+	public static function remove( string $message ): void {
 		self::createLog( 'remove', '[' . self::$typeIcons['remove'] . '] ' . $message );
 	}
 
-	public static function info( string $message ) {
+	public static function info( string $message ): void {
 		self::createLog( 'info', '[' . self::$typeIcons['info'] . '] ' . $message );
 	}
 
-	public static function error( string $message ) {
+	public static function error( string $message ): void {
 		self::createLog( 'error', '[' . self::$typeIcons['error'] . '] ' . $message );
 	}
 
@@ -114,7 +114,7 @@ class Logger {
 		self::destroy();
 	}
 
-	public static function destroy() {
+	public static function destroy(): void {
 		if ( empty( self::$fh ) ) {
 			return;
 		}

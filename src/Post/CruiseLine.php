@@ -20,7 +20,7 @@ class CruiseLine implements Post {
 			'nopaging'       => true,
 			'no_found_rows'  => true,
 			'meta_key'       => Feed\CruiseLine::$metaKeyId,
-			'meta_value'     => $details->id
+			'meta_value'     => $details->getId()
 		] );
 
 		if ( ! defined( 'ATD_CF_XML_IMPORT_FORCE_OVERWRITE' ) ) {
@@ -42,12 +42,21 @@ class CruiseLine implements Post {
 
 		if ( $originalPost->post_count === 1 ) {
 			$post_details['ID'] = $originalPost->post->ID;
-			Logger::modify( sprintf( '[%d] Updated %s post %s', $post_details['meta_input'][ Feed\CruiseLine::$metaKeyId ], $post_details['post_type'], $originalPost->post->post_title ) );
-		} else {
-			Logger::add( sprintf( '[%d] Added %s post %s', $post_details['meta_input'][ Feed\CruiseLine::$metaKeyId ], $post_details['post_type'], $post_details['post_title'] ) );
 		}
 
 		$post_id = wp_insert_post( $post_details );
+
+		if ( is_wp_error( $post_id ) ) {
+			Logger::error( "[{$details->getId()}] Cruise Line error: {$post_id->get_error_message()}" );
+
+			return null;
+		}
+
+		if ( $originalPost->post_count === 1 ) {
+			Logger::modify( "[{$post_details['meta_input'][ Feed\CruiseLine::$metaKeyId ]}] Updated {$post_details['post_type']} post {$originalPost->post->post_title}" );
+		} else {
+			Logger::add( "[{$post_details['meta_input'][ Feed\CruiseLine::$metaKeyId ]}] Added {$post_details['post_type']} post {$post_details['post_title']}" );
+		}
 
 		if ( ! defined( 'ATD_CF_XML_IMAGE_EXCLUDE' ) && ! empty( $details->getLogoData() ) ) {
 			$logoFileName = 'atd-cfi_cruise-line-logo_' . $details->id . '.' . self::getExtension( $details->getLogoType() );
@@ -101,6 +110,8 @@ class CruiseLine implements Post {
 				return 'gif';
 			case 'image/png':
 				return 'png';
+			case 'image/webp':
+				return 'webp';
 			default:
 				return 'jpg';
 		}

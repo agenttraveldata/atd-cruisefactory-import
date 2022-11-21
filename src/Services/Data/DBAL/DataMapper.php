@@ -39,7 +39,7 @@ class DataMapper {
 			}
 		}
 
-		throw new Exception( sprintf( 'Unable to find feed class for entity %s!', $entity ) );
+		throw new Exception( "Unable to find feed class for entity $entity!" );
 	}
 
 	/**
@@ -257,7 +257,7 @@ class DataMapper {
 			' FROM ' . implode( ', ', $from ) .
 			' WHERE ' . preg_replace( '/%\w/', '?', $whereKeys ) . ( $limit ?? '' )
 		) ) {
-			throw new Exception( sprintf( 'Unable to prepare query statement! %s', $this->dbh->error ) );
+			throw new Exception( "Unable to prepare query statement! {$this->dbh->error}" );
 		}
 
 		if ( preg_match_all( '/%(\w)/', $whereKeys, $matches ) ) {

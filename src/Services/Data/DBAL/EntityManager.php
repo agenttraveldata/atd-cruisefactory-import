@@ -4,6 +4,7 @@
 namespace ATD\CruiseFactory\Services\Data\DBAL;
 
 
+use ATD\CruiseFactory\Services\Logger;
 use Exception;
 use mysqli;
 
@@ -32,6 +33,9 @@ class EntityManager {
 			return $this->loadedMappers[ $entity ];
 		}
 
-		throw new Exception( sprintf( 'Entity %s not found!', $entity ) );
+		$errorMessage = "Entity $entity not found!";
+
+		Logger::error( "[FATAL] Error: $errorMessage" );
+		throw new Exception( $errorMessage );
 	}
 }

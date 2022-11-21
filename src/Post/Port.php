@@ -48,14 +48,20 @@ class Port implements Post {
 
 		if ( $originalPost->post_count === 1 ) {
 			$post_details['ID'] = $originalPost->post->ID;
-			Logger::modify( sprintf( '[%d] Updated %s post %s', $post_details['meta_input'][ Feed\Port::$metaKeyId ], $post_details['post_type'], $originalPost->post->post_title ) );
+			Logger::modify( "[{$post_details['meta_input'][ Feed\Port::$metaKeyId ]}] Updated {$post_details['post_type']} post {$originalPost->post->post_title}" );
 		} else {
-			Logger::add( sprintf( '[%d] Added %s post %s', $post_details['meta_input'][ Feed\Port::$metaKeyId ], $post_details['post_type'], $post_details['post_title'] ) );
+			Logger::add( "[{$post_details['meta_input'][ Feed\Port::$metaKeyId ]}] Added {$post_details['post_type']} post {$post_details['post_title']}" );
 		}
 
-		wp_insert_post( $post_details );
+		$post_id = wp_insert_post( $post_details );
 
-		return true;
+		if ( is_wp_error( $post_id ) ) {
+			Logger::error( "[{$details->getId()}] Port error: {$post_id->get_error_message()}" );
+
+			return null;
+		}
+
+		return $post_id;
 	}
 
 	public static function register() {

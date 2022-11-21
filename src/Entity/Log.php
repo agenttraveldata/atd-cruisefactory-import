@@ -32,7 +32,7 @@ class Log {
 		];
 
 		if ( ! isset( $types[ $type ] ) ) {
-			throw new Exception( 'Invalid log type: ' . $type );
+			throw new Exception( "Invalid log type: $type" );
 		}
 
 		$this->type = $type;
