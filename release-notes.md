@@ -1,0 +1,1 @@
+* Added error logging if WordPress post insert/update fails.
