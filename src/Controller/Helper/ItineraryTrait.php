@@ -104,6 +104,7 @@ trait ItineraryTrait {
 		$dateTime->sub( new DateInterval( 'P1D' ) );
 
 		$html .= '<tr><th colspan="4">Cruise Itinerary</th></tr>';
+		/** @var Entity\Itinerary $activity */
 		foreach ( $departure->getCruise()->getItinerary() as $activity ) {
 			$port = '<a data-action="atd-cfi-popover#json" href="/wp-json/wp/v2/' . Port::$postType . '?include[]=' . $ports[ $activity->getPort()->getId() ]->ID . '">' . $ports[ $activity->getPort()->getId() ]->post_title . '</a>';
 			if ( ( $day + 1 ) !== $activity->getDay() ) {
@@ -112,7 +113,7 @@ trait ItineraryTrait {
 				}
 			}
 
-			$html .= $this->formatDayRow( $dateTime->add( new DateInterval( 'P1D' ) ), $port, $activity->getArrive(), $activity->getDepart() );
+			$html .= $this->formatDayRow( $dateTime->add( new DateInterval( 'P' . ( $day === $activity->getDay() ? '0' : '1' ) . 'D' ) ), $port, $activity->getArrive(), $activity->getDepart() );
 			$day  = $activity->getDay();
 		}
 

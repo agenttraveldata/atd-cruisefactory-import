@@ -5,7 +5,7 @@ Plugin Name: Cruisefactory XML integration
 Plugin URI: https://www.agenttraveldata.com/integrations/wordpress
 Description: Cruise Factory XML import for creating dynamic automatically updated cruise websites. ^Cruise Factory account required.
 Tested up to: 6.1.1
-Version: 0.10.2
+Version: 0.10.3
 Requires PHP: 8.0
 Author: Agent Travel Data Pty Ltd
 Author URI: https://www.agenttraveldata.com
@@ -20,7 +20,7 @@ require __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/includes/core-functions.php';
 
 const ATD_CF_PLUGIN_FILE                      = __FILE__;
-const ATD_CF_PLUGIN_VERSION                   = '0.10.2';
+const ATD_CF_PLUGIN_VERSION                   = '0.10.3';
 const ATD_CF_DATABASE_VERSION                 = '1.1.0';
 const ATD_CF_XML_PAX_TYPES                    = [ 'single', 'double', 'triple', 'quad' ];
 const ATD_CF_XML_LEAD_CATEGORIES              = [ 'inside', 'outside', 'balcony', 'suite' ];
