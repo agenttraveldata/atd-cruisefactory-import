@@ -1,0 +1,1 @@
+* Fixed incorrect dates for itineraries with same day activities.
