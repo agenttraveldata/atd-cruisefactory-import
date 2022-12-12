@@ -24,7 +24,7 @@ class Hydrator {
 		$this->entityManager = new EntityManager( $this->dbh );
 	}
 
-	public function loopStart( WP_Query $query ) {
+	public function loopStart( WP_Query $query ): void {
 		if ( ! $query->is_main_query() && ! ( $query->post_count > 0 ) && ! defined( 'ATD_CF_XML_HYDRATE_POST' ) ) {
 			return;
 		}
@@ -127,7 +127,7 @@ class Hydrator {
 		}
 	}
 
-	public function thePost( WP_Post $post ) {
+	public function thePost( WP_Post $post ): void {
 		switch ( $post->post_type ) {
 			case Post\Departure::$postType:
 			case Post\Destination::$postType:
@@ -147,6 +147,16 @@ class Hydrator {
 
 		switch ( $entityClass ) {
 			case Entity\SpecialDeparture::class:
+				if ( $details->getSpecial() === null ) {
+					// Special missing from database - perhaps imported services instead of increment
+					$this->setGlobalVariables( [
+						'departure' => $details->getSailingDate()
+					] );
+
+					$this->globalsToUnset = [ 'departure' ];
+					break;
+				}
+
 				$details->getSpecial()->setDepartureId( $details->getId() );
 				$this->setGlobalVariables( [
 					'special'   => $details->getSpecial(),
@@ -177,7 +187,7 @@ class Hydrator {
 		return $response;
 	}
 
-	private function setGlobalVariables( array $namesAndValues ) {
+	private function setGlobalVariables( array $namesAndValues ): void {
 		foreach ( $this->globalsToUnset as $unsetName ) {
 			unset( $GLOBALS[ $this->getGlobalVariableName( $unsetName ) ] );
 		}
