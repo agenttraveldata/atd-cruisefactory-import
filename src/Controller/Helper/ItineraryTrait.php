@@ -113,7 +113,11 @@ trait ItineraryTrait {
 				}
 			}
 
-			$html .= $this->formatDayRow( $dateTime->add( new DateInterval( 'P' . ( $day === $activity->getDay() ? '0' : '1' ) . 'D' ) ), $port, $activity->getArrive(), $activity->getDepart() );
+			if ($activity->getDay() > $day) {
+				$dateTime->add( new DateInterval( 'P1D' ) );
+			}
+
+			$html .= $this->formatDayRow( $dateTime, $port, $activity->getArrive(), $activity->getDepart() );
 			$day  = $activity->getDay();
 		}
 
