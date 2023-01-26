@@ -5,7 +5,7 @@ namespace ATD\CruiseFactory\Controller;
 
 
 class Provider {
-	public static function registerControllers() {
+	public static function registerControllers(): void {
 		new Api\v1\DepartureController();
 		new Api\v1\SpecialDepartureController();
 		new Api\v1\DestinationController();

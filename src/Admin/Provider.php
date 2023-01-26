@@ -8,11 +8,11 @@ use ATD\CruiseFactory\Feed\Factory;
 use ATD\CruiseFactory\Services\WordPress\Commands\Import;
 
 class Provider {
-	public static function registerAdminPages() {
+	public static function registerAdminPages(): void {
 		add_action( 'admin_menu', [ Overview::class, 'register' ] );
 	}
 
-	public static function registerAdminAjaxCalls() {
+	public static function registerAdminAjaxCalls(): void {
 		add_action( 'wp_ajax_atd_cfi_verify_xml', function () {
 			if ( false !== check_ajax_referer( 'atd_cfi_verify_xml', 'verify_xml' ) ) {
 				define( 'ATD_CF_XML_IMPORT_NO_CACHE', true );

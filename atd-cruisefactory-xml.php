@@ -1,7 +1,7 @@
 <?php
 
 /*
-Plugin Name: Cruisefactory XML integration
+Plugin Name: Cruise Factory XML integration
 Plugin URI: https://www.agenttraveldata.com/integrations/wordpress
 Description: Cruise Factory XML import for creating dynamic automatically updated cruise websites. ^Cruise Factory account required.
 Tested up to: 6.1.1

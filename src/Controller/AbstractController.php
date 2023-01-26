@@ -12,7 +12,7 @@ abstract class AbstractController {
 	protected string $apiNamespace = 'atd/cfi/v1';
 	protected string $apiEndpointPrefix;
 
-	public function setFeed( Feed $feed ) {
+	public function setFeed( Feed $feed ): void {
 		$this->feed = $feed;
 	}
 
