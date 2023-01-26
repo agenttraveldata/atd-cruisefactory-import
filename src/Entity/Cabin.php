@@ -13,6 +13,8 @@ class Cabin {
 	private string $photo;
 	private string $cabin_order;
 	private string $cabin_category;
+	private string $providerImageUrl = 'https://ik.imagekit.io/atd/ships/cabins/';
+	private string $providerPhotoUrl = 'https://ik.imagekit.io/atd/ships/cabinphotos/';
 
 	public function getId(): int {
 		return $this->id;
@@ -55,7 +57,7 @@ class Cabin {
 	}
 
 	public function getImage(): string {
-		return $this->image;
+		return $this->providerImageUrl . $this->image;
 	}
 
 	public function setImage( string $image ): self {
@@ -65,7 +67,7 @@ class Cabin {
 	}
 
 	public function getPhoto(): string {
-		return $this->photo;
+		return $this->providerPhotoUrl . $this->photo;
 	}
 
 	public function setPhoto( string $photo ): self {
@@ -92,5 +94,13 @@ class Cabin {
 		$this->cabin_category = $cabinCategory;
 
 		return $this;
+	}
+
+	public function getProviderImageUrl(): string {
+		return $this->providerImageUrl;
+	}
+
+	public function getProviderPhotoUrl(): string {
+		return $this->providerPhotoUrl;
 	}
 }

@@ -11,6 +11,7 @@ class Deck {
 	private string $level;
 	private string $image;
 	private string $colorcode;
+	private string $providerImageUrl = 'https://ik.imagekit.io/atd/ships/deckplans/';
 
 	public function getId(): int {
 		return $this->id;
@@ -53,7 +54,7 @@ class Deck {
 	}
 
 	public function getImage(): string {
-		return $this->image;
+		return $this->providerImageUrl . $this->image;
 	}
 
 	public function setImage( string $image ): self {
