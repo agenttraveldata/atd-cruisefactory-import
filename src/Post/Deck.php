@@ -10,8 +10,6 @@ use ATD\CruiseFactory\Services\Logger;
 use WP_Query;
 
 class Deck {
-	private static string $imageUrl = 'https://ik.imagekit.io/atd/ships/deckplans/';
-
 	public static function add( Entity\Deck $details ): ?int {
 		$shipPost = new WP_Query( [
 			'post_type'      => Ship::$postType,
@@ -36,7 +34,7 @@ class Deck {
 		];
 
 		if ( ! defined( 'ATD_CF_XML_IMAGE_EXCLUDE' ) && ! empty( $details->getImage() ) ) {
-			self::createAttachment( self::$imageUrl . $details->getImage(), $shipPost->post->ID, $postData );
+			self::createAttachment( $details->getImage(), $shipPost->post->ID, $postData );
 		}
 
 		return true;

@@ -10,9 +10,6 @@ use ATD\CruiseFactory\Services\Logger;
 use WP_Query;
 
 class Cabin {
-	private static string $cabinImageUrl = 'https://ik.imagekit.io/atd/ships/cabins/';
-	private static string $cabinPhotoUrl = 'https://ik.imagekit.io/atd/ships/cabinphotos/';
-
 	public static function add( Entity\Cabin $details ): ?int {
 		$shipPost = new WP_Query( [
 			'post_type'      => Ship::$postType,
@@ -40,12 +37,12 @@ class Cabin {
 
 		if ( ! defined( 'ATD_CF_XML_IMAGE_EXCLUDE' ) && ! empty( $details->getImage() ) ) {
 			$postData['meta_input']['atd_cfi_cabin_image_type'] = 'image';
-			self::createAttachment( self::$cabinImageUrl . $details->getImage(), $shipPost->post->ID, $postData );
+			self::createAttachment( $details->getImage(), $shipPost->post->ID, $postData );
 		}
 
 		if ( ! defined( 'ATD_CF_XML_IMAGE_EXCLUDE' ) && ! empty( $details->getPhoto() ) ) {
 			$postData['meta_input']['atd_cfi_cabin_image_type'] = 'photo';
-			self::createAttachment( self::$cabinPhotoUrl . $details->getPhoto(), $shipPost->post->ID, $postData );
+			self::createAttachment( $details->getPhoto(), $shipPost->post->ID, $postData );
 		}
 
 		return true;

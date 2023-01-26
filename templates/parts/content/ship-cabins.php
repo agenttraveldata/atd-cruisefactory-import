@@ -1,22 +1,23 @@
+<?php global $atdShip; ?>
 <div class="atd-cfi-ar">
-	<?php if ( $cabins = atd_cf_get_post_attached_images( get_the_ID(), 'cabin' ) ): ?>
-		<?php foreach ( $cabins as $image ) : ?>
+	<?php if ( $atdShip->getCabins()->count() > 0 ): ?>
+		<?php foreach ( $atdShip->getCabins() as $cabin ) : ?>
             <div class="atd-cfi-ar__col atd-cfi-ar-col__double">
                 <div class="atd-cfi-ar-col__img">
-					<?php if ( ! empty( $image['image'] ) ): ?>
-                        <a data-action="atd-cfi-popover#image" href="<?php echo wp_get_attachment_image_url( $image['image'], 'full-size' ); ?>">
-                            <img src="<?php echo wp_get_attachment_image_url( $image['image'] ); ?>" alt="">
+					<?php if ( ! empty( $cabin->getImage() ) ): ?>
+                        <a data-action="atd-cfi-popover#image" href="<?php echo $cabin->getImage(); ?>">
+                            <img src="<?php echo $cabin->getImage(); ?>" alt="">
                         </a>
 					<?php endif; ?>
-					<?php if ( ! empty( $image['photo'] ) ): ?>
-                        <a data-action="atd-cfi-popover#image" href="<?php echo wp_get_attachment_image_url( $image['photo'], 'full-size' ); ?>">
-                            <img src="<?php echo wp_get_attachment_image_url( $image['photo'] ); ?>" alt="">
+					<?php if ( ! empty( $cabin->getPhoto() ) ): ?>
+                        <a data-action="atd-cfi-popover#image" href="<?php echo $cabin->getPhoto(); ?>">
+                            <img src="<?php echo $cabin->getPhoto(); ?>" alt="">
                         </a>
 					<?php endif; ?>
                 </div>
                 <div class="atd-cfi-ar-col__details">
-                    <h4><?php echo $image['name']; ?></h4>
-					<?php echo apply_filters( 'the_content', $image['description'] ); ?>
+                    <h4><?php echo $cabin->getName(); ?></h4>
+					<?php echo apply_filters( 'the_content', $cabin->getDescription() ); ?>
                 </div>
             </div>
 		<?php endforeach; ?>

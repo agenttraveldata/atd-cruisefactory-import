@@ -17,7 +17,7 @@ $shipPost       = atd_cf_get_post_by_meta_value( ATD\CruiseFactory\Post\Ship::$p
                  src="data:<?php echo $atdDeparture->getCruise()->getCruiseLine()->getLogoType(); ?>;base64,<?php echo base64_encode( $atdDeparture->getCruise()->getCruiseLine()->getLogoData() ); ?>"
                  alt="Cruise Line">
             <p>
-                <?php echo $atdDeparture->getCruise()->getDuration(); ?> nights onboard
+				<?php echo $atdDeparture->getCruise()->getDuration(); ?> nights onboard
                 <a href="<?php echo get_permalink( $shipPost->post->ID ); ?>">
 					<?php echo $atdDeparture->getCruise()->getShip()->getName(); ?>
                 </a> from
