@@ -5,6 +5,7 @@ namespace ATD\CruiseFactory\Feed;
 
 
 use ATD\CruiseFactory\Entity;
+use DateTimeInterface;
 
 class Deck extends AbstractFeed {
 	protected static string $tableName = 'atd_cfi_deck';
@@ -12,6 +13,10 @@ class Deck extends AbstractFeed {
 	public static string $metaKeyId = 'atd_cfi_deck_id';
 	protected static string $entity = Entity\Deck::class;
 	protected static array $relationships = [ 'ship_id' => Entity\Ship::class ];
+
+	public function import( DateTimeInterface $updatedAt ): bool {
+		return false;
+	}
 
 	public static function getTableNameWithPrefix(): string {
 		global $wpdb;
