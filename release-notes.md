@@ -1,0 +1,1 @@
+* Changed destination images to be linked from Cruise Factory unless featured image is added to destination post.
