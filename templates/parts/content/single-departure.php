@@ -99,6 +99,7 @@ $shipPost       = atd_cf_get_post_by_meta_value( ATD\CruiseFactory\Post\Ship::$p
                     <div id="atd-tab-cabins">
 						<?php atd_cf_get_template_part( 'content/ship', 'cabins', [
 							'departureId' => $atdDeparture->getId(),
+							'type'        => ! empty( $atdSpecial ) ? 'special' : 'cruise',
 							'prices'      => ! is_null( $atdSpecial ) && $atdSpecial->getSpecialPrices()->count() > 0
 								? $atdSpecial->getSpecialPrices()
 								: $atdDeparture->getCruisePrices()

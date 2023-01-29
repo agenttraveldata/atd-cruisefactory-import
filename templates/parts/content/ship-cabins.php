@@ -17,23 +17,26 @@
                 </div>
                 <div class="atd-cfi-ar-col__details">
                     <h4><?php echo $cabin->getName(); ?></h4>
-					<?php if ( $args['prices'] && $args['prices']->count() > 0 ): ?>
-                        <span class="atd-cfi__cabins-price">
-						<?php if ( $price = $args['prices']->filter( fn( $p ) => $p->getCabin()->getId() === $cabin->getId() )->first() ): ?>
-                            <span class="atd-cfi__cabins-price__price-from">
-                                from <?php echo is_object( $price->getCurrency() ) ? $price->getCurrency()->getSign() : $price->getCurrency(); ?><?php echo number_format( $price->getPrice() ); ?>
-                                <span class="atd-cfi__cabins-price__price-from-price">
-                                    <?php if ( ! $price->isSinglePrice() ): ?>twin share<?php else: ?>solo<?php endif; ?>
+                    <div class="atd-cfi__cabins-price">
+						<?php if ( ! empty( $args['prices'] ) && $args['prices']->count() > 0 ): ?>
+							<?php if ( $price = $args['prices']->filter( fn( $p ) => $p->getCabin()->getId() === $cabin->getId() )->first() ): ?>
+                                <span class="atd-cfi__cabins-price__price-from">
+                                    from <?php echo is_object( $price->getCurrency() ) ? $price->getCurrency()->getSign() : $price->getCurrency(); ?><?php echo number_format( $price->getPrice() ); ?>
+                                    <span class="atd-cfi__cabins-price__price-from-price">
+                                        <?php if ( ! $price->isSinglePrice() ): ?>twin share<?php else: ?>solo<?php endif; ?>
+                                    </span>
                                 </span>
-                            </span>
 
-                            <a href="<?php echo get_permalink( get_option( ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD ) ); ?>?departure_id=<?php echo $args['departureId']; ?>&departure_type=<?php echo is_a( $price, \ATD\CruiseFactory\Entity\SpecialPrice::class ) ? 'special' : 'cruise'; ?>&pax=<?php echo $price->isSinglePrice() ? 'single' : 'twin'; ?>&cabin_price=<?php echo $price->getId(); ?>"
-                               class="atd-cfi__btn atd-cfi__btn-enquire">Enquire</a>
+                                <a href="<?php echo get_permalink( get_option( ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD ) ); ?>?departure_id=<?php echo $args['departureId']; ?>&departure_type=<?php echo $args['type']; ?>&pax=<?php echo $price->isSinglePrice() ? 'single' : 'twin'; ?>&cabin_price=<?php echo $price->getId(); ?>"
+                                   class="atd-cfi__btn atd-cfi__btn-enquire">Enquire</a>
+							<?php else: ?>
+                                <span class="atd-cfi-cabins-price__sold-out">Sold out</span>
+							<?php endif; ?>
 						<?php else: ?>
-                            <span class="atd-cfi-cabins-price__sold-out">Sold out</span>
+                            <a href="<?php echo get_permalink( get_option( ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD ) ); ?>?departure_id=<?php echo $args['departureId']; ?>&departure_type=<?php echo $args['type']; ?>&pax=twin&request_cabin=<?php echo $cabin->getId(); ?>"
+                               class="atd-cfi__btn atd-cfi__btn-enquire">Enquire</a>
 						<?php endif; ?>
-                        </span>
-					<?php endif; ?>
+                    </div>
 					<?php echo apply_filters( 'the_content', $cabin->getDescription() ); ?>
                 </div>
             </div>
