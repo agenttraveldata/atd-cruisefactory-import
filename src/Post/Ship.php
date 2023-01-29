@@ -12,7 +12,6 @@ use WP_Query;
 
 class Ship implements Post {
 	public static string $postType = 'atd_cf_ship';
-	private static string $cfImageUrl = 'https://ik.imagekit.io/atd/ships/thumbnails/';
 
 	public static function add( Entity\Ship $details ): ?int {
 		$originalPost = new WP_Query( [
@@ -59,8 +58,11 @@ class Ship implements Post {
 			Logger::add( "[{$post_details['meta_input'][ Feed\Ship::$metaKeyId ]}] Added {$post_details['post_type']} post {$post_details['post_title']}" );
 		}
 
+		return true;
+
+		/*
 		if ( ! defined( 'ATD_CF_XML_IMAGE_EXCLUDE' ) && ! empty( $details->getThumbnail() ) ) {
-			$imageUrl      = self::$cfImageUrl . $details->getThumbnail();
+			$imageUrl      = $details->getThumbnail();
 			$imageFileName = 'atd-cfi_' . wp_basename( $imageUrl ) . ( pathinfo( $imageUrl, PATHINFO_EXTENSION ) === '' ? '.jpg' : '' );
 
 			if ( has_post_thumbnail( $post_id ) ) {
@@ -97,6 +99,7 @@ class Ship implements Post {
 		}
 
 		return true;
+		*/
 	}
 
 	public static function register() {

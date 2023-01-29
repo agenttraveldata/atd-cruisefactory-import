@@ -182,8 +182,8 @@ class Departure implements Post {
 	}
 
 	private static function attachMedia( int $post_id, Entity\Departure $details ): void {
-		if ( ! defined( 'ATD_CF_XML_IMAGE_EXCLUDE' ) && ! empty( $details->getCruise()->getMap() ) ) {
-			$imageUrl       = $details->getCruise()->getMap();
+		if ( ! defined( 'ATD_CF_XML_IMAGE_EXCLUDE' ) && ! empty( $details->getCruise()->getPhoto() ) ) {
+			$imageUrl       = $details->getCruise()->getPhoto();
 			$imageExtension = strtolower( pathinfo( $imageUrl, PATHINFO_EXTENSION ) );
 			$imageFileName  = 'atd-cfi_cruise-' . $details->getCruise()->getId() . ( $imageExtension === '' ? '.jpg' : '.' . $imageExtension );
 

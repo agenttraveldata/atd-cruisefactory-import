@@ -31,6 +31,7 @@ class Ship {
 	private Collection $decks;
 	private Collection $amenities;
 	private Collection $facilities;
+	private string $providerImageUrl = 'https://ik.imagekit.io/atd/ships/thumbnails/';
 
 	public function __construct() {
 		$this->cabins     = new ArrayCollection();
@@ -69,8 +70,16 @@ class Ship {
 		return $this;
 	}
 
+	public function hasImage(): string {
+		return !empty($this->thumbnail);
+	}
+
+	public function getImage(): string {
+		return $this->getThumbnail();
+	}
+
 	public function getThumbnail(): string {
-		return $this->thumbnail;
+		return $this->providerImageUrl . $this->thumbnail;
 	}
 
 	public function setThumbnail( string $thumbnail ): self {

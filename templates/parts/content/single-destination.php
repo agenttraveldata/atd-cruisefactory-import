@@ -3,6 +3,7 @@
  * The template partial for displaying destination details
  */
 
+/** @var \ATD\CruiseFactory\Entity\Destination $atdDestination */
 global $atdDestination;
 
 ?>
@@ -19,9 +20,17 @@ global $atdDestination;
 
     <div class="atd-cfi-tabs__contents" data-atd-cfi-tabs-target="contents" data-controller="atd-cfi-popover">
         <div id="atd-tab-overview">
-            <a class="atd-cfi__float-end atd-cfi__ml-2 atd-cfi__mb-2 atd-cfi__mw-40" data-action="atd-cfi-popover#image" href="<?php echo get_the_post_thumbnail_url(); ?>">
-				<?php the_post_thumbnail( 'large', [ 'class' => 'atd-cfi__img-fluid' ] ); ?>
-            </a>
+			<?php if ( has_post_thumbnail() || $atdDestination->hasImage() ): ?>
+                <a class="atd-cfi__float-end atd-cfi__ml-2 atd-cfi__mb-2 atd-cfi__mw-40"
+                   data-action="atd-cfi-popover#image"
+                   href="<?php echo has_post_thumbnail() ? get_the_post_thumbnail_url() : $atdDestination->getImage(); ?>">
+					<?php if ( has_post_thumbnail() ): ?>
+						<?php the_post_thumbnail( 'large', [ 'class' => 'atd-cfi__img-fluid' ] ); ?>
+					<?php else: ?>
+                        <img class="atd-cfi__img-fluid" src="<?php echo $atdDestination->getImage(); ?>" alt="">
+					<?php endif; ?>
+                </a>
+			<?php endif; ?>
 			<?php the_content(); ?>
         </div>
         <div id="atd-tab-departures"
@@ -32,7 +41,8 @@ global $atdDestination;
                 <div class="spinner-loader"></div>
             </div>
             <p>For more itineraries,
-                <a href="<?php echo get_post_type_archive_link( ATD\CruiseFactory\Post\Departure::$postType ); ?>">click here</a> to search our site.
+                <a href="<?php echo get_post_type_archive_link( ATD\CruiseFactory\Post\Departure::$postType ); ?>">click
+                    here</a> to search our site.
             </p>
         </div>
     </div>

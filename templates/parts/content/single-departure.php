@@ -94,10 +94,10 @@ $shipPost       = atd_cf_get_post_by_meta_value( ATD\CruiseFactory\Post\Ship::$p
                     </div>
 				<?php endif; ?>
                 <div id="atd-tab-overview">
-					<?php if ( $atdDeparture->getCruise()->hasMap() ): ?>
+					<?php if ( $atdDeparture->getCruise()->hasImage() ): ?>
                         <div class="atd-cfi__float-end atd-cfi__ml-2 atd-cfi__mb-2 atd-cfi__mw-40">
-                            <a data-action="atd-cfi-popover#image" href="<?php echo $atdDeparture->getCruise()->getMap(); ?>">
-                                <img class="atd-cfi__img-fluid" src="<?php echo $atdDeparture->getCruise()->getMap(); ?>" alt="Map">
+                            <a data-action="atd-cfi-popover#image" href="<?php echo $atdDeparture->getCruise()->getImage(); ?>">
+                                <img class="atd-cfi__img-fluid" src="<?php echo $atdDeparture->getCruise()->getImage(); ?>" alt="Map">
                             </a>
                         </div>
 					<?php endif; ?>

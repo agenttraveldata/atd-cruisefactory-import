@@ -12,7 +12,6 @@ use WP_Query;
 
 class Destination implements Post {
 	public static string $postType = 'atd_cf_destination';
-	private static string $cfImageUrl = 'https://ik.imagekit.io/atd/destinations/image/';
 
 	public static function add( Entity\Destination $details ): ?int {
 		$originalPost = new WP_Query( [
@@ -59,8 +58,11 @@ class Destination implements Post {
 			Logger::add( "[{$post_details['meta_input'][ Feed\Destination::$metaKeyId ]}] Added {$post_details['post_type']} post {$post_details['post_title']}" );
 		}
 
+		return true;
+
+		/*
 		if ( ! defined( 'ATD_CF_XML_IMAGE_EXCLUDE' ) && ! empty( $details->image ) ) {
-			$imageUrl       = self::$cfImageUrl . $details->image;
+			$imageUrl       = $details->getImage();
 			$imageExtension = strtolower( pathinfo( $imageUrl, PATHINFO_EXTENSION ) );
 			$imageFileName  = 'atd-cfi_destination-' . $details->getId() . ( $imageExtension === '' ? '.jpg' : '.' . $imageExtension );
 
@@ -122,6 +124,7 @@ class Destination implements Post {
 		}
 
 		return true;
+		*/
 	}
 
 	public static function register() {

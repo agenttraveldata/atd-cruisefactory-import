@@ -9,7 +9,9 @@ class Destination {
 	private string $name;
 	private string $featured_text;
 	private string $description;
+	private string $image;
 	private string $map_large;
+	private string $providerImageUrl = 'https://ik.imagekit.io/atd/destinations/image/';
 
 	public function getId(): int {
 		return $this->id;
@@ -47,6 +49,20 @@ class Destination {
 
 	public function setDescription( string $description ): self {
 		$this->description = $description;
+
+		return $this;
+	}
+
+	public function hasImage(): bool {
+		return ! empty( $this->image );
+	}
+
+	public function getImage(): string {
+		return $this->providerImageUrl . $this->image;
+	}
+
+	public function setImage( string $image ): self {
+		$this->image = $image;
 
 		return $this;
 	}

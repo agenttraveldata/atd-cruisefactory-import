@@ -67,16 +67,20 @@ class Cruise {
 		return $this;
 	}
 
-	public function hasMap(): bool {
-		return ! empty( $this->photo );
+	public function hasImage(): string {
+		return !empty($this->thumbnail);
 	}
 
-	public function getMap(): string {
+	public function getImage(): string {
+		return $this->getPhoto();
+	}
+
+	public function getPhoto(): string {
 		return $this->providerImageUrl . $this->photo;
 	}
 
-	public function setMap( string $map ): self {
-		$this->photo = $map;
+	public function setPhoto( string $photo ): self {
+		$this->photo = $photo;
 
 		return $this;
 	}

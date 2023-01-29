@@ -53,6 +53,10 @@ class Deck {
 		return $this;
 	}
 
+	public function hasImage(): bool {
+		return ! empty( $this->image );
+	}
+
 	public function getImage(): string {
 		return $this->providerImageUrl . $this->image;
 	}
