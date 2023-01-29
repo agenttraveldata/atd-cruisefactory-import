@@ -14,7 +14,6 @@ use WP_Query;
 
 class Departure implements Post {
 	public static string $postType = 'atd_cf_departure';
-	private static string $cfImageUrl = 'https://ik.imagekit.io/atd/cruises/';
 
 	public static function add( object $details ): ?int {
 		if ( $details instanceof Entity\SpecialDeparture ) {
@@ -174,14 +173,17 @@ class Departure implements Post {
 			wp_set_object_terms( $post_id, (int) $term['term_id'], Taxonomy\Month::$name );
 		}
 
+		/*
+		 * No longer attaching map images to departure posts.
 		self::attachMedia( $post_id, $details );
+		 */
 
 		return true;
 	}
 
 	private static function attachMedia( int $post_id, Entity\Departure $details ): void {
-		if ( ! defined( 'ATD_CF_XML_IMAGE_EXCLUDE' ) && ! empty( $details->getCruise()->getPhoto() ) ) {
-			$imageUrl       = self::$cfImageUrl . $details->getCruise()->getPhoto();
+		if ( ! defined( 'ATD_CF_XML_IMAGE_EXCLUDE' ) && ! empty( $details->getCruise()->getMap() ) ) {
+			$imageUrl       = $details->getCruise()->getMap();
 			$imageExtension = strtolower( pathinfo( $imageUrl, PATHINFO_EXTENSION ) );
 			$imageFileName  = 'atd-cfi_cruise-' . $details->getCruise()->getId() . ( $imageExtension === '' ? '.jpg' : '.' . $imageExtension );
 

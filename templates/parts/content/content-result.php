@@ -4,7 +4,7 @@
     <?php if ( has_post_thumbnail() ): ?>
         <?php $resultImage = get_the_post_thumbnail_url( get_the_ID(), 'large' ); ?>
     <?php else: ?>
-        <?php $resultImage = atd_cf_get_media_image_by_meta_key_and_id( 'atd_cfi_cruise_id', $atdDeparture->getCruise()->getId() ); ?>
+        <?php $resultImage = $atdDeparture->getCruise()->hasMap() ? $atdDeparture->getCruise()->getMap() : ''; ?>
     <?php endif; ?>
     <a data-action="atd-cfi-popover#image" class="atd-cfi-sr-row__img" href="<?php echo $resultImage; ?>" style="background-image: url('<?php echo $resultImage; ?>');"></a>
     <div class="atd-cfi-sr-row__details atd-cfi__flex-1">

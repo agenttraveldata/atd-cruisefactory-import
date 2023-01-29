@@ -19,8 +19,9 @@ class Cruise {
 	private ?Ship $ship;
 	private ?Port $embarkPort;
 	private ?Port $disembarkPort;
-    private ?CruiseType $cruiseType;
+	private ?CruiseType $cruiseType;
 	private Collection $itinerary;
+	private string $providerImageUrl = 'https://ik.imagekit.io/atd/cruises/';
 
 	public function __construct() {
 		$this->itinerary = new ArrayCollection();
@@ -66,12 +67,16 @@ class Cruise {
 		return $this;
 	}
 
-	public function getPhoto(): string {
-		return $this->photo;
+	public function hasMap(): bool {
+		return ! empty( $this->photo );
 	}
 
-	public function setPhoto( string $photo ): self {
-		$this->photo = $photo;
+	public function getMap(): string {
+		return $this->providerImageUrl . $this->photo;
+	}
+
+	public function setMap( string $map ): self {
+		$this->photo = $map;
 
 		return $this;
 	}
@@ -142,25 +147,25 @@ class Cruise {
 		return $this;
 	}
 
-    public function getDisembarkPort(): ?Port {
-        return $this->disembarkPort ?? null;
-    }
+	public function getDisembarkPort(): ?Port {
+		return $this->disembarkPort ?? null;
+	}
 
-    public function setDisembarkPort( Port $disembarkPort ): self {
-        $this->disembarkPort = $disembarkPort;
+	public function setDisembarkPort( Port $disembarkPort ): self {
+		$this->disembarkPort = $disembarkPort;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getCruiseType(): ?CruiseType {
-        return $this->cruiseType ?? null;
-    }
+	public function getCruiseType(): ?CruiseType {
+		return $this->cruiseType ?? null;
+	}
 
-    public function setCruiseType( CruiseType $cruiseType ): self {
-        $this->cruiseType = $cruiseType;
+	public function setCruiseType( CruiseType $cruiseType ): self {
+		$this->cruiseType = $cruiseType;
 
-        return $this;
-    }
+		return $this;
+	}
 
 	public function getItinerary(): Collection {
 		return $this->itinerary;
