@@ -1,0 +1,1 @@
+* Changed departures to no longer save cruise maps to the local WordPress install. Instead, they now link off to Cruise Factory hosted images.
