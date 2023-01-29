@@ -2,110 +2,102 @@
 
 namespace ATD\CruiseFactory\Entity;
 
-class CruisePrice
-{
-    public int $id;
-    private string $cabin_name;
-    private ?Cabin $cabin;
-    private ?float $price_single;
-    private ?float $price_double;
-    private ?float $price_triple;
-    private ?float $price_quad;
-    private string $currency;
+class CruisePrice {
+	public int $id;
+	private string $cabin_name;
+	private ?Cabin $cabin;
+	private ?float $price_single;
+	private ?float $price_double;
+	private ?float $price_triple;
+	private ?float $price_quad;
+	private string $currency;
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
+	public function getId(): int {
+		return $this->id;
+	}
 
-    public function setId(int $id): self
-    {
-        $this->id = $id;
+	public function setId( int $id ): self {
+		$this->id = $id;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getCabinName(): string
-    {
-        return $this->cabin_name;
-    }
+	public function getCabinName(): string {
+		return $this->cabin_name;
+	}
 
-    public function setCabinName(string $cabinName): self
-    {
-        $this->cabin_name = $cabinName;
+	public function setCabinName( string $cabinName ): self {
+		$this->cabin_name = $cabinName;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getCabin(): ?Cabin
-    {
-        return $this->cabin ?? null;
-    }
+	public function getCabin(): ?Cabin {
+		return $this->cabin ?? null;
+	}
 
-    public function setCabin(Cabin $cabin): self
-    {
-        $this->cabin = $cabin;
+	public function setCabin( Cabin $cabin ): self {
+		$this->cabin = $cabin;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getPriceSingle(): ?float
-    {
-        return $this->price_single ?? null;
-    }
+	public function getPriceSingle(): ?float {
+		return $this->price_single ?? null;
+	}
 
-    public function setPriceSingle(float $priceSingle): self
-    {
-        $this->price_single = $priceSingle;
+	public function setPriceSingle( float $priceSingle ): self {
+		$this->price_single = $priceSingle;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getPriceDouble(): ?float
-    {
-        return $this->price_double ?? null;
-    }
+	public function getPrice(): ?float {
+		return ( $this->isSinglePrice() ? $this->price_single : $this->price_double ) ?? null;
+	}
 
-    public function setPriceDouble(float $priceDouble): self
-    {
-        $this->price_double = $priceDouble;
+	public function isSinglePrice(): bool {
+		return empty( $this->price_double ) && empty( $this->price_triple )
+		       && empty( $this->price_quad ) && ! empty( $this->price_single );
+	}
 
-        return $this;
-    }
+	public function getPriceDouble(): ?float {
+		return $this->price_double ?? null;
+	}
 
-    public function getPriceTriple(): ?float
-    {
-        return $this->price_triple ?? null;
-    }
+	public function setPriceDouble( float $priceDouble ): self {
+		$this->price_double = $priceDouble;
 
-    public function setPriceTriple(float $priceTriple): self
-    {
-        $this->price_triple = $priceTriple;
+		return $this;
+	}
 
-        return $this;
-    }
+	public function getPriceTriple(): ?float {
+		return $this->price_triple ?? null;
+	}
 
-    public function getPriceQuad(): ?float
-    {
-        return $this->price_quad ?? null;
-    }
+	public function setPriceTriple( float $priceTriple ): self {
+		$this->price_triple = $priceTriple;
 
-    public function setPriceQuad(float $priceQuad): self
-    {
-        $this->price_quad = $priceQuad;
+		return $this;
+	}
 
-        return $this;
-    }
+	public function getPriceQuad(): ?float {
+		return $this->price_quad ?? null;
+	}
 
-    public function getCurrency(): string
-    {
-        return $this->currency;
-    }
+	public function setPriceQuad( float $priceQuad ): self {
+		$this->price_quad = $priceQuad;
 
-    public function setCurrency(string $currency): self
-    {
-        $this->currency = $currency;
+		return $this;
+	}
 
-        return $this;
-    }
+	public function getCurrency(): string {
+		return $this->currency;
+	}
+
+	public function setCurrency( string $currency ): self {
+		$this->currency = $currency;
+
+		return $this;
+	}
 }

@@ -70,6 +70,10 @@ class Cabin {
 		return $this;
 	}
 
+	public function hasPhoto(): bool {
+		return ! empty( $this->photo );
+	}
+
 	public function getPhoto(): string {
 		return $this->providerPhotoUrl . $this->photo;
 	}

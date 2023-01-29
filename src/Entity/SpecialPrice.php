@@ -40,6 +40,10 @@ class SpecialPrice {
 		return $this;
 	}
 
+	public function isSinglePrice(): bool {
+		return false;
+	}
+
 	public function getCurrency(): ?Currency {
 		return $this->currency;
 	}

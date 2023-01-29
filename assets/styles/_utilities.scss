@@ -3,6 +3,9 @@
 $btn-submit-bg: #fff !default;
 $btn-submit-color: #000 !default;
 
+$btn-enquire-bg: #000 !default;
+$btn-enquire-color: #fff !default;
+
 .atd-cfi {
     &__img-fluid {
         max-width: 100%;
@@ -67,6 +70,12 @@ $btn-submit-color: #000 !default;
 
         &[type="reset"]:not(:hover) {
             text-decoration: underline;
+        }
+
+        &-enquire {
+            color: $btn-enquire-color !important;
+            background-color: $btn-enquire-bg !important;
+            text-decoration: none;
         }
     }
 
