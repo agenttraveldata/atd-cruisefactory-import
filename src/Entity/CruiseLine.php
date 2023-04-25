@@ -15,6 +15,7 @@ class CruiseLine {
 	private string $logodata;
 	private string $logotype;
 	private Collection $ships;
+	private string $providerImageUrl = 'https://images.cruisefactory.net/getimage.php?id=';
 
 	public function __construct() {
 		$this->ships = new ArrayCollection();
@@ -58,6 +59,10 @@ class CruiseLine {
 		$this->company_bio = $description;
 
 		return $this;
+	}
+
+	public function getImage(): string {
+		return $this->providerImageUrl . $this->id;
 	}
 
 	public function getLogoData(): string {
