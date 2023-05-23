@@ -26,7 +26,7 @@ export default class extends Controller {
         e.preventDefault();
         e.stopPropagation();
 
-        const post = this.getPost(e.currentTarget.href);
+        const post = this.getPost(e.params.url);
 
         const popoverElement = document.createElement('div');
         popoverElement.innerHTML = `<div class="atd-cfi-popover-overlay">

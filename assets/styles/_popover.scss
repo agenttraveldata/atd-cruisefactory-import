@@ -6,6 +6,11 @@
     }
 }
 
+.atd-cfi-popover__link {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 .atd-cfi-popover-overlay {
     position: fixed;
     top: 0;
