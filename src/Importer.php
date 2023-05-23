@@ -4,16 +4,11 @@ namespace ATD\CruiseFactory;
 
 use ATD\CruiseFactory\Services;
 use ATD\CruiseFactory\Taxonomy;
-use wpdb;
 
 class Importer {
-	private wpdb $wpdb;
 	public static array $endpoints;
 
 	public function __construct() {
-		global $wpdb;
-		$this->wpdb = $wpdb;
-
 		add_action( 'init', [ $this, 'init' ] );
 		add_action( 'admin_init', [ $this, 'admin_init' ] );
 

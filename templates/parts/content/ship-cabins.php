@@ -17,6 +17,7 @@
                 </div>
                 <div class="atd-cfi-ar-col__details">
                     <h4><?php echo $cabin->getName(); ?></h4>
+                    <?php if (isset($args['prices']) && isset($args['type'])): ?>
                     <div class="atd-cfi__cabins-price">
 						<?php if ( ! empty( $args['prices'] ) && $args['prices']->count() > 0 ): ?>
 							<?php if ( $price = $args['prices']->filter( fn( $p ) => $p->getCabin()->getId() === $cabin->getId() )->first() ): ?>
@@ -37,6 +38,7 @@
                                class="atd-cfi__btn atd-cfi__btn-enquire">Enquire</a>
 						<?php endif; ?>
                     </div>
+                    <?php endif; ?>
 					<?php echo apply_filters( 'the_content', $cabin->getDescription() ); ?>
                 </div>
             </div>
