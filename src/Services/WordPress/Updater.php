@@ -1,6 +1,6 @@
 <?php
 
-namespace ATD\CruiseFactory\Services\WordPress\Plugin;
+namespace ATD\CruiseFactory\Services\WordPress;
 
 class Updater {
 	private array $plugin;

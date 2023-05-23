@@ -19,8 +19,10 @@ class Hydrator {
 	private array $postDetails = [];
 	private array $globalsToUnset = [];
 
-	public function __construct( mysqli $dbh ) {
-		$this->dbh           = $dbh;
+	public function __construct() {
+		global $wpdb;
+
+		$this->dbh           = $wpdb->__get( 'dbh' );
 		$this->entityManager = new EntityManager( $this->dbh );
 	}
 

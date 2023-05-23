@@ -19,11 +19,11 @@ class SpecialDeparture {
 		return $this;
 	}
 
-	public function getSailingdate(): ?Departure {
+	public function getSailingDate(): ?Departure {
 		return $this->departure ?? null;
 	}
 
-	public function setSailingdate( Departure $departure ): self {
+	public function setSailingDate( Departure $departure ): self {
 		$this->departure = $departure;
 
 		return $this;

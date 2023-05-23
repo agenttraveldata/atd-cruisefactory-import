@@ -29,12 +29,19 @@ class Importer {
 			Services\WordPress\Commands\Provider::registerCommands();
 		}
 
-		$postHydrator = new Services\WordPress\Posts\Hydrator( $this->wpdb->__get( 'dbh' ) );
+		$postHydrator = new Services\WordPress\Posts\Hydrator();
 
 		Taxonomy\Provider::registerTaxonomies();
 		Post\Provider::registerPosts();
 		Services\WordPress\Templates\Provider::register();
 		Services\WordPress\Shortcodes\Provider::register();
+
+		/**
+		 * Add extensions for plugins if available
+		 */
+		if ( ! is_admin() ) {
+			Services\WordPress\Plugins\Provider::registerPluginExtensions();
+		}
 
 		/**
 		 * Basic plugin required setup
@@ -151,7 +158,7 @@ class Importer {
 
 	public function admin_init(): void {
 		$this->installTables();
-		( new Services\WordPress\Plugin\Updater() );
+		( new Services\WordPress\Updater() );
 	}
 
 	public function activate(): void {

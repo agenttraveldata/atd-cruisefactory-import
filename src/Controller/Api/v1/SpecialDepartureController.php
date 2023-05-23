@@ -28,7 +28,7 @@ class SpecialDepartureController extends AbstractController {
 		if ( $request->has_param( 'id' ) ) {
 			/** @var Entity\SpecialDeparture $specialDeparture */
 			if ( $specialDeparture = $this->getFeed()->getEntityManager()->getMapper( Entity\SpecialDeparture::class )->find( $request->get_param( 'id' ) ) ) {
-				$itinerary = $this->formatItinerary( $specialDeparture->getSailingdate()->getSailingDate(), $specialDeparture );
+				$itinerary = $this->formatItinerary( $specialDeparture->getSailingDate()->getSailingDate(), $specialDeparture );
 			}
 		}
 

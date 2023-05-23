@@ -151,8 +151,8 @@ function atd_cf_get_departure_details( int $departure_id, string $departure_type
 		case 'special':
 			/** @var Entity\SpecialDeparture $departure */
 			$summary->setSpecial( $departure->getSpecial() );
-			$summary->setCruise( $departure->getSailingdate()->getCruise() );
-			$summary->setSailingDate( $departure->getSailingdate()->getSailingDate() );
+			$summary->setCruise( $departure->getSailingDate()->getCruise() );
+			$summary->setSailingDate( $departure->getSailingDate()->getSailingDate() );
 			if ( $departure->getSpecial()->getSpecialLeadPrice() ) {
 				$summary->setSpecialLeadPrice( $departure->getSpecial()->getSpecialLeadPrice() );
 			}

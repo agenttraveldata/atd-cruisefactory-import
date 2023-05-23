@@ -14,7 +14,7 @@ trait ItineraryTrait {
 	private function formatItinerary( DateTimeInterface $dateTime, $departure ): string {
 		if ( $departure instanceof Entity\SpecialDeparture ) {
 			$special   = $departure->getSpecial();
-			$departure = $departure->getSailingdate();
+			$departure = $departure->getSailingDate();
 		}
 
 		$html = $this->startTable();

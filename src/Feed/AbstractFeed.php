@@ -98,7 +98,7 @@ abstract class AbstractFeed implements Feed {
 		/** @var Entity\SpecialDeparture $specialDeparture */
 		if ( $specialDeparture = $this->entityManager->getMapper( Entity\SpecialDeparture::class )->find( $specialDepartureId ) ) {
 			if ( Post\Departure::convertBackToCruise( $specialDeparture ) ) {
-				Post\Departure::add( $specialDeparture->getSailingdate() );
+				Post\Departure::add( $specialDeparture->getSailingDate() );
 			}
 		}
 	}
@@ -230,7 +230,7 @@ abstract class AbstractFeed implements Feed {
 				$this->postServicesPopulateCleanUp();
 			} else {
 				foreach ( $this->fetchRowFromXmlFile( $xmlFileName, 'delete' ) as $delete ) {
-					if ( isset( $delete['ids'] ) && ! empty( $delete['ids'] ) ) {
+					if ( ! empty( $delete['ids'] ) ) {
 						$this->cleanUp->add( $this->wpdb->prefix . static::$tableName, array_map( 'intval', explode( ',', $delete['ids'] ) ), static::$metaKeyId );
 					}
 				}
@@ -286,7 +286,7 @@ abstract class AbstractFeed implements Feed {
 
 		if ( $feed && file_exists( $feed ) ) {
 			$contentSnippet = strtolower( file_get_contents( $feed, false, null, 0, 20 ) );
-			if ( false === strpos( $contentSnippet, 'invalid' ) && false === strpos( $contentSnippet, 'error' ) ) {
+			if ( ! str_contains( $contentSnippet, 'invalid' ) && ! str_contains( $contentSnippet, 'error' ) ) {
 				return $feed;
 			}
 		}
@@ -311,6 +311,9 @@ abstract class AbstractFeed implements Feed {
 			fclose( fopen( $outputFile, 'w' ) );
 
 			$handle = fopen( $feedFile, 'r' );
+			if ( ! $handle ) {
+				throw new Exception( 'invalid feed file: "' . $feedFile . '"' );
+			}
 			while ( ! feof( $handle ) ) {
 				file_put_contents( $outputFile, fread( $handle, 2048 ), FILE_APPEND );
 			}
@@ -318,7 +321,7 @@ abstract class AbstractFeed implements Feed {
 
 			return $outputFile;
 		} catch ( Exception $e ) {
-			trigger_error( 'atd_cruisefactory_xml::' . $e->getMessage(), E_USER_NOTICE );
+			error_log( 'atd_cruisefactory_xml::' . $e->getMessage() );
 		}
 
 		return null;

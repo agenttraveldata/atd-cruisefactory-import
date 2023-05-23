@@ -68,7 +68,7 @@ class Cruise {
 	}
 
 	public function hasImage(): string {
-		return !empty($this->thumbnail);
+		return !empty($this->photo);
 	}
 
 	public function getImage(): string {

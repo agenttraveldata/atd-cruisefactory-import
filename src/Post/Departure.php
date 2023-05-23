@@ -20,7 +20,7 @@ class Departure implements Post {
 			$specialDepartureId = $details->getId();
 			$special            = $details->getSpecial();
 
-			if ( empty( $special ) || ! $details = $details->getSailingdate() ) {
+			if ( empty( $special ) || ! $details = $details->getSailingDate() ) {
 				return null;
 			}
 		}
@@ -73,7 +73,7 @@ class Departure implements Post {
 		$meta_input = [
 			Feed\Departure::$metaKeyId => $details->getId(),
 			'atd_cfi_cruise_id'        => $details->getCruise()->getId(),
-			'atd_cfi_sailing_date'     => $details->getSailingdate()->getTimestamp(),
+			'atd_cfi_sailing_date'     => $details->getSailingDate()->getTimestamp(),
 			'atd_cfi_start_price'      => ! empty( $special ) ? $special->getStartPrice() : $details->getStartPrice()
 		];
 
@@ -292,13 +292,13 @@ class Departure implements Post {
 
 			$post_details = [
 				'ID'          => $originalPost->ID,
-				'post_title'  => $details->getSailingdate()->getCruise()->getName() . ' - ' . $details->getSailingDate()->getSailingDate()->format( 'd/m/Y' ),
-				'post_name'   => sanitize_title( $details->getSailingdate()->getCruise()->getName() . ' - ' . $details->getSailingDate()->getSailingDate()->format( 'd/m/Y' ) ),
+				'post_title'  => $details->getSailingDate()->getCruise()->getName() . ' - ' . $details->getSailingDate()->getSailingDate()->format( 'd/m/Y' ),
+				'post_name'   => sanitize_title( $details->getSailingDate()->getCruise()->getName() . ' - ' . $details->getSailingDate()->getSailingDate()->format( 'd/m/Y' ) ),
 				'post_status' => 'publish',
 				'meta_input'  => [
-					Feed\Departure::$metaKeyId => $details->getSailingdate()->getId(),
-					'atd_cfi_cruise_id'        => $details->getSailingdate()->getCruise()->getId(),
-					'atd_cfi_sailing_date'     => $details->getSailingdate()->getSailingdate()->getTimestamp()
+					Feed\Departure::$metaKeyId => $details->getSailingDate()->getId(),
+					'atd_cfi_cruise_id'        => $details->getSailingDate()->getCruise()->getId(),
+					'atd_cfi_sailing_date'     => $details->getSailingDate()->getSailingDate()->getTimestamp()
 				]
 			];
 
