@@ -9,7 +9,7 @@ use ATD\CruiseFactory\Post\Departure;
 class Month extends AbstractTaxonomy {
 	public static string $name = 'atd_cf_tax_month';
 
-	public static function register() {
+	public static function register(): void {
 		register_taxonomy( self::$name, [ Departure::$postType ], [
 			'labels'            => [ 'name' => 'Month' ],
 			'show_ui'           => true,

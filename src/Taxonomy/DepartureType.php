@@ -9,7 +9,7 @@ use ATD\CruiseFactory\Post\Departure;
 class DepartureType extends AbstractTaxonomy {
 	public static string $name = 'atd_cf_tax_departure_type';
 
-	public static function register() {
+	public static function register(): void {
 		register_taxonomy( self::$name, [ Departure::$postType ], [
 			'labels'       => [ 'name' => 'Departure Type' ],
 			'show_ui'      => true,

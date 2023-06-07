@@ -7,6 +7,7 @@ namespace ATD\CruiseFactory\Controller\Api\v1;
 use ATD\CruiseFactory\Controller\AbstractController;
 use ATD\CruiseFactory\Post\Departure;
 use ATD\CruiseFactory\Taxonomy\CruiseLine;
+use ATD\CruiseFactory\Taxonomy\CruiseType;
 use ATD\CruiseFactory\Taxonomy\DepartureType;
 use ATD\CruiseFactory\Taxonomy\Destination;
 use ATD\CruiseFactory\Taxonomy\DisembarkPort;
@@ -30,9 +31,7 @@ class SearchController extends AbstractController {
 		$terms = [];
 
 		foreach ( get_object_taxonomies( Departure::$postType ) as $taxonomy ) {
-			$atd = substr( $taxonomy, 0, 11 );
-
-			if ( $atd === 'atd_cf_tax_' ) {
+			if ( str_starts_with( $taxonomy, 'atd_cf_tax_' ) ) {
 				$postQuery = null;
 				$taxQuery  = $metaQuery = [];
 
@@ -93,6 +92,7 @@ class SearchController extends AbstractController {
 						case EmbarkPort::$name:
 						case DisembarkPort::$name:
 						case Duration::$name:
+						case CruiseType::$name:
 							if ( $taxonomy === $param ) {
 								break;
 							}
