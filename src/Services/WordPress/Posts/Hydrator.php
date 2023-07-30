@@ -45,6 +45,7 @@ class Hydrator {
 			Taxonomy\Ship::$name,
 			Taxonomy\Month::$name,
 			Taxonomy\Duration::$name,
+			Taxonomy\PromoCode::$name,
 		];
 
 		if ( ( $query->is_post_type_archive( $validPostTypes ) && isset( $query->query['post_type'] )

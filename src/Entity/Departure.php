@@ -66,13 +66,6 @@ class Departure {
 
 	public function setCruisePrices( array $cruisePrices ): self {
 		usort( $cruisePrices, function ( $a, $b ) {
-			if ( $a->getPriceDouble() < 1 ) {
-				return 1;
-			}
-			if ( $b->getPriceDouble() < 1 ) {
-				return - 1;
-			}
-
 			return $a->getPriceDouble() <=> $b->getPriceDouble();
 		} );
 

@@ -33,4 +33,5 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess {
 	public function slice( int $offset, ?int $length = null ): array;
 	public function count(): int;
 	public function uasort( callable $callable ): self;
+	public function usort( callable $callable ): self;
 }

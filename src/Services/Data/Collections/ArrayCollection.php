@@ -157,4 +157,10 @@ class ArrayCollection implements Collection {
 
 		return $this;
 	}
+
+	public function usort( callable $callable ): self {
+		usort( $this->elements, $callable );
+
+		return $this;
+	}
 }

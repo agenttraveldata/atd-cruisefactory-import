@@ -27,7 +27,7 @@ class DataMapper {
 	 * @throws Exception
 	 */
 	public function setEntity( string $entity ): self {
-		if ( false !== strpos( $entity, '\Entity\\' ) ) {
+		if ( str_contains( $entity, '\Entity\\' ) ) {
 			$feedClass = ConvertClass::toFeedFromEntity( $entity );
 
 			if ( class_exists( $feedClass ) ) {
@@ -50,7 +50,7 @@ class DataMapper {
 	public function find( int $id ): ?object {
 		try {
 			$stmt = $this->getPreparedStatement( [ 'i.id=' => $id ] );
-		} catch ( Exception $e ) {
+		} catch ( Exception ) {
 			return null;
 		}
 
@@ -76,7 +76,7 @@ class DataMapper {
 
 		try {
 			$stmt = $this->getPreparedStatement( $where, $limit );
-		} catch ( Exception $e ) {
+		} catch ( Exception ) {
 			return $rows;
 		}
 
@@ -163,7 +163,7 @@ class DataMapper {
 				foreach ( $parentFeed::getCollections() as $column => $entities ) {
 					foreach ( $entities as $entity ) {
 						$entityName   = substr( strrchr( $entity, '\\' ), 1 );
-						$parentSetter = 'set' . $entityName . ( substr( $entityName, - 1 ) === 'y' ? '' : 's' );
+						$parentSetter = 'set' . $entityName . ( str_ends_with( $entityName, 'y' ) ? '' : 's' );
 
 						if ( method_exists( ConvertClass::toEntityFromFeed( $parentFeed ), $parentSetter ) ) {
 							/** @var Feed $entityFeed */

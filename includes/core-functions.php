@@ -130,7 +130,7 @@ function atd_cf_get_post_attached_images( ?int $post_id = null, ?string $image_t
 function atd_cf_get_departure_details( int $departure_id, string $departure_type ): Entity\DepartureSummary {
 	try {
 		$departure = Finder::getDepartureByIdAndType( $departure_id, $departure_type );
-	} catch ( Exception $e ) {
+	} catch ( Exception ) {
 		wp_redirect( '/' );
 		exit;
 	}

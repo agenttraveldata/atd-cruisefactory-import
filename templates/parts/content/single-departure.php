@@ -13,43 +13,43 @@ $shipPost       = atd_cf_get_post_by_meta_value( ATD\CruiseFactory\Post\Ship::$p
 <div class="atd-cfi__cols" data-controller="atd-cfi-popover">
     <div class="atd-cfi-cols__column">
         <div class="atd-cfi-departure__logo atd-cfi__mb-2">
-        <img class="atd-cfi__img-fluid atd-cfi__mb-2"
-             src="data:<?php echo $atdDeparture->getCruise()->getCruiseLine()->getLogoType(); ?>;base64,<?php echo base64_encode( $atdDeparture->getCruise()->getCruiseLine()->getLogoData() ); ?>"
-             alt="Cruise Line">
-        <p>
-			<?php echo $atdDeparture->getCruise()->getDuration(); ?> nights onboard
-            <a href="<?php echo get_permalink( $shipPost->post->ID ); ?>">
-				<?php echo $atdDeparture->getCruise()->getShip()->getName(); ?>
-            </a> from
-            <a href="<?php echo get_permalink( $cruiseLinePost->post->ID ); ?>">
-				<?php echo $atdDeparture->getCruise()->getCruiseLine()->getName(); ?>
-            </a> departing <?php echo $atdDeparture->getSailingDate()->format( 'd M Y' ); ?>
-        </p>
+            <img class="atd-cfi__img-fluid atd-cfi__mb-2"
+                 src="data:<?php echo $atdDeparture->getCruise()->getCruiseLine()->getLogoType(); ?>;base64,<?php echo base64_encode( $atdDeparture->getCruise()->getCruiseLine()->getLogoData() ); ?>"
+                 alt="Cruise Line">
+            <p>
+				<?php echo $atdDeparture->getCruise()->getDuration(); ?> nights onboard
+                <a href="<?php echo get_permalink( $shipPost->post->ID ); ?>">
+					<?php echo $atdDeparture->getCruise()->getShip()->getName(); ?>
+                </a> from
+                <a href="<?php echo get_permalink( $cruiseLinePost->post->ID ); ?>">
+					<?php echo $atdDeparture->getCruise()->getCruiseLine()->getName(); ?>
+                </a> departing <?php echo $atdDeparture->getSailingDate()->format( 'd M Y' ); ?>
+            </p>
         </div>
         <div class="atd-cfi-departure__pricing atd-cfi__mt-2" data-controller="atd-cfi-toggle-element"
              data-atd-cfi-toggle-element-prefix-value="atd-cfi-departure-price-">
             <form action="<?php echo get_permalink( get_option( ATD_CF_XML_ENQUIRY_PAGE_ID_FIELD ) ); ?>" method="get">
                 <div class="atd-cfi-departure-pricing__prices">
-                    <?php if ( $atdSpecial ): ?>
+					<?php if ( $atdSpecial ): ?>
                         <h3>Special Pricing</h3>
                         <h4 class="atd-cfi__mb-2">
                             <small>From</small>
                             <small><?php echo $atdSpecial->getCurrency()->getSign(); ?></small><?php echo number_format( $atdSpecial->getStartPrice() ); ?>
                             <small>pp twin share</small>
                         </h4>
-                        <?php atd_cf_get_template_part( 'content/departure', 'special-pricing' ); ?>
-                    <?php elseif ( $atdDeparture->getCruisePrices()->count() > 0 ): ?>
+						<?php atd_cf_get_template_part( 'content/departure', 'special-pricing' ); ?>
+					<?php elseif ( $atdDeparture->getCruisePrices()->count() > 0 ): ?>
                         <h3>Pricing</h3>
                         <h4 class="atd-cfi__mb-2">
                             <small>From</small>
                             <small><?php echo $atdDeparture->getCruisePrices()->get( 0 )->getCurrency(); ?></small><?php echo number_format( $atdDeparture->getCruisePrices()->get( 0 )->getPriceDouble() ); ?>
                             <small>pp twin share</small>
                         </h4>
-                        <?php atd_cf_get_template_part( 'content/departure', 'cruise-pricing' ); ?>
-                    <?php else: ?>
+						<?php atd_cf_get_template_part( 'content/departure', 'cruise-pricing' ); ?>
+					<?php else: ?>
                         <h4>Request Price</h4>
-                        <?php atd_cf_get_template_part( 'content/departure', 'request-pricing' ); ?>
-                    <?php endif; ?>
+						<?php atd_cf_get_template_part( 'content/departure', 'request-pricing' ); ?>
+					<?php endif; ?>
                 </div>
                 <div class="atd-cfi-departure-pricing__buttons">
                     <button class="atd-cfi__btn" type="submit">Continue</button>
@@ -130,8 +130,8 @@ $shipPost       = atd_cf_get_post_by_meta_value( ATD\CruiseFactory\Post\Ship::$p
                     </div>
                     <div id="atd-tab-cabins">
 						<?php atd_cf_get_template_part( 'content/ship', 'cabins', [
-							'departureId' => $atdDeparture->getId(),
-							'type'        => ! empty( $atdSpecial ) ? 'special' : 'cruise',
+							'departureId' => ! is_null( $atdSpecial ) ? $atdSpecial->getDepartureId() : $atdDeparture->getId(),
+							'type'        => ! is_null( $atdSpecial ) ? 'special' : 'cruise',
 							'prices'      => ! is_null( $atdSpecial ) && $atdSpecial->getSpecialPrices()->count() > 0
 								? $atdSpecial->getSpecialPrices()
 								: $atdDeparture->getCruisePrices()
