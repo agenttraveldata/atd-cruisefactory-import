@@ -15,6 +15,8 @@ class Cabin {
 	private string $cabin_category;
 	private string $providerImageUrl = 'https://ik.imagekit.io/atd/ships/cabins/';
 	private string $providerPhotoUrl = 'https://ik.imagekit.io/atd/ships/cabinphotos/';
+	private string $updated_at;
+	private ?float $price = null;
 
 	public function getId(): int {
 		return $this->id;
@@ -110,5 +112,22 @@ class Cabin {
 
 	public function getProviderPhotoUrl(): string {
 		return $this->providerPhotoUrl;
+	}
+
+	public function setPrice(float $price): self
+	{
+		$this->price = $price;
+
+		return $this;
+	}
+
+	public function getPrice(): ?float
+	{
+		return $this->price;
+	}
+
+	public function hasPrice(): bool
+	{
+		return !empty($this->price);
 	}
 }
